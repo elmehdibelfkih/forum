@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/profile.css">
+    <title>Forum</title>
+</head>
+<body>
+    <header class="nav">
+        <div class="profile-icon">
+            <a href="/profile">{{.Username}}</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="profile-photo">
+            <img src="" alt="profile-photo">
+        </div>
+    
+        <div class="profile">
+            <div>
+                Username : <span class="to-right">{{.Username}} <a href="/profile/update/username"><span class="update-icon">🔄</span></a></span>
+            </div>
+            <div>
+                Email : <span class="to-right">{{.Email}} <a href="/profile/update/email"><span class="update-icon">🔄</span></a></span>
+            </div>
+            <div>
+                Password <span class="to-right"><a href="/profile/update/password"><span class="update-icon">🔄</span></a></span>
+            </div>
+    
+            <a class="delete" href="/profile/delete">Delete This Account</a>
+        </div>
+    </div>
+
+
+</body>
+</html>

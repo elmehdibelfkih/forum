@@ -1,0 +1,49 @@
+package repository
+
+import (
+	"database/sql"
+	"html/template"
+	"regexp"
+)
+
+var (
+	EmailExp        *regexp.Regexp
+	UsernameExp     *regexp.Regexp
+	GLOBAL_TEMPLATE *template.Template
+	DB              *sql.DB
+)
+
+type User struct {
+	Id            int
+	Username      string
+	Email         string
+	Password_hash string
+	Created_at    string
+	Updated_at    string
+}
+
+type contextKey string
+
+const (
+	DATABASE_NAME = "sqlite3"
+
+	// database paths
+	DATABASE_LOCATION        = "./internal/db/forum.db"
+	DATABASE_SCHEMA_LOCATION = "./internal/db/schema.sql"
+
+	// error messages
+	FAILED_OPEN_DATABES     = "failed to open the database: %v"
+	FAILED_CREAT_TABELS     = "failed to create tables: %v"
+	FAILED_CLOSING_DATABASE = "closing database: %v"
+
+	// templates paths
+	TEMPLATE_PATHS = "./templates/*.html"
+
+	// server helpers
+	PORT               = ":8080"
+	SERVER_RUN_MESSAGE = "\033[2mServer running on http://localhost:8080\033[0m"
+
+	// context keys
+	USER_ID_KEY contextKey = "user_id"
+	ERROR_CASE  contextKey = "error_case"
+)

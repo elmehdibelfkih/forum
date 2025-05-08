@@ -1,0 +1,8 @@
+services:
+  ascii:
+    container_name: ascii
+    image: ascii:latest
+    build: ./requirements/.
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
