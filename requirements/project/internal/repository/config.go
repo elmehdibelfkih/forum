@@ -28,7 +28,7 @@ const (
 	DATABASE_NAME = "sqlite3"
 
 	// database paths
-	DATABASE_LOCATION        = "./internal/db/forum.db"
+	DATABASE_LOCATION        = "./database/forum.db"
 	DATABASE_SCHEMA_LOCATION = "./internal/db/schema.sql"
 
 	// error messages

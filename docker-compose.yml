@@ -1,8 +1,16 @@
 services:
-  ascii:
-    container_name: ascii
-    image: ascii:latest
-    build: ./requirements/.
+  forum:
+    container_name: forum
+    image: forum:latest
+    build: ./requirements
     ports:
       - "8080:8080"
     restart: unless-stopped
+    working_dir: /app/project
+    volumes:
+      - ./requirements/project:/app/project
+      - forum_db:/app/project/database
+
+volumes:
+  forum_db:
+    driver: local
