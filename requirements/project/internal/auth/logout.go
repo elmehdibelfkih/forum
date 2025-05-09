@@ -1,6 +1,7 @@
 package auth
 
 import (
+	db "forum/internal/db"
 	forumerror "forum/internal/error"
 	"net/http"
 	"time"
@@ -18,7 +19,7 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	sessionToken := sessionCookie.Value
 
 	// Invalidate the session on server side
-	hasSession, err := ResetUserSession(sessionToken)
+	hasSession, err := db.ResetUserSession(sessionToken)
 	if err != nil {
 		// Server-side error, do not proceed with cookie reset
 		forumerror.TempErr(w, err, http.StatusInternalServerError)

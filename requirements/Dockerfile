@@ -1,13 +1,17 @@
 # Build Stage
 FROM golang:1.23.0 AS builder
-WORKDIR /project
-COPY project /project
-RUN go build -o app main.go
+WORKDIR /app/project
+COPY ./project/. ./
+RUN go build -o forum main.go
 
 # Final Stage
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
+RUN apt-get update && apt-get upgrade -y
 WORKDIR /project
-COPY --from=builder /project/app /project/app
+COPY --from=builder ./app/project/forum .
+COPY ./project/static ./static
+COPY ./project/database ./database
+COPY ./project/templates ./templates
 EXPOSE 8080
 LABEL owner="soubaaiss" \
       owner="mlarbi" \
@@ -16,4 +20,4 @@ LABEL owner="soubaaiss" \
       version="1.0" \
       description="This is a simple web application that works like a forum." \
       environment="zone 01"
-CMD ["./app"]
+CMD ["./forum"]

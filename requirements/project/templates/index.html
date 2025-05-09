@@ -7,17 +7,21 @@
     <title>Forum</title>
 </head>
 <body>
+    <!-- nav bare -->
     <header class="nav">
         <div class="profile-icon">
             {{if .Authenticated}}
                 <a href="/profile">{{.Username}}</a>
                 <a href="/logout">Logout</a>
+                <a href="/post">New Post</a>
             {{else}}
                 <a href="/login">Login</a>
                 <a href="/register">Sign Up</a>
+                <a href="/post">New Post</a>
             {{end}}
         </div>
     </header>
+
     <main>
         <div class="home">
             <div class="create-button">+Create a Post</div>
@@ -47,5 +51,7 @@
             </div>
         </div>
     </main>
+
+
 </body>
 </html>

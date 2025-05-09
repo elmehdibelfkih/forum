@@ -22,6 +22,9 @@ type User struct {
 	Updated_at    string
 }
 
+type Post struct {
+}
+
 type contextKey string
 
 const (
@@ -29,7 +32,7 @@ const (
 
 	// database paths
 	DATABASE_LOCATION        = "./database/forum.db"
-	DATABASE_SCHEMA_LOCATION = "./internal/db/schema.sql"
+	DATABASE_SCHEMA_LOCATION = "./database/schema.sql"
 
 	// error messages
 	FAILED_OPEN_DATABES     = "failed to open the database: %v"

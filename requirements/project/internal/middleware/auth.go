@@ -3,6 +3,7 @@ package middleware
 import (
 	"context"
 	auth "forum/internal/auth"
+	db "forum/internal/db"
 	forumerror "forum/internal/error"
 	repo "forum/internal/repository"
 	"net/http"
@@ -16,7 +17,7 @@ func AuthMidleware(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		user_id, exist, err := auth.SelectUserSession(sessionCookie.Value)
+		user_id, exist, err := db.SelectUserSession(sessionCookie.Value)
 
 		if err != nil {
 			forumerror.TempErr(w, err, http.StatusInternalServerError)

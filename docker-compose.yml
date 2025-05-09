@@ -6,11 +6,10 @@ services:
     ports:
       - "8080:8080"
     restart: unless-stopped
-    working_dir: /app/project
     volumes:
-      - ./requirements/project:/app/project
       - forum_db:/app/project/database
+      # - forum_static:/app/static
 
 volumes:
   forum_db:
-    driver: local
+  # forum_static:

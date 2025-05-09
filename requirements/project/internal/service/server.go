@@ -39,7 +39,7 @@ func forumMux() *http.ServeMux {
 	forumux.HandleFunc("/profile/delete/confirm", middleware.AuthMidleware(handler.DeleteConfirmation))
 
 	// static mux
-	forumux.HandleFunc("/static/", handler.StaticHandler)
+	// forumux.HandleFunc("/static/", handler.StaticHandler)
 
 	return forumux
 }

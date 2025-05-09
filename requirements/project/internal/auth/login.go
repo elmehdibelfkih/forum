@@ -69,7 +69,7 @@ func SubmitLogin(w http.ResponseWriter, r *http.Request) {
 		SameSite: http.SameSiteStrictMode,
 	})
 
-	err = UpdateUserSession(user_id, session)
+	err = db.UpdateUserSession(user_id, session)
 
 	if err != nil {
 		forumerror.TempErr(w, err, http.StatusInternalServerError)
