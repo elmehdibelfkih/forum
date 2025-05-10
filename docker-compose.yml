@@ -7,9 +7,13 @@ services:
       - "8080:8080"
     restart: unless-stopped
     volumes:
-      - forum_db:/app/project/database
-      # - forum_static:/app/static
+      - forum_db:/project/database
 
 volumes:
   forum_db:
-  # forum_static:
+    name: forum_db
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/ebelfkih/Desktop/zone\ 01\ project/forum/requirements/project/database/
+      o: bind

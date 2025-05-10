@@ -5,12 +5,12 @@ COPY ./project/. ./
 RUN go build -o forum main.go
 
 # Final Stage
-FROM debian:bookworm-slim
+FROM debian:stable-slim
 RUN apt-get update && apt-get upgrade -y
 WORKDIR /project
 COPY --from=builder ./app/project/forum .
 COPY ./project/static ./static
-COPY ./project/database ./database
+# COPY ./project/database ./database
 COPY ./project/templates ./templates
 EXPOSE 8080
 LABEL owner="soubaaiss" \
