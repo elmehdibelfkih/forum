@@ -1,0 +1,53 @@
+{{define "post_component"}}
+<article class="post">
+  <header>
+    <h2>{{.Title}}</h2>
+    <p>Published by <strong>{{.Publisher}}</strong> in <em>{{.Catigory}}</em></p>
+  </header>
+
+  <section>
+    <p>{{.Content}}</p>
+  </section>
+
+  <footer>
+    <form action="/like" method="POST">
+      <input type="hidden" name="post_id" value="{{.Id}}">
+      <button type="submit">👍{{.Likes}}</button>
+    </form>
+    
+    <form action="/deslike" method="POST">
+      <input type="hidden" name="post_id" value="{{.Id}}">
+      <button type="submit">👎{{.Deslikes}}</button>
+    </form>
+
+    {{if .Comments}}
+      <p>💬</p>
+      <form action="/comment" method="POST">
+        <div>
+            <label for="comment">comment:</label>
+            <input type="text" id="comment" name="comment"  maxlength="50" required>
+        </div>
+        <button type="submit">comment</button>
+      </form>
+      <ul>
+        {{range .Comments}}
+          {{range $author, $comment := .}}
+            <li><strong>{{$author}}:</strong> {{$comment}}</li>
+         {{end}}
+        {{end}}
+      </ul>
+    {{else}}
+      <p>No comments yet.</p>
+    {{end}}
+
+    {{if not .IsEdited}}
+      <p><time datetime="{{.Created_at}}">Created: {{.Created_at}}</time></p>
+    {{else}}
+      <p>
+        <time datetime="{{.Created_at}}">Created: {{.Created_at}}</time> |
+        <time datetime="{{.Updated_at}}">Updated: {{.Updated_at}}</time>
+      </p>
+    {{end}}
+  </footer>
+</article>
+{{end}}

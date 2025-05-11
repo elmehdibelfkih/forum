@@ -12,8 +12,16 @@ const (
 	SELECT_USER_COUNT_BY_USERNAME_EMAIL      = `SELECT COUNT(*) FROM users WHERE username = ? OR email = ?`
 	SELECT_USERID_PASSHASH_BY_USERNAME_EMAIL = `SELECT id,password_hash FROM users WHERE username = ? OR email = ?`
 	SELECT_PASSHASH_BY_USERID                = `SELECT password_hash FROM users WHERE id = ?`
+	CHECK_EMAIL_DUP                          = `SELECT COUNT(*) FROM users WHERE email = ?`
+	CHECK_USERNAME_DUP                       = `SELECT COUNT(*) FROM users WHERE username = ?`
 
 	// update queries
 	UPDATE_SESSION_EXPIRING_TIME = `UPDATE sessions SET expires_at = DATETIME('now', '+1 hour'), session_token = ? WHERE user_id = ?`
 	RESET_USER_SESSION_TOKEN     = `UPDATE sessions SET session_token = NULL WHERE session_token = ?`
+	UPDATE_PASS                  = `UPDATE users SET updated_at = DATETIME('now'), password_hash = ? WHERE id = ?`
+	UPDATE_EMAIL                 = `UPDATE users SET updated_at = DATETIME('now') , email = ? WHERE id = ?`
+	UPDATE_USER_NAME             = `UPDATE users SET updated_at = DATETIME('now') , username = ? WHERE id = ?`
+
+	// delete queries
+	DELETE_USER = `DELETE FROM users WHERE id = ?`
 )

@@ -115,8 +115,7 @@ func GetUserHashById(id int) (string, error) {
 
 func DupplicatedUsername(username string) (bool, error) {
 	var count int
-	query := `SELECT COUNT(*) FROM users WHERE username = ?`
-	err := repo.DB.QueryRow(query, username).Scan(&count)
+	err := repo.DB.QueryRow(repo.CHECK_USERNAME_DUP, username).Scan(&count)
 	if err != nil {
 		return false, err
 	}
@@ -124,8 +123,7 @@ func DupplicatedUsername(username string) (bool, error) {
 }
 
 func UpdateUsernmae(id int, username string) error {
-	query := `UPDATE users SET updated_at = DATETIME('now') , username = ? WHERE id = ?`
-	res, err := repo.DB.Exec(query, username, id)
+	res, err := repo.DB.Exec(repo.UPDATE_USER_NAME, username, id)
 	if err != nil {
 		return err
 	}
@@ -135,8 +133,7 @@ func UpdateUsernmae(id int, username string) error {
 
 func DupplicatedEmail(email string) (bool, error) {
 	var count int
-	query := `SELECT COUNT(*) FROM users WHERE email = ?`
-	err := repo.DB.QueryRow(query, email).Scan(&count)
+	err := repo.DB.QueryRow(repo.CHECK_EMAIL_DUP, email).Scan(&count)
 	if err != nil {
 		return false, err
 	}
@@ -144,8 +141,7 @@ func DupplicatedEmail(email string) (bool, error) {
 }
 
 func UpdateEmail(id int, email string) error {
-	query := `UPDATE users SET updated_at = DATETIME('now') , email = ? WHERE id = ?`
-	res, err := repo.DB.Exec(query, email, id)
+	res, err := repo.DB.Exec(repo.UPDATE_EMAIL, email, id)
 	if err != nil {
 		return err
 	}
@@ -155,8 +151,7 @@ func UpdateEmail(id int, email string) error {
 }
 
 func UpdatePassword(id int, password string) error {
-	query := `UPDATE users SET updated_at = DATETIME('now'), password_hash = ? WHERE id = ?`
-	res, err := repo.DB.Exec(query, password, id)
+	res, err := repo.DB.Exec(repo.UPDATE_PASS, password, id)
 	if err != nil {
 		return err
 	}
@@ -165,8 +160,7 @@ func UpdatePassword(id int, password string) error {
 }
 
 func DeleteUser(user_id int) error {
-	query := `DELETE FROM users WHERE id = ?`
-	_, err := repo.DB.Exec(query, user_id)
+	_, err := repo.DB.Exec(repo.DELETE_USER, user_id)
 	if err != nil {
 		return err
 	}

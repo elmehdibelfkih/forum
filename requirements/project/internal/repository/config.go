@@ -23,6 +23,21 @@ type User struct {
 }
 
 type Post struct {
+	Id         int
+	Title      string
+	Content    string
+	Publisher  string
+	Catigory   string
+	Likes      int
+	Deslikes   int
+	Comments   []map[string]string
+	Created_at string
+	Updated_at string
+	IsEdited   bool
+}
+
+type PageData struct {
+	Posts []Post
 }
 
 type contextKey string

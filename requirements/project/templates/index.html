@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/index.css">
     <title>Forum</title>
 </head>
+
 <body>
-    <!-- nav bare -->
+
     <header class="nav">
         <div class="profile-icon">
             {{if .Authenticated}}
@@ -24,34 +26,14 @@
 
     <main>
         <div class="home">
-            <div class="create-button">+Create a Post</div>
-            <div class="Categories">
-                {{range .Categories}}
-                <div class="Category">{{.}}</div>
-                {{end}}
-            </div>
-            <div class="posts">
-                {{range .Posts}}
-                    <div class="post-container">
-                        <div class="post">
-                            <div class="publisher">{{.Publisher}}</div>
-                            <div class="post-category">{{.Category}}</div>
-                            <div class="title">{{.Title}}</div>
-                            <div class="content">{{.Content}}</div>
-                            <div class="readmore-button"></div>
-                        </div>
-                        <div class="react-bar">
-                            <div class="reactions">
-                                
-                            </div>
-                            <div class="comment-button"></div>
-                        </div>
-                    </div>
-                {{end}}
-            </div>
+            {{block "content" .Posts}}{{end}}
         </div>
     </main>
 
+     <footer>
+        &copy; 2025
+    </footer>
 
 </body>
+
 </html>
