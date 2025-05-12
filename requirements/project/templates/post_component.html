@@ -2,7 +2,7 @@
 <article class="post">
   <header>
     <h2>{{.Title}}</h2>
-    <p>Published by <strong>{{.Publisher}}</strong> in <em>{{.Catigory}}</em></p>
+    <p>Published by <strong>{{.Publisher}}</strong> in <em>{{range .Catigories}}{{.}}{{end}}</em></p>
   </header>
 
   <section>
@@ -24,6 +24,7 @@
       <p>💬</p>
       <form action="/comment" method="POST">
         <div>
+            <input type="hidden" name="post_id" value="{{.Id}}">
             <label for="comment">comment:</label>
             <input type="text" id="comment" name="comment"  maxlength="50" required>
         </div>

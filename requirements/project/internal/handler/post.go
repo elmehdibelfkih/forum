@@ -33,7 +33,6 @@ func PostPostHandler(w http.ResponseWriter, r *http.Request) {
 	err := db.AddNewPost(user_id, r.FormValue("title"), r.FormValue("content"))
 	if err != nil {
 		forumerror.TempErr(w, err, http.StatusInternalServerError)
-		println(err)
 		return
 	}
 

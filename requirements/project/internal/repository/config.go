@@ -24,10 +24,11 @@ type User struct {
 
 type Post struct {
 	Id         int
+	UserId     int
 	Title      string
 	Content    string
 	Publisher  string
-	Catigory   string
+	Catigories []string
 	Likes      int
 	Deslikes   int
 	Comments   []map[string]string

@@ -47,3 +47,10 @@ func ValidPassword(s string) bool {
 	}
 	return false
 }
+
+func ValidComment(commet string) bool {
+	if len(commet) > 50 {
+		return false
+	}
+	return true
+}

@@ -41,6 +41,17 @@ func forumMux() *http.ServeMux {
 	// post mux
 	forumux.HandleFunc("/post", middleware.AuthMidleware(handler.PostHandler))
 
+	// like mux
+	forumux.HandleFunc("/like", middleware.AuthMidleware(handler.LikeHandler))
+
+	// deslike mux
+	forumux.HandleFunc("/deslike", middleware.AuthMidleware(handler.DeslikeHandler))
+
+	// comment mux
+	forumux.HandleFunc("/comment", middleware.AuthMidleware(handler.CommentHandler))
+
+
+
 	// static mux
 	// forumux.HandleFunc("/static/", handler.StaticHandler)
 

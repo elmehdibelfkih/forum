@@ -166,3 +166,13 @@ func DeleteUser(user_id int) error {
 	}
 	return nil
 }
+
+func GetUserNameById(user_id int) (string, error) {
+	var userName string
+
+	err := repo.DB.QueryRow(repo.SELECT_USERNAME_BY_ID, user_id).Scan(&userName)
+	if err != nil {
+		return userName, err
+	}
+	return userName, nil
+}

@@ -19,7 +19,7 @@ func RootHandler(w http.ResponseWriter, r *http.Request) { // todo: check the me
 				Title:     "Understanding Go Templates",
 				Content:   "Templates in Go let you separate logic and HTML... Templates in Go let you separate logic and HTML... Templates in Go let you separate logic and HTML... Templates in Go let you separate logic and HTML... ",
 				Publisher: "El Mehdi",
-				Catigory:  "Programming",
+				Catigories:  []string{"Programming"},
 				Likes:     42,
 				Deslikes:  1,
 				Comments: []map[string]string{
@@ -35,7 +35,7 @@ func RootHandler(w http.ResponseWriter, r *http.Request) { // todo: check the me
 				Title:     "test",
 				Content:   "kanjarbo wach hadchi khdam wla la lakan khdam rah nadi hadchi ",
 				Publisher: "El chapo",
-				Catigory:  "walo",
+				Catigories:  []string{"walo"},
 				Likes:     37,
 				Deslikes:  13,
 				Comments: []map[string]string{
