@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS likes_dislikes (
     user_id INTEGER NOT NULL,
     post_id INTEGER NOT NULL,
     is_like BOOLEAN NOT NULL CHECK (is_like IN (0, 1)),
+    is_deslike BOOLEAN NOT NULL CHECK (is_like IN (0, 1)),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY(post_id) REFERENCES posts(id) ON DELETE CASCADE,

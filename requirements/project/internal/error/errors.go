@@ -1,10 +1,100 @@
-package errors
+package forumerror
 
 import (
+	repo "forum/internal/repository"
+	"log"
 	"net/http"
+	"os"
+	"time"
 )
 
-func TempErr(w http.ResponseWriter, err error, code int) {
-	// log.Println("error >>", err)
-	http.Error(w, http.StatusText(code), code)
+type Error struct {
+	StatusCode       int
+	StatusText       string
+	ErrorMessage     string
+	ErrorTitle       string
+	ErrorDescription string
+}
+
+func NotFoundError(w http.ResponseWriter, r *http.Request) {
+	notFoundError := Error{
+		StatusCode:       404,
+		StatusText:       "Not Found",
+		ErrorMessage:     "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+		ErrorTitle:       "Oops! Page Not Found",
+		ErrorDescription: "We couldn't find the page you were looking for. Please check the URL for any mistakes or go back to the homepage.",
+	}
+
+	w.WriteHeader(notFoundError.StatusCode)
+	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "erro.html", notFoundError) // when u excute 2 template the get concatinated one in top of the other
+	if tmplErr != nil {
+		log.Printf("Failed to execute error template: %v", tmplErr)
+	}
+}
+
+func MethodNotAllowed(w http.ResponseWriter, r *http.Request) {
+	methodNotAllowed := Error{
+		StatusCode:       405,
+		StatusText:       "Method not allowed",
+		ErrorMessage:     "The HTTP method used for this request is not allowed on this resource. Please use a different method.",
+		ErrorTitle:       "Oops! method not allowed",
+		ErrorDescription: "Please send a POST request to this endpoint with the required data for processing. Other HTTP methods are not allowed.",
+	}
+
+	w.WriteHeader(methodNotAllowed.StatusCode)
+	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "erro.html", methodNotAllowed) // when u excute 2 template the get concatinated one in top of the other
+	if tmplErr != nil {
+		log.Printf("Failed to execute error template: %v", tmplErr)
+	}
+}
+
+func InternalServerError(w http.ResponseWriter, r *http.Request, err error) {
+	internalServerError := Error{
+		StatusCode:       http.StatusInternalServerError,
+		StatusText:       "Internal Server Error",
+		ErrorMessage:     "An unexpected error occurred while processing your request.",
+		ErrorTitle:       "Oops! Internal Server Error",
+		ErrorDescription: "Something went wrong on our end. Please try again later or contact support if the issue persists.",
+	}
+
+	logFile, err := os.OpenFile(
+		repo.INTERNAL_SERVER_ERROR_LOG_PATH,
+		os.O_APPEND|os.O_CREATE|os.O_WRONLY,
+		0644,
+	)
+	if err != nil {
+		log.Printf("Failed to open error log file: %v", err)
+	} else {
+		defer logFile.Close()
+		log.SetOutput(logFile)
+		log.Printf("[%s] %s %s\nError: %v",
+			time.Now().Format(time.RFC3339),
+			r.Method,
+			r.URL.Path,
+			err,
+		)
+	}
+
+	w.WriteHeader(internalServerError.StatusCode)
+
+	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "erro.html", internalServerError)
+	if tmplErr != nil {
+		log.Printf("Failed to execute error template: %v", tmplErr)
+	}
+}
+
+func BadRequest(w http.ResponseWriter, r *http.Request) {
+	badRequest := Error{
+		StatusCode:       400,
+		StatusText:       "Bad Request",
+		ErrorMessage:     "The Server recieved a Bad request!!",
+		ErrorTitle:       "Oops! Bad Request",
+		ErrorDescription: "Please make sure you respect the input limits",
+	}
+
+	w.WriteHeader(badRequest.StatusCode)
+	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "erro.html", badRequest) // when u excute 2 template the get concatinated one in top of the other
+	if tmplErr != nil {
+		log.Printf("Failed to execute error template: %v", tmplErr)
+	}
 }

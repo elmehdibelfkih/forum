@@ -14,6 +14,7 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 		PostPostHandler(w, r)
 	} else {
 		forumerror.TempErr(w, nil, http.StatusMethodNotAllowed)
+		return
 	}
 }
 

@@ -22,7 +22,7 @@ func InitRegex() {
 }
 
 func ValidUsername(s string) bool {
-	if len(s) < 8 || len(s) > 50 {
+	if len(s) < 4 || len(s) > 50 {
 		return false
 	}
 	if !repo.UsernameExp.MatchString(s) {
@@ -32,7 +32,7 @@ func ValidUsername(s string) bool {
 }
 
 func ValidEmail(s string) bool {
-	if len(s) < 8 || len(s) > 50 {
+	if len(s) < 4 || len(s) > 50 {
 		return false
 	}
 	if !repo.EmailExp.MatchString(s) {
@@ -42,14 +42,14 @@ func ValidEmail(s string) bool {
 }
 
 func ValidPassword(s string) bool {
-	if len(s) >= 8 && len(s) <= 50 {
+	if len(s) >= 4 && len(s) <= 50 {
 		return true
 	}
 	return false
 }
 
 func ValidComment(commet string) bool {
-	if len(commet) > 50 {
+	if len(commet) > 500 || len(commet) == 0{
 		return false
 	}
 	return true

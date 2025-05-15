@@ -14,7 +14,8 @@ func ProfilHandler(w http.ResponseWriter, r *http.Request) {
 	user_id := r.Context().Value(repo.USER_ID_KEY).(int)
 	user, err := db.GetUserInfo(user_id)
 	if err != nil {
-		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		forumerror.InternalServerError(w,r, err)
+		return
 	}
 	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "profile.html", user) // when u excute 2 template the get concatinated one in top of the other
 }
@@ -70,6 +71,7 @@ func SaveUsername(w http.ResponseWriter, r *http.Request) {
 	hash, err := db.GetUserHashById(user_id)
 	if err != nil {
 		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		return
 	}
 	if !utils.CheckPassword(password, hash) {
 		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Wrong password"})
@@ -90,6 +92,7 @@ func SaveUsername(w http.ResponseWriter, r *http.Request) {
 	err = db.UpdateUsernmae(user_id, new_username)
 	if err != nil {
 		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		return
 	}
 
 	http.Redirect(w, r, "/profile", http.StatusSeeOther)
@@ -107,6 +110,7 @@ func SaveEmail(w http.ResponseWriter, r *http.Request) {
 	hash, err := db.GetUserHashById(user_id)
 	if err != nil {
 		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		return
 	}
 	if !utils.CheckPassword(password, hash) {
 		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Wrong password"})
@@ -117,6 +121,7 @@ func SaveEmail(w http.ResponseWriter, r *http.Request) {
 	dupp, err := db.DupplicatedEmail(new_email)
 	if err != nil {
 		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		return
 	}
 	if dupp {
 		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Email Alredy exists try again"})
@@ -127,6 +132,7 @@ func SaveEmail(w http.ResponseWriter, r *http.Request) {
 	err = db.UpdateEmail(user_id, new_email)
 	if err != nil {
 		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		return
 	}
 
 	http.Redirect(w, r, "/profile", http.StatusSeeOther)
@@ -141,6 +147,7 @@ func SavePassword(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		return
 	}
 	if current == new || !utils.ValidPassword(new) {
 		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "You used an Old password"})
@@ -160,11 +167,13 @@ func SavePassword(w http.ResponseWriter, r *http.Request) {
 	new_hash, err := utils.HashPassword(new)
 	if err != nil {
 		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		return
 	}
 
 	err = db.UpdatePassword(user_id, new_hash)
 	if err != nil {
 		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		return
 	}
 
 	http.Redirect(w, r, "/profile", http.StatusSeeOther)
@@ -185,6 +194,7 @@ func DeleteConfirmation(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		return
 	}
 	if !utils.CheckPassword(password, hash) {
 		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Wrong password"})
@@ -196,5 +206,6 @@ func DeleteConfirmation(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		return
 	}
 }

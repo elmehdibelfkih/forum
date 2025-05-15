@@ -39,6 +39,7 @@ func SubmitLogin(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		return
 	}
 
 	if (!utils.ValidUsername(username) && !utils.ValidEmail(username)) || !utils.ValidPassword(password) || !exist { //TODO: it should be a better way
@@ -51,6 +52,7 @@ func SubmitLogin(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		return
 	}
 
 	if !utils.CheckPassword(password, hash) {
@@ -73,6 +75,7 @@ func SubmitLogin(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		return
 	}
 
 	http.Redirect(w, r, "/", http.StatusSeeOther)

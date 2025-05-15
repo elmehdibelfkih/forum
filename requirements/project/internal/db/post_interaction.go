@@ -10,6 +10,7 @@ func AddNewPost(user_id int, titel string, content string) error {
 	return err
 }
 
+// TODO: gel all catigories
 func GetAllPostsInfo() (repo.PageData, error) {
 	var data repo.PageData
 	var post repo.Post
@@ -26,6 +27,7 @@ func GetAllPostsInfo() (repo.PageData, error) {
 			return data, err
 		}
 		post.IsEdited = post.Updated_at != post.Created_at
+		// TODO: fix time format
 		post.Publisher, err = GetUserNameById(post.UserId)
 		if err != nil {
 			return data, err
@@ -87,8 +89,7 @@ func GetPostComments(postId int) ([]map[string]string, error) {
 			return comments, err
 		}
 		toAppend := map[string]string{
-			"username": userNameTmp,
-			"comment":  commentTmp,
+			userNameTmp: commentTmp,
 		}
 		comments = append(comments, toAppend)
 	}
@@ -102,6 +103,7 @@ func GetPostComments(postId int) ([]map[string]string, error) {
 
 func IsPostExist(postId int) (bool, error) {
 	var exists bool
+
 	err := repo.DB.QueryRow(repo.IS_POST_EXIST, postId).Scan(&exists)
 	if err == sql.ErrNoRows {
 		return false, nil
@@ -114,4 +116,28 @@ func IsPostExist(postId int) (bool, error) {
 func AddNewComment(userId int, postId int, comment string) error {
 	_, err := repo.DB.Exec(repo.INSERT_NEW_COMMENT, userId, postId, comment)
 	return err
+}
+
+func AddRemovePostLike(userId int, postId int) error {
+
+	return nil
+}
+
+func AddRemovePostDesike(userId int, postId int) error {
+
+	return nil
+}
+
+func IsPostLikedByUser(userId int, postId int) (bool, error) {
+	var isLike int
+
+	err := repo.DB.QueryRow(repo.IS_LIKED, userId, postId).Scan(&isLike)
+	if err == sql.ErrNoRows {
+		return false, nil
+	} else if err != nil {
+		return false, err
+	} else if isLike == 1 {
+		return true, nil
+	}
+	return false, nil
 }

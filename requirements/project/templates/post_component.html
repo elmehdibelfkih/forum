@@ -19,17 +19,18 @@
       <input type="hidden" name="post_id" value="{{.Id}}">
       <button type="submit">👎{{.Deslikes}}</button>
     </form>
+    
+    <p>💬</p>
+    <form action="/comment" method="POST">
+      <div>
+          <input type="hidden" name="post_id" value="{{.Id}}">
+          <label for="comment">comment:</label>
+          <input type="text" id="comment" name="comment"  maxlength="500" required>
+      </div>
+      <button type="submit">comment</button>
+    </form>
 
     {{if .Comments}}
-      <p>💬</p>
-      <form action="/comment" method="POST">
-        <div>
-            <input type="hidden" name="post_id" value="{{.Id}}">
-            <label for="comment">comment:</label>
-            <input type="text" id="comment" name="comment"  maxlength="50" required>
-        </div>
-        <button type="submit">comment</button>
-      </form>
       <ul>
         {{range .Comments}}
           {{range $author, $comment := .}}

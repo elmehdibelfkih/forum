@@ -21,6 +21,7 @@ func AuthMidleware(next http.HandlerFunc) http.HandlerFunc {
 
 		if err != nil {
 			forumerror.TempErr(w, err, http.StatusInternalServerError)
+			return
 		}
 
 		if !exist {
