@@ -13,7 +13,8 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 	} else if r.Method == http.MethodPost {
 		PostPostHandler(w, r)
 	} else {
-		forumerror.TempErr(w, nil, http.StatusMethodNotAllowed)
+		forumerror.MethodNotAllowed(w, r)
+
 		return
 	}
 }
@@ -33,7 +34,7 @@ func PostPostHandler(w http.ResponseWriter, r *http.Request) {
 
 	err := db.AddNewPost(user_id, r.FormValue("title"), r.FormValue("content"))
 	if err != nil {
-		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		forumerror.InternalServerError(w,r, err)
 		return
 	}
 

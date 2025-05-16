@@ -15,9 +15,9 @@
       <button type="submit">👍{{.Likes}}</button>
     </form>
     
-    <form action="/deslike" method="POST">
+    <form action="/dislike" method="POST">
       <input type="hidden" name="post_id" value="{{.Id}}">
-      <button type="submit">👎{{.Deslikes}}</button>
+      <button type="submit">👎{{.Dislikes}}</button>
     </form>
     
     <p>💬</p>

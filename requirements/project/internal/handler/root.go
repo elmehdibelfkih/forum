@@ -2,19 +2,20 @@ package handler
 
 import (
 	db "forum/internal/db"
-	errTmp "forum/internal/error"
+	forumerror "forum/internal/error"
 	repo "forum/internal/repository"
 	"net/http"
 )
 
 func RootHandler(w http.ResponseWriter, r *http.Request) { // todo: check the methode
 	if r.URL.Path != "/" {
-		errTmp.TempErr(w, nil, http.StatusNotFound)
+		forumerror.NotFoundError(w, r)
 		return
 	}
 	data, err := db.GetAllPostsInfo()
 	if err != nil {
-		errTmp.TempErr(w, nil, http.StatusInternalServerError)
+		forumerror.InternalServerError(w, r, err)
+		return
 	}
 
 	sessionCookie, err := r.Cookie("session_token")
@@ -26,7 +27,7 @@ func RootHandler(w http.ResponseWriter, r *http.Request) { // todo: check the me
 	user_id, exist, err := db.SelectUserSession(sessionCookie.Value)
 
 	if err != nil {
-		errTmp.TempErr(w, err, http.StatusInternalServerError)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
 
@@ -38,7 +39,7 @@ func RootHandler(w http.ResponseWriter, r *http.Request) { // todo: check the me
 	user, err := db.GetUserInfo(user_id)
 
 	if err != nil {
-		errTmp.TempErr(w, err, http.StatusInternalServerError)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
 	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "index.html", map[string]any{"Authenticated": true, "Username": user.Username, "Posts": data})

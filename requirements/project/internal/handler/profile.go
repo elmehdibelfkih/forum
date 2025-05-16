@@ -70,7 +70,7 @@ func SaveUsername(w http.ResponseWriter, r *http.Request) {
 
 	hash, err := db.GetUserHashById(user_id)
 	if err != nil {
-		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		forumerror.InternalServerError(w,r, err)
 		return
 	}
 	if !utils.CheckPassword(password, hash) {
@@ -81,7 +81,8 @@ func SaveUsername(w http.ResponseWriter, r *http.Request) {
 
 	dupp, err := db.DupplicatedUsername(new_username)
 	if err != nil {
-		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		forumerror.InternalServerError(w,r, err)
+		return
 	}
 	if dupp {
 		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Username Alredy exists try again"})
@@ -91,7 +92,7 @@ func SaveUsername(w http.ResponseWriter, r *http.Request) {
 
 	err = db.UpdateUsernmae(user_id, new_username)
 	if err != nil {
-		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		forumerror.InternalServerError(w,r, err)
 		return
 	}
 
@@ -109,7 +110,7 @@ func SaveEmail(w http.ResponseWriter, r *http.Request) {
 	}
 	hash, err := db.GetUserHashById(user_id)
 	if err != nil {
-		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		forumerror.InternalServerError(w,r, err)
 		return
 	}
 	if !utils.CheckPassword(password, hash) {
@@ -120,7 +121,7 @@ func SaveEmail(w http.ResponseWriter, r *http.Request) {
 
 	dupp, err := db.DupplicatedEmail(new_email)
 	if err != nil {
-		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		forumerror.InternalServerError(w,r, err)
 		return
 	}
 	if dupp {
@@ -131,7 +132,7 @@ func SaveEmail(w http.ResponseWriter, r *http.Request) {
 
 	err = db.UpdateEmail(user_id, new_email)
 	if err != nil {
-		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		forumerror.InternalServerError(w,r, err)
 		return
 	}
 
@@ -146,7 +147,7 @@ func SavePassword(w http.ResponseWriter, r *http.Request) {
 	hash, err := db.GetUserHashById(user_id)
 
 	if err != nil {
-		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		forumerror.InternalServerError(w,r, err)
 		return
 	}
 	if current == new || !utils.ValidPassword(new) {
@@ -166,13 +167,13 @@ func SavePassword(w http.ResponseWriter, r *http.Request) {
 	}
 	new_hash, err := utils.HashPassword(new)
 	if err != nil {
-		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		forumerror.InternalServerError(w,r, err)
 		return
 	}
 
 	err = db.UpdatePassword(user_id, new_hash)
 	if err != nil {
-		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		forumerror.InternalServerError(w,r, err)
 		return
 	}
 
@@ -193,7 +194,7 @@ func DeleteConfirmation(w http.ResponseWriter, r *http.Request) {
 	hash, err := db.GetUserHashById(user_id)
 
 	if err != nil {
-		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		forumerror.InternalServerError(w,r, err)
 		return
 	}
 	if !utils.CheckPassword(password, hash) {
@@ -205,7 +206,7 @@ func DeleteConfirmation(w http.ResponseWriter, r *http.Request) {
 	err = db.DeleteUser(user_id)
 
 	if err != nil {
-		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		forumerror.InternalServerError(w,r, err)
 		return
 	}
 }

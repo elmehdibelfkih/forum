@@ -44,8 +44,8 @@ func forumMux() *http.ServeMux {
 	// like mux
 	forumux.HandleFunc("/like", middleware.AuthMidleware(handler.LikeHandler))
 
-	// deslike mux
-	forumux.HandleFunc("/deslike", middleware.AuthMidleware(handler.DeslikeHandler))
+	// dislike mux
+	forumux.HandleFunc("/dislike", middleware.AuthMidleware(handler.DislikeHandler))
 
 	// comment mux
 	forumux.HandleFunc("/comment", middleware.AuthMidleware(handler.CommentHandler))

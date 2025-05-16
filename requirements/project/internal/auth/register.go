@@ -3,6 +3,7 @@ package auth
 import (
 	"context"
 	db "forum/internal/db"
+	forumerror "forum/internal/error"
 	repo "forum/internal/repository"
 	utils "forum/internal/utils"
 	"net/http"
@@ -41,7 +42,7 @@ func SubmitRegister(w http.ResponseWriter, r *http.Request) {
 
 	hash, err := utils.HashPassword(password)
 	if err != nil {
-		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
 
@@ -52,7 +53,7 @@ func SubmitRegister(w http.ResponseWriter, r *http.Request) {
 			ServRegister(w, r.WithContext(ctx))
 			return
 		} else {
-			http.Error(w, "Internal server error.", http.StatusInternalServerError)
+			forumerror.InternalServerError(w, r, err)
 		}
 		return
 	}

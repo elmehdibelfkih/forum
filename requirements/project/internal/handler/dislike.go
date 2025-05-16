@@ -4,13 +4,11 @@ import (
 	"forum/internal/db"
 	forumerror "forum/internal/error"
 	repo "forum/internal/repository"
-
-	// repo "forum/internal/repository"
 	"net/http"
 	"strconv"
 )
 
-func LikeHandler(w http.ResponseWriter, r *http.Request) {
+func DislikeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "StatusMethodNotAllowed", http.StatusMethodNotAllowed)
 		return
@@ -26,9 +24,10 @@ func LikeHandler(w http.ResponseWriter, r *http.Request) {
 		forumerror.InternalServerError(w, r, err)
 		return
 	}
-	err = db.AddRemovePostLike(r.Context().Value(repo.USER_ID_KEY).(int), int(postId))
+	err = db.AddRemovePostDeslike(r.Context().Value(repo.USER_ID_KEY).(int), int(postId))
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 	}
+
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

@@ -26,7 +26,7 @@ func NotFoundError(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(notFoundError.StatusCode)
-	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "erro.html", notFoundError) // when u excute 2 template the get concatinated one in top of the other
+	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "error.html", notFoundError) // when u excute 2 template the get concatinated one in top of the other
 	if tmplErr != nil {
 		log.Printf("Failed to execute error template: %v", tmplErr)
 	}
@@ -42,13 +42,13 @@ func MethodNotAllowed(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(methodNotAllowed.StatusCode)
-	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "erro.html", methodNotAllowed) // when u excute 2 template the get concatinated one in top of the other
+	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "error.html", methodNotAllowed) // when u excute 2 template the get concatinated one in top of the other
 	if tmplErr != nil {
 		log.Printf("Failed to execute error template: %v", tmplErr)
 	}
 }
 
-func InternalServerError(w http.ResponseWriter, r *http.Request, err error) {
+func InternalServerError(w http.ResponseWriter, r *http.Request, forumErr error) {
 	internalServerError := Error{
 		StatusCode:       http.StatusInternalServerError,
 		StatusText:       "Internal Server Error",
@@ -71,13 +71,13 @@ func InternalServerError(w http.ResponseWriter, r *http.Request, err error) {
 			time.Now().Format(time.RFC3339),
 			r.Method,
 			r.URL.Path,
-			err,
+			forumErr.Error(),
 		)
 	}
 
 	w.WriteHeader(internalServerError.StatusCode)
 
-	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "erro.html", internalServerError)
+	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "error.html", internalServerError)
 	if tmplErr != nil {
 		log.Printf("Failed to execute error template: %v", tmplErr)
 	}
@@ -93,7 +93,7 @@ func BadRequest(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(badRequest.StatusCode)
-	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "erro.html", badRequest) // when u excute 2 template the get concatinated one in top of the other
+	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "error.html", badRequest) // when u excute 2 template the get concatinated one in top of the other
 	if tmplErr != nil {
 		log.Printf("Failed to execute error template: %v", tmplErr)
 	}

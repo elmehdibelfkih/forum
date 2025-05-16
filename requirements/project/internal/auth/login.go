@@ -38,7 +38,7 @@ func SubmitLogin(w http.ResponseWriter, r *http.Request) {
 	exist, err := db.AlreadyExists(username, username)
 
 	if err != nil {
-		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		forumerror.InternalServerError(w,r, err)
 		return
 	}
 
@@ -51,7 +51,7 @@ func SubmitLogin(w http.ResponseWriter, r *http.Request) {
 	user_id, hash, err := db.GetUserHashByUsername(username)
 
 	if err != nil {
-		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		forumerror.InternalServerError(w,r, err)
 		return
 	}
 
@@ -74,7 +74,7 @@ func SubmitLogin(w http.ResponseWriter, r *http.Request) {
 	err = db.UpdateUserSession(user_id, session)
 
 	if err != nil {
-		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		forumerror.InternalServerError(w,r, err)
 		return
 	}
 

@@ -21,8 +21,7 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	// Invalidate the session on server side
 	hasSession, err := db.ResetUserSession(sessionToken)
 	if err != nil {
-		// Server-side error, do not proceed with cookie reset
-		forumerror.TempErr(w, err, http.StatusInternalServerError)
+		forumerror.InternalServerError(w,r, err)
 		return
 	}
 

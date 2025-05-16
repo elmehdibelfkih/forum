@@ -36,7 +36,7 @@ func GetAllPostsInfo() (repo.PageData, error) {
 		if err != nil {
 			return data, err
 		}
-		post.Deslikes, err = GetPostDeslikes(post.Id)
+		post.Dislikes, err = GetPostDislikes(post.Id)
 		if err != nil {
 			return data, err
 		}
@@ -63,14 +63,14 @@ func GetPostLikes(postId int) (int, error) {
 	return likes, nil
 }
 
-func GetPostDeslikes(postId int) (int, error) {
-	var deslikes int
+func GetPostDislikes(postId int) (int, error) {
+	var dislikes int
 
-	err := repo.DB.QueryRow(repo.SELECT_DESLIKES_COUNT, postId).Scan(&deslikes)
+	err := repo.DB.QueryRow(repo.SELECT_DISLIKES_COUNT, postId).Scan(&dislikes)
 	if err != nil {
-		return deslikes, err
+		return dislikes, err
 	}
-	return deslikes, nil
+	return dislikes, nil
 }
 
 func GetPostComments(postId int) ([]map[string]string, error) {
@@ -119,24 +119,74 @@ func AddNewComment(userId int, postId int, comment string) error {
 }
 
 func AddRemovePostLike(userId int, postId int) error {
-
-	return nil
+	isLiked, err := IsPostLikedByUser(userId, postId)
+	if err == sql.ErrNoRows {
+		_, err = repo.DB.Exec(repo.INSERT_NEW_LIKE_DISLIKE, userId, postId, 1, 0)
+		return err
+	}
+	if isLiked {
+		res, err := repo.DB.Exec(repo.UPDATE_LIKE, 0, userId, postId)
+		if err != nil {
+			return err
+		}
+		_, err = res.RowsAffected()
+		return err
+	}
+	res, err := repo.DB.Exec(repo.UPDATE_LIKE, 1, userId, postId)
+	if err != nil {
+		return err
+	}
+	_, err = res.RowsAffected()
+	return err
 }
 
-func AddRemovePostDesike(userId int, postId int) error {
-
-	return nil
+func AddRemovePostDeslike(userId int, postId int) error {
+	isDisike, err := IsPostDisikedByUser(userId, postId)
+	if err == sql.ErrNoRows {
+		_, err = repo.DB.Exec(repo.INSERT_NEW_LIKE_DISLIKE, userId, postId, 0, 1)
+		return err
+	}
+	if isDisike {
+		res, err := repo.DB.Exec(repo.UPDATE_DISLIKE, 0, userId, postId)
+		if err != nil {
+			return err
+		}
+		_, err = res.RowsAffected()
+		return err
+	}
+	res, err := repo.DB.Exec(repo.UPDATE_DISLIKE, 1, userId, postId)
+	if err != nil {
+		return err
+	}
+	_, err = res.RowsAffected()
+	return err
 }
 
 func IsPostLikedByUser(userId int, postId int) (bool, error) {
 	var isLike int
 
 	err := repo.DB.QueryRow(repo.IS_LIKED, userId, postId).Scan(&isLike)
+	println("isLike : ", isLike)
+	println("hani",postId, userId)
 	if err == sql.ErrNoRows {
-		return false, nil
+		return false, err
 	} else if err != nil {
 		return false, err
 	} else if isLike == 1 {
+		return true, nil
+	}
+	return false, nil
+}
+
+func IsPostDisikedByUser(userId int, postId int) (bool, error) {
+	var isDisike int
+
+	err := repo.DB.QueryRow(repo.IS_DISLIKED, userId, postId).Scan(&isDisike)
+	if err == sql.ErrNoRows {
+		return false, err
+	} else if err != nil {
+		return false, err
+	} else if isDisike == 1 {
 		return true, nil
 	}
 	return false, nil

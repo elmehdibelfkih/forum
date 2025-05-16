@@ -20,9 +20,9 @@ func AuthMidleware(next http.HandlerFunc) http.HandlerFunc {
 		user_id, exist, err := db.SelectUserSession(sessionCookie.Value)
 
 		if err != nil {
-			forumerror.TempErr(w, err, http.StatusInternalServerError)
-			return
-		}
+		forumerror.InternalServerError(w,r, err)
+		return
+	}
 
 		if !exist {
 			auth.ServLogin(w, r)
