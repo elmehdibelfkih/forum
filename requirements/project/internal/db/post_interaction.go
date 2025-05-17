@@ -11,6 +11,7 @@ func AddNewPost(user_id int, titel string, content string) error {
 }
 
 // TODO: gel all catigories
+// TODO: add offset and limit 
 func GetAllPostsInfo() (repo.PageData, error) {
 	var data repo.PageData
 	var post repo.Post
@@ -163,30 +164,28 @@ func AddRemovePostDeslike(userId int, postId int) error {
 }
 
 func IsPostLikedByUser(userId int, postId int) (bool, error) {
-	var isLike int
+	var isLike bool
 
 	err := repo.DB.QueryRow(repo.IS_LIKED, userId, postId).Scan(&isLike)
-	println("isLike : ", isLike)
-	println("hani",postId, userId)
 	if err == sql.ErrNoRows {
 		return false, err
 	} else if err != nil {
 		return false, err
-	} else if isLike == 1 {
+	} else if isLike == true {
 		return true, nil
 	}
 	return false, nil
 }
 
 func IsPostDisikedByUser(userId int, postId int) (bool, error) {
-	var isDisike int
+	var isDisike bool
 
 	err := repo.DB.QueryRow(repo.IS_DISLIKED, userId, postId).Scan(&isDisike)
 	if err == sql.ErrNoRows {
 		return false, err
 	} else if err != nil {
 		return false, err
-	} else if isDisike == 1 {
+	} else if isDisike == true {
 		return true, nil
 	}
 	return false, nil

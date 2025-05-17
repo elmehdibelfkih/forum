@@ -18,7 +18,7 @@ type Error struct {
 
 func NotFoundError(w http.ResponseWriter, r *http.Request) {
 	notFoundError := Error{
-		StatusCode:       404,
+		StatusCode:       http.StatusNotFound,
 		StatusText:       "Not Found",
 		ErrorMessage:     "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
 		ErrorTitle:       "Oops! Page Not Found",
@@ -26,7 +26,7 @@ func NotFoundError(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(notFoundError.StatusCode)
-	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "error.html", notFoundError) // when u excute 2 template the get concatinated one in top of the other
+	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "error.html", notFoundError)
 	if tmplErr != nil {
 		log.Printf("Failed to execute error template: %v", tmplErr)
 	}
@@ -34,7 +34,7 @@ func NotFoundError(w http.ResponseWriter, r *http.Request) {
 
 func MethodNotAllowed(w http.ResponseWriter, r *http.Request) {
 	methodNotAllowed := Error{
-		StatusCode:       405,
+		StatusCode:       http.StatusMethodNotAllowed,
 		StatusText:       "Method not allowed",
 		ErrorMessage:     "The HTTP method used for this request is not allowed on this resource. Please use a different method.",
 		ErrorTitle:       "Oops! method not allowed",
@@ -42,7 +42,7 @@ func MethodNotAllowed(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(methodNotAllowed.StatusCode)
-	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "error.html", methodNotAllowed) // when u excute 2 template the get concatinated one in top of the other
+	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "error.html", methodNotAllowed)
 	if tmplErr != nil {
 		log.Printf("Failed to execute error template: %v", tmplErr)
 	}
@@ -85,7 +85,7 @@ func InternalServerError(w http.ResponseWriter, r *http.Request, forumErr error)
 
 func BadRequest(w http.ResponseWriter, r *http.Request) {
 	badRequest := Error{
-		StatusCode:       400,
+		StatusCode:       http.StatusBadRequest,
 		StatusText:       "Bad Request",
 		ErrorMessage:     "The Server recieved a Bad request!!",
 		ErrorTitle:       "Oops! Bad Request",
@@ -93,7 +93,7 @@ func BadRequest(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(badRequest.StatusCode)
-	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "error.html", badRequest) // when u excute 2 template the get concatinated one in top of the other
+	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "error.html", badRequest)
 	if tmplErr != nil {
 		log.Printf("Failed to execute error template: %v", tmplErr)
 	}

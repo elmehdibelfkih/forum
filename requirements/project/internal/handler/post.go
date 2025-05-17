@@ -4,6 +4,7 @@ import (
 	db "forum/internal/db"
 	forumerror "forum/internal/error"
 	repo "forum/internal/repository"
+	"html"
 	"net/http"
 )
 
@@ -31,12 +32,12 @@ func PostPostHandler(w http.ResponseWriter, r *http.Request) {
 	user_id := r.Context().Value(repo.USER_ID_KEY).(int)
 	// TODO: check if the inputs is valid
 	// TODO: add the categories
-
-	err := db.AddNewPost(user_id, r.FormValue("title"), r.FormValue("content"))
+	escapedTitle := html.EscapeString(r.FormValue("title"))
+	escapedContent := html.EscapeString(r.FormValue("content"))
+	err := db.AddNewPost(user_id, escapedTitle, escapedContent)
 	if err != nil {
-		forumerror.InternalServerError(w,r, err)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
-
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
