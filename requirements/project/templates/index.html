@@ -9,7 +9,7 @@
 </head>
 
 <body>
-
+    
     <header class="nav">
         <div class="profile-icon">
             {{if .Authenticated}}
@@ -23,30 +23,32 @@
             {{end}}
         </div>
     </header>
-    {{if .Authenticated}}
-    <form action="/select-category" method="GET">
-        <p> category: </p>
-        <input type="submit" name="category" value="Technology">
-        <input type="submit" name="category" value="DevOps">
-        <input type="submit" name="category" value="Crypto">
-        <input type="submit" name="category" value="Backend">
-        <input type="submit" name="category" value="Frontend">
-        <input type="submit" name="category" value="Machine Learning">
-        <input type="submit" name="category" value="AI"> 
-    </form>
-    {{else}}
-        <p> Welcome !!</p>
-    {{end}}
-    <main>
+    
+    <form action="/filterby" method="GET">
+        <p>Filter:</p>
+        <p>Categories :</p>
+        <input type="submit" name="filter" value="Technology">
+        <input type="submit" name="filter" value="IA">
+        <input type="submit" name="filter" value="DevOps">
+        <input type="submit" name="filter" value="Internet">
+        <input type="submit" name="filter" value="Crypto">
+        <input type="submit" name="filter" value="Machine Learning">
+        <input type="submit" name="filter" value="Backend">
         {{if .Authenticated}}
+        <p>Additional Filters:</p>
+        <label><input type="submit" name="filter" value="Owned"></label>
+        <label><input type="submit" name="filter" value="Likes"></label>
+        {{else}}
+        {{end}}
+      </form>
+    
+    <main>
+      
         <div class="home">
             {{block "content" .Posts}}{{end}}
         </div>
-        {{else}}
-        <p> To Forum </p>
-    {{end}}
-    </main>
 
+    </main>
      <footer>
         &copy; 2025
     </footer>
