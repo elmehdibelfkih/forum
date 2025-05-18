@@ -23,11 +23,28 @@
             {{end}}
         </div>
     </header>
-
+    {{if .Authenticated}}
+    <form action="/select-category" method="GET">
+        <p> category: </p>
+        <input type="submit" name="category" value="Technology">
+        <input type="submit" name="category" value="DevOps">
+        <input type="submit" name="category" value="Crypto">
+        <input type="submit" name="category" value="Backend">
+        <input type="submit" name="category" value="Frontend">
+        <input type="submit" name="category" value="Machine Learning">
+        <input type="submit" name="category" value="AI"> 
+    </form>
+    {{else}}
+        <p> Welcome !!</p>
+    {{end}}
     <main>
+        {{if .Authenticated}}
         <div class="home">
             {{block "content" .Posts}}{{end}}
         </div>
+        {{else}}
+        <p> To Forum </p>
+    {{end}}
     </main>
 
      <footer>
