@@ -21,10 +21,11 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetPostHandler(w http.ResponseWriter, r *http.Request) {
-	var errMap map[string]any
+	var errMap = make(map[string]any)
 	if r.Context().Value(repo.ERROR_CASE) != nil {
 		errMap = r.Context().Value(repo.ERROR_CASE).(map[string]any)
 	}
+	errMap["Fields"] = repo.IT_MAJOR_FIELDS
 	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "new_post.html", errMap) // when u excute 2 template the get concatinated one in top of the other
 }
 
@@ -34,10 +35,31 @@ func PostPostHandler(w http.ResponseWriter, r *http.Request) {
 	// TODO: add the categories
 	escapedTitle := html.EscapeString(r.FormValue("title"))
 	escapedContent := html.EscapeString(r.FormValue("content"))
-	err := db.AddNewPost(user_id, escapedTitle, escapedContent)
+	postId, err := db.AddNewPost(user_id, escapedTitle, escapedContent)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return
 	}
+
+	err = r.ParseForm()
+	if err != nil {
+		forumerror.InternalServerError(w, r, err)
+		return
+	}
+	categories := r.Form["Categories"]
+
+	for _, c := range categories {
+		if !repo.IT_MAJOR_FIELDS[c] {
+			forumerror.BadRequest(w, r)
+			return
+		}
+	}
+
+	err = db.MapPostWithCategories(postId, categories)
+	if err != nil {
+		forumerror.InternalServerError(w, r, err)
+		return
+	}
+
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

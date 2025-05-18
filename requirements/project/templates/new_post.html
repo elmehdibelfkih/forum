@@ -27,15 +27,22 @@
             </div>
 
             <div>
-                <select name="Categories" id="CategorySelect">
-                    <option value="AI">AI</option>
-                    <option value="Crypto">Crypto</option>
-                    <option value="Machin Learning">Machin Learning</option>
-                    <option value="Backend">Backend</option>
-                    <option value="Frontent">Frontent</option>
-                    <option value="DevOps">DevOps</option>
-                    <option value="walo">walo</option>
-                </select>
+                <!-- <select name="Categories" id="CategorySelect" multiple required> -->
+                    <!-- {{range $key, $value := .Fields}}
+                        <option value="{{$key}}">{{$key}}</option>
+                    {{end}}
+                </select> -->
+            
+            <fieldset>
+                <legend>Select Categories</legend>
+                {{range $key, $value := .Fields}}
+                <label>
+                  <input type="checkbox" name="Categories" value="{{$key}}">
+                  {{$key}}
+                </label><br>
+              {{end}}
+            </fieldset>
+
             </div>
             <button type="submit">post</button>
         </form>
