@@ -3,6 +3,7 @@ package db
 import (
 	"database/sql"
 	repo "forum/internal/repository"
+	"strings"
 )
 
 func AddNewPost(user_id int, titel string, content string) error {
@@ -11,95 +12,62 @@ func AddNewPost(user_id int, titel string, content string) error {
 }
 
 // TODO: gel all catigories
-// TODO: add offset and limit 
+// TODO: add offset and limit
 func GetAllPostsInfo() (repo.PageData, error) {
-	var data repo.PageData
-	var post repo.Post
 
-	rows, err := repo.DB.Query(repo.SELECT_ALL_POSTS)
+	var data repo.PageData
+	rows, err := repo.DB.Query(repo.SELECT_ALL_POSTS, 2)
 	if err != nil {
 		return data, err
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&post.Id, &post.UserId, &post.Title, &post.Content, &post.Created_at, &post.Updated_at)
+		var post repo.Post
+
+		var categoriesStr, commentsStr string
+
+		err := rows.Scan(
+			&post.Id,
+			&post.UserId,
+			&post.Title,
+			&post.Content,
+			&post.Publisher,
+			&categoriesStr,
+			&post.Likes,
+			&post.Dislikes,
+			&commentsStr,
+			&post.Created_at,
+			&post.Updated_at,
+		)
 		if err != nil {
 			return data, err
 		}
-		post.IsEdited = post.Updated_at != post.Created_at
-		// TODO: fix time format
-		post.Publisher, err = GetUserNameById(post.UserId)
-		if err != nil {
-			return data, err
+		if categoriesStr != "" {
+			post.Catigories = strings.Split(categoriesStr, ",")
 		}
-		post.Likes, err = GetPostLikes(post.Id)
-		if err != nil {
-			return data, err
+		if commentsStr != "" {
+			comments := strings.Split(commentsStr, ",")
+			for _, c := range comments {
+				parts := strings.SplitN(c, ":", 2)
+				if len(parts) == 2 {
+					commentMap := map[string]string{
+						parts[0]: parts[1],
+					}
+					post.Comments = append(post.Comments, commentMap)
+				}
+			}
 		}
-		post.Dislikes, err = GetPostDislikes(post.Id)
-		if err != nil {
-			return data, err
-		}
-		post.Comments, err = GetPostComments(post.Id)
-		if err != nil {
-			return data, err
-		}
+		post.IsEdited = post.Created_at != post.Updated_at
+
 		data.Posts = append(data.Posts, post)
 	}
-	if err = rows.Err(); err != nil {
+
+	if err := rows.Err(); err != nil {
 		return data, err
 	}
 
 	return data, nil
-}
-
-func GetPostLikes(postId int) (int, error) {
-	var likes int
-
-	err := repo.DB.QueryRow(repo.SELECT_LIKES_COUNT, postId).Scan(&likes)
-	if err != nil {
-		return likes, err
-	}
-	return likes, nil
-}
-
-func GetPostDislikes(postId int) (int, error) {
-	var dislikes int
-
-	err := repo.DB.QueryRow(repo.SELECT_DISLIKES_COUNT, postId).Scan(&dislikes)
-	if err != nil {
-		return dislikes, err
-	}
-	return dislikes, nil
-}
-
-func GetPostComments(postId int) ([]map[string]string, error) {
-	var comments []map[string]string
-	var userNameTmp, commentTmp string
-
-	rows, err := repo.DB.Query(repo.SELECT_COMMENTS, postId)
-	if err != nil {
-		return comments, err
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		err = rows.Scan(&userNameTmp, &commentTmp)
-		if err != nil {
-			return comments, err
-		}
-		toAppend := map[string]string{
-			userNameTmp: commentTmp,
-		}
-		comments = append(comments, toAppend)
-	}
-
-	if err = rows.Err(); err != nil {
-		return comments, err
-	}
-
-	return comments, nil
 }
 
 func IsPostExist(postId int) (bool, error) {
