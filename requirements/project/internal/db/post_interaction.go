@@ -6,9 +6,13 @@ import (
 	"strings"
 )
 
-func AddNewPost(user_id int, titel string, content string) error {
-	_, err := repo.DB.Exec(repo.INSERT_NEW_POST, user_id, titel, content)
-	return err
+func AddNewPost(user_id int, titel string, content string) (int, error) {
+	res, err := repo.DB.Exec(repo.INSERT_NEW_POST, user_id, titel, content)
+	if err != nil {
+		return -1, err
+	}
+	id, err := res.LastInsertId()
+	return int(id), err
 }
 
 // TODO: gel all catigories
@@ -157,4 +161,32 @@ func IsPostDisikedByUser(userId int, postId int) (bool, error) {
 		return true, nil
 	}
 	return false, nil
+}
+
+func MapPostWithCategories(postId int, categories []string) error {
+	for _, category := range categories {
+		categoryId, err := GetCategoryId(category)
+		if err != nil {
+			return err
+		}
+		MapPostCategory(postId, categoryId)
+	}
+	return nil
+}
+
+func GetCategoryId(category string) (int, error) {
+	var categoryId int
+
+	err := repo.DB.QueryRow(repo.SELECT_CATEGORY_ID, category).Scan(&categoryId)
+	if err == sql.ErrNoRows {
+		return -1, err
+	} else if err != nil {
+		return -1, err
+	}
+	return categoryId, nil
+}
+
+func MapPostCategory(postId int, categoryId int) error {
+	_, err := repo.DB.Exec(repo.MAP_POSTS_WITH_CATEGORY, postId, categoryId)
+	return err
 }

@@ -17,6 +17,8 @@ func InitDB(datasource string) {
 	if err != nil {
 		log.Fatalf(repo.FAILED_CREAT_TABELS, err)
 	}
+	// TODO: fix the post initialization
+	// InitFields()
 }
 
 func CreateTable(db *sql.DB) error {
@@ -26,6 +28,16 @@ func CreateTable(db *sql.DB) error {
 	}
 	_, err = db.Exec(string(schema))
 	return err
+}
+
+func InitFields() {
+	for key, _ := range repo.IT_MAJOR_FIELDS {
+		_, err := repo.DB.Exec(repo.INIT_FIELDS_QUERY, key)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+	}
 }
 
 func CloseDB() {

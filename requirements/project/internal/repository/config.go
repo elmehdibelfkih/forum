@@ -67,4 +67,23 @@ const (
 	// context keys
 	USER_ID_KEY contextKey = "user_id"
 	ERROR_CASE  contextKey = "error_case"
+
+	INIT_FIELDS_QUERY = `INSERT INTO categories (name) VALUES (?)`
+	
 )
+
+// IT major fields
+var IT_MAJOR_FIELDS = map[string]bool{
+	"Software Engineering":                         true,
+	"Artificial Intelligence and Machine Learning": true,
+	"Data Science & Big Data":                      true,
+	"Cybersecurity":                                true,
+	"Networking & Telecommunications":              true,
+	"Cloud Computing & Virtualization":             true,
+	"DevOps & SRE":                                 true,
+	"Database Systems":                             true,
+	"Systems Programming":                          true,
+	"Reverse Engineering":                          true,
+	"Mobile & Embedded Development":                true,
+	"IoT (Internet of Things)":                     true,
+}

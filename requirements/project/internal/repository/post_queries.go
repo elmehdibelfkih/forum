@@ -57,6 +57,10 @@ const (
 	IS_POST_EXIST = `SELECT 1 FROM posts WHERE id = ? LIMIT 1`
 	IS_LIKED      = `SELECT is_like FROM likes_dislikes WHERE user_id = ? AND post_id = ?`
 	IS_DISLIKED   = `SELECT is_dislike FROM likes_dislikes WHERE user_id = ? AND post_id = ?`
+	MAP_POSTS_WITH_CATEGORY = `INSERT INTO post_categories (post_id, category_id) VALUES (?, ?)`
+
+	//SELECT queries
+	SELECT_CATEGORY_ID = `SELECT id FROM categories WHERE name = ?`
 
 	// UDDATE queries
 	UPDATE_LIKE    = `UPDATE likes_dislikes SET is_like = ?, is_dislike = 0 WHERE user_id = ? AND post_id = ?`
@@ -64,26 +68,55 @@ const (
 
 	// todo: sort the comments by time
 	SELECT_ALL_POSTS = `
-  	SELECT
-	p.id,
-	p.user_id,
-	p.title,
-	p.content,
-	u.username AS Publisher,
-	IFNULL(GROUP_CONCAT(DISTINCT c.name), '') AS categories,
-	COUNT(DISTINCT CASE WHEN ld.is_like = 1 THEN ld.user_id END) AS likes,
-	COUNT(DISTINCT CASE WHEN ld.is_dislike = 1 THEN ld.user_id END) AS dislikes,
-	IFNULL(GROUP_CONCAT(commenter.username || ':' || cm.comment ORDER BY datetime(cm.created_at) DESC), '') AS comments,
-	p.created_at,
-	p.updated_at
-	FROM posts p
-	JOIN users u ON u.id = p.user_id
-	LEFT JOIN post_categories pc ON pc.post_id = p.id
-	LEFT JOIN categories c ON c.id = pc.category_id
-	LEFT JOIN likes_dislikes ld ON ld.post_id = p.id
-	LEFT JOIN comments cm ON cm.post_id = p.id
-	LEFT JOIN users commenter ON commenter.id = cm.user_id
-	GROUP BY p.id
-	ORDER BY p.created_at DESC;
+SELECT
+  posts.id,
+  posts.user_id,
+  posts.title,
+  posts.content,
+  users.username,
+  IFNULL(cat.categories, '') AS categories,
+  COALESCE(likes.likes, 0) AS likes,
+  COALESCE(dislikes.dislikes, 0) AS dislikes,
+  IFNULL(com.comments, '') AS comments,
+  posts.created_at,
+  posts.updated_at
+FROM posts
+JOIN users ON users.id = posts.user_id
+
+LEFT JOIN (
+  SELECT post_categories.post_id,
+         GROUP_CONCAT(DISTINCT categories.name) AS categories
+  FROM post_categories
+  JOIN categories ON categories.id = post_categories.category_id
+  GROUP BY post_categories.post_id
+) AS cat ON cat.post_id = posts.id
+
+LEFT JOIN (
+  SELECT post_id,
+         COUNT(DISTINCT user_id) AS likes
+  FROM likes_dislikes
+  WHERE is_like = 1
+  GROUP BY post_id
+) AS likes ON likes.post_id = posts.id
+
+LEFT JOIN (
+  SELECT post_id,
+         COUNT(DISTINCT user_id) AS dislikes
+  FROM likes_dislikes
+  WHERE is_dislike = 1
+  GROUP BY post_id
+) AS dislikes ON dislikes.post_id = posts.id
+
+LEFT JOIN (
+  SELECT comments.post_id,
+         GROUP_CONCAT(DISTINCT users.username || ':' || comments.comment
+                      ORDER BY datetime(comments.created_at) DESC) AS comments
+  FROM comments
+  JOIN users ON users.id = comments.user_id
+  GROUP BY comments.post_id
+) AS com ON com.post_id = posts.id
+
+ORDER BY posts.created_at DESC;
+
 `
 )
