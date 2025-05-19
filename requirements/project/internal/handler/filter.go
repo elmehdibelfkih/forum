@@ -12,7 +12,7 @@ func Selectfilter(w http.ResponseWriter, r *http.Request){
 	if r.Method != "GET" {
 		print("erooe")
 	}
-	user_id := r.Context().Value(repo.USER_ID_KEY).(int)
+	userId := r.Context().Value(repo.USER_ID_KEY).(int)
 	
 	queryselect := r.URL.Query().Get("filter")
 
@@ -22,15 +22,21 @@ func Selectfilter(w http.ResponseWriter, r *http.Request){
 	var err error
 	var Posts repo.PageData	
 	if queryselect == "Likes" {
-		Posts , err = db.Getposbytlikes(r)
+		Posts , err = db.Getposbytlikes(userId)
 		if err != nil {
 			print("eroo to fetch from db at filter by likes")
 		}
 		fmt.Printf("At likes")
-
+	}else if queryselect == "Owned" {
+		Posts, err = db.Getpostbyowner(userId)
+		if err != nil {
+			print("erro to fetch db at filter by owned")
+		}
+	}else {
+		Posts = Getpostbycategory()
 	}
 	
-	user, err := db.GetUserInfo(user_id)
+	user, err := db.GetUserInfo(userId)
 	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "index.html", map[string]any{"Authenticated": true, "Username": user.Username, "Posts": Posts})
 	fmt.Fprintf(w, "at likeselector");
 }
