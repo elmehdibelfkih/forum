@@ -1,8 +1,8 @@
 package db
 
 import (
-	"database/sql"
 	repo "forum/internal/repository"
+	"database/sql"
 	"log"
 	"os"
 )
@@ -17,8 +17,7 @@ func InitDB(datasource string) {
 	if err != nil {
 		log.Fatalf(repo.FAILED_CREAT_TABELS, err)
 	}
-	// TODO: fix the post initialization
-	// InitFields()
+	InitFields()
 }
 
 func CreateTable(db *sql.DB) error {
@@ -36,7 +35,6 @@ func InitFields() {
 		if err != nil {
 			log.Fatal(err)
 		}
-
 	}
 }
 

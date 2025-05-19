@@ -68,7 +68,7 @@ const (
 	USER_ID_KEY contextKey = "user_id"
 	ERROR_CASE  contextKey = "error_case"
 
-	INIT_FIELDS_QUERY = `INSERT INTO categories (name) VALUES (?)`
+	INIT_FIELDS_QUERY = `INSERT OR IGNORE INTO categories (name) VALUES (?)`
 	
 )
 

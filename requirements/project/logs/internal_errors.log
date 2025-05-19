@@ -1,0 +1,80 @@
+2025/05/15 21:40:16 [2025-05-15T21:40:16+01:00] GET /
+Error: no such column: likes_dislikes
+2025/05/15 21:48:52 [2025-05-15T21:48:52+01:00] GET /
+Error: no such column: is_dislikes
+2025/05/15 23:27:58 [2025-05-15T23:27:58+01:00] POST /dislike
+Error: near "WHERE": syntax error
+2025/05/15 23:29:11 [2025-05-15T23:29:11+01:00] POST /dislike
+Error: near "WHERE": syntax error
+2025/05/15 23:29:16 [2025-05-15T23:29:16+01:00] POST /like
+Error: near "WHERE": syntax error
+2025/05/15 23:29:19 [2025-05-15T23:29:19+01:00] POST /dislike
+Error: near "WHERE": syntax error
+2025/05/15 23:29:23 [2025-05-15T23:29:23+01:00] POST /like
+Error: near "WHERE": syntax error
+2025/05/16 01:15:52 [2025-05-16T01:15:52+01:00] POST /like
+Error: near "WHERE": syntax error
+2025/05/16 01:21:20 [2025-05-16T01:21:20+01:00] POST /like
+Error: CHECK constraint failed: is_like IN (0, 1)
+2025/05/16 02:28:52 [2025-05-16T02:28:52+01:00] POST /like
+Error: UNIQUE constraint failed: likes_dislikes.user_id, likes_dislikes.post_id
+2025/05/16 02:29:00 [2025-05-16T02:29:00+01:00] POST /like
+Error: UNIQUE constraint failed: likes_dislikes.user_id, likes_dislikes.post_id
+2025/05/16 02:32:06 [2025-05-16T02:32:06+01:00] POST /like
+Error: UNIQUE constraint failed: likes_dislikes.user_id, likes_dislikes.post_id
+2025/05/16 02:32:12 [2025-05-16T02:32:12+01:00] POST /like
+Error: UNIQUE constraint failed: likes_dislikes.user_id, likes_dislikes.post_id
+2025/05/16 20:36:16 [2025-05-16T20:36:16+01:00] POST /like
+Error: UNIQUE constraint failed: likes_dislikes.user_id, likes_dislikes.post_id
+2025/05/16 20:37:05 [2025-05-16T20:37:05+01:00] POST /like
+Error: UNIQUE constraint failed: likes_dislikes.user_id, likes_dislikes.post_id
+2025/05/16 23:33:33 [2025-05-16T23:33:33+01:00] POST /like
+Error: no such table: likejs_dislikes
+2025/05/16 23:37:59 [2025-05-16T23:37:59+01:00] POST /like
+Error: no such table: likejs_dislikes
+2025/05/17 00:43:03 [2025-05-17T00:43:03+01:00] GET /
+Error: ambiguous column name: created_at
+2025/05/17 00:43:07 [2025-05-17T00:43:07+01:00] GET /
+Error: ambiguous column name: created_at
+2025/05/17 00:43:08 [2025-05-17T00:43:08+01:00] GET /
+Error: ambiguous column name: created_at
+2025/05/17 00:43:08 [2025-05-17T00:43:08+01:00] GET /
+Error: ambiguous column name: created_at
+2025/05/17 00:43:08 [2025-05-17T00:43:08+01:00] GET /
+Error: ambiguous column name: created_at
+2025/05/17 00:43:09 [2025-05-17T00:43:09+01:00] GET /
+Error: ambiguous column name: created_at
+2025/05/17 00:44:32 [2025-05-17T00:44:32+01:00] GET /
+Error: no such column: comment.created_at
+2025/05/17 07:24:13 [2025-05-17T07:24:13+01:00] GET /
+Error: no such column: posts.id
+2025/05/17 07:44:46 [2025-05-17T07:44:46+01:00] GET /
+Error: near "FROM": syntax error
+2025/05/17 07:45:15 [2025-05-17T07:45:15+01:00] GET /
+Error: near "FROM": syntax error
+2025/05/17 07:46:33 [2025-05-17T07:46:33+01:00] GET /
+Error: near "FROM": syntax error
+2025/05/17 07:57:24 [2025-05-17T07:57:24+01:00] GET /
+Error: near ".": syntax error
+2025/05/17 07:57:57 [2025-05-17T07:57:57+01:00] GET /
+Error: no such column: p.id
+2025/05/17 09:10:50 [2025-05-17T09:10:50+01:00] GET /
+Error: no such column: p.id
+2025/05/17 09:11:05 [2025-05-17T09:11:05+01:00] GET /
+Error: no such column: p.id
+2025/05/17 09:11:07 [2025-05-17T09:11:07+01:00] GET /
+Error: no such column: p.id
+2025/05/18 19:24:15 [2025-05-18T19:24:15+01:00] GET /
+Error: ON clause references tables to its right
+2025/05/18 22:25:31 [2025-05-18T22:25:31+01:00] GET /
+Error: ambiguous column name: users.username
+2025/05/18 22:26:23 [2025-05-18T22:26:23+01:00] GET /
+Error: ambiguous column name: users.username
+2025/05/18 22:27:46 [2025-05-18T22:27:46+01:00] GET /
+Error: ambiguous column name: users.username
+2025/05/18 22:36:26 [2025-05-18T22:36:26+01:00] GET /
+Error: near "ON": syntax error
+2025/05/18 22:39:14 [2025-05-18T22:39:14+01:00] GET /
+Error: near "ON": syntax error
+2025/05/19 15:09:55 [2025-05-19T15:09:55+01:00] POST /post
+Error: sql: no rows in result set
