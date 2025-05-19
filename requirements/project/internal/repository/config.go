@@ -87,3 +87,4 @@ var IT_MAJOR_FIELDS = map[string]bool{
 	"Mobile & Embedded Development":                true,
 	"IoT (Internet of Things)":                     true,
 }
+

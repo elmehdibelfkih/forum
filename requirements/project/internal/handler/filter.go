@@ -32,8 +32,20 @@ func Selectfilter(w http.ResponseWriter, r *http.Request){
 		if err != nil {
 			print("erro to fetch db at filter by owned")
 		}
+	}else if Contain(queryselect) {
+		Posts , err = db.GePostbycategory(queryselect)
+		if err != nil {
+			print("erooor to fetch at filet by category")
+		}
+	}else {
+		print("bad request")
 	}
 	user, err := db.GetUserInfo(userId)
 	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "index.html", map[string]any{"Authenticated": true, "Username": user.Username, "Posts": Posts})
-	fmt.Fprintf(w, "at likeselector");
+
+}
+
+func Contain(query string) bool {
+    _, exists := repo.IT_MAJOR_FIELDS[query]
+    return exists
 }
