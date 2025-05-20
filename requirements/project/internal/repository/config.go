@@ -42,7 +42,9 @@ type PageData struct {
 }
 
 type contextKey string
+ 
 
+ 
 const (
 	INTERNAL_SERVER_ERROR_LOG_PATH = "./logs/internal_errors.log"
 
@@ -67,6 +69,9 @@ const (
 	// context keys
 	USER_ID_KEY contextKey = "user_id"
 	ERROR_CASE  contextKey = "error_case"
+	// user not login or login !
+	PUBLIC contextKey = "Public"
+
 
 	INIT_FIELDS_QUERY = `INSERT OR IGNORE INTO categories (name) VALUES (?)`
 	

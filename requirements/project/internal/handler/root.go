@@ -35,7 +35,7 @@ func RootHandler(w http.ResponseWriter, r *http.Request) { // todo: check the me
 		repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "index.html", map[string]any{"Authenticated": false, "Posts": data})
 		return
 	}
-
+	
 	user, err := db.GetUserInfo(user_id)
 
 	if err != nil {

@@ -40,23 +40,17 @@ func forumMux() *http.ServeMux {
 
 	// post mux
 	forumux.HandleFunc("/post", middleware.AuthMidleware(handler.PostHandler))
-
 	// like mux
 	forumux.HandleFunc("/like", middleware.AuthMidleware(handler.LikeHandler))
-
 	// dislike mux
 	forumux.HandleFunc("/dislike", middleware.AuthMidleware(handler.DislikeHandler))
-
 	// comment mux
 	forumux.HandleFunc("/comment", middleware.AuthMidleware(handler.CommentHandler))
-
 	// filter the post by category !!
 	forumux.HandleFunc("/filterby", middleware.AuthMidleware(handler.Selectfilter))
 
-
 	// static mux
 	// forumux.HandleFunc("/static/", handler.StaticHandler)
-
 	return forumux
 }
 
