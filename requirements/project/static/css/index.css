@@ -97,6 +97,109 @@ main {
     justify-content: center;
 }
 
+/* ==== Post Component Styling ==== */
+.post {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+.post header h2 {
+    font-size: 1.6rem;
+    color: #fdd395;
+    margin-bottom: 0.5rem;
+}
+
+.post header p {
+    font-size: 0.95rem;
+    color: #d9c8ae;
+    margin-bottom: 1rem;
+}
+
+.post section p {
+    color: #f4f1ee;
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+}
+
+/* ==== Footer with Like/Dislike/Comment ==== */
+.post footer {
+    margin-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 1rem;
+    font-size: 0.95rem;
+    color: #ccc;
+}
+
+.post footer form {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.post footer button {
+    background: #e07b00;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.post footer button:hover {
+    background: #c96a00;
+}
+
+/* ==== Comment Input ==== */
+.post footer input[type="text"] {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    width: 300px;
+    max-width: 100%;
+    margin-top: 6px;
+    margin-bottom: 10px;
+}
+
+.post footer label {
+    margin-right: 6px;
+    color: #f4e5c2;
+}
+
+/* ==== Comment List ==== */
+.post footer ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 1rem;
+}
+
+.post footer li {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    color: #eee;
+}
+
+/* ==== Timestamp Styling ==== */
+.post footer time {
+    font-size: 0.85rem;
+    color: #a8a8a8;
+}
+
+
 /* ==== Responsive ==== */
 @media (max-width: 768px) {
     .nav {
