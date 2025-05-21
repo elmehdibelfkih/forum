@@ -4,60 +4,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/index.css">
     <title>Forum</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    
     <header class="nav">
-        <div class="profile-icon">
-            {{if .Authenticated}}
-                <a href="/profile">{{.Username}}</a>
-                <a href="/logout">Logout</a>
-                <a href="/post">New Post</a>
-            {{else}}
-                <a href="/login">Login</a>
-                <a href="/register">Sign Up</a>
-                <a href="/post">New Post</a>
-            {{end}}
+        <div class="container">
+            <div class="profile-icon">
+                {{if .Authenticated}}
+                    <a href="/profile">{{.Username}}</a>
+                    <a href="/logout">Logout</a>
+                    <a href="/post" class="btn-primary">New Post</a>
+                {{else}}
+                    <a href="/login">Login</a>
+                    <a href="/register">Sign Up</a>
+                    <a href="/post" class="btn-primary">New Post</a>
+                {{end}}
+            </div>
         </div>
     </header>
-    
-    <form action="/filterby" method="GET">
-        <p>Filter:</p>
-        <p>Categories :</p>
-        <input type="submit" name="filter" value="Cybersecurity">
-        <input type="submit" name="filter" value="Cloud Computing & Virtualization">
-        <input type="submit" name="filter" value="Systems Programming">
-        <input type="submit" name="filter" value="IoT (Internet of Things)">
-        <input type="submit" name="filter" value="Artificial Intelligence and Machine Learning">
-        <input type="submit" name="filter" value="Data Science & Big Data">
-        <input type="submit" name="filter" value="Networking & Telecommunications">
-        <input type="submit" name="filter" value="DevOps & SRE">
-        <input type="submit" name="filter" value="Database Systems">
-        <input type="submit" name="filter" value="Reverse Engineering">
-        <input type="submit" name="filter" value="Mobile & Embedded Development">
-        <input type="submit" name="filter" value="Software Engineering">
-        {{if .Authenticated}}
-        <p>Additional Filters:</p>
-        <label><input type="submit" name="filter" value="Owned"></label>
-        <label><input type="submit" name="filter" value="Likes"></label>
-        {{else}}
-        {{end}}
-      </form>
-    
-    <main>
-      
-        <div class="home">
+
+    <section class="filter-section">
+        <form action="/filterby" method="GET">
+            <h2>Filter by Categories</h2>
+            <div class="filters">
+                <input type="submit" name="filter" value="Cybersecurity">
+                <input type="submit" name="filter" value="Cloud Computing & Virtualization">
+                <input type="submit" name="filter" value="Systems Programming">
+                <input type="submit" name="filter" value="IoT (Internet of Things)">
+                <input type="submit" name="filter" value="Artificial Intelligence and Machine Learning">
+                <input type="submit" name="filter" value="Data Science & Big Data">
+                <input type="submit" name="filter" value="Networking & Telecommunications">
+                <input type="submit" name="filter" value="DevOps & SRE">
+                <input type="submit" name="filter" value="Database Systems">
+                <input type="submit" name="filter" value="Reverse Engineering">
+                <input type="submit" name="filter" value="Mobile & Embedded Development">
+                <input type="submit" name="filter" value="Software Engineering">
+
+                {{if .Authenticated}}
+                    <h3>Additional Filters</h3>
+                    <input type="submit" name="filter" value="Owned">
+                    <input type="submit" name="filter" value="Likes">
+                {{end}}
+            </div>
+        </form>
+    </section>
+
+    <main class="home">
+        <div class="container">
             {{block "content" .Posts}}{{end}}
         </div>
-
     </main>
-     <footer>
-        &copy; 2025
-    </footer>
-
 </body>
 
 </html>

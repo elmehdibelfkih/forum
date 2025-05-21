@@ -20,6 +20,10 @@ func InitDependencies() {
 	utils.InitRegex()
 }
 
+func test(w http.ResponseWriter, r *http.Request){
+	fmt.Println("hello")
+}
+
 func forumMux() *http.ServeMux {
 	forumux := http.NewServeMux()
 
@@ -30,6 +34,11 @@ func forumMux() *http.ServeMux {
 	forumux.HandleFunc("/login", auth.SwitchLogin)
 	forumux.HandleFunc("/register", auth.SwitchRegister)
 	forumux.HandleFunc("/logout", auth.LogoutHandler)
+
+	// static files 
+	 // Serve static files from the "static" directory at "/static/" URL path
+    // fs := http.FileServer(http.Dir("static"))
+    // http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	// profile mux
 	forumux.HandleFunc("/profile", middleware.AuthMidleware(handler.ProfilHandler))
@@ -50,7 +59,7 @@ func forumMux() *http.ServeMux {
 	forumux.HandleFunc("/filterby", middleware.AuthMidleware(handler.Selectfilter))
 
 	// static mux
-	// forumux.HandleFunc("/static/", handler.StaticHandler)
+	forumux.HandleFunc("/static/", handler.StaticHandler)
 	return forumux
 }
 
