@@ -11,6 +11,9 @@
 
 <body>
     <header class="nav">
+        <div id="project_header">
+             <h1>Forum</h1>
+        </div>
         <div class="container">
             <div class="profile-icon">
                 {{if .Authenticated}}
@@ -42,7 +45,6 @@
                 <input type="submit" name="filter" value="Reverse Engineering">
                 <input type="submit" name="filter" value="Mobile & Embedded Development">
                 <input type="submit" name="filter" value="Software Engineering">
-
                 {{if .Authenticated}}
                     <h3>Additional Filters</h3>
                     <input type="submit" name="filter" value="Owned">
