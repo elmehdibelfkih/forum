@@ -10,23 +10,21 @@
   </section>
 
   <footer>
-    <form action="/like" method="POST">
-      <input type="hidden" name="post_id" value="{{.Id}}">
-      <button type="submit">👍{{.Likes}}</button>
-    </form>
-    
-    <form action="/dislike" method="POST">
-      <input type="hidden" name="post_id" value="{{.Id}}">
-      <button type="submit">👎{{.Dislikes}}</button>
-    </form>
-    
-    <p>💬</p>
-    <form action="/comment" method="POST">
-      <div>
+    <div id="likes_dislikes">
+      <form action="/like" method="POST">
+        <input type="hidden" name="post_id" value="{{.Id}}">
+        <button type="submit">👍{{.Likes}}</button>
+      </form>
+      
+      <form action="/dislike" method="POST">
+        <input type="hidden" name="post_id" value="{{.Id}}">
+        <button type="submit">👎{{.Dislikes}}</button>
+      </form>
+
+    </div>
+    <form id="form_comment" action="/comment" method="POST">
           <input type="hidden" name="post_id" value="{{.Id}}">
-          <label for="comment">comment:</label>
-          <input type="text" id="comment" name="comment"  maxlength="500" required>
-      </div>
+          <input type="text" id="comment" name="comment" placeholder="comment..."  maxlength="500" required>
       <button type="submit">comment</button>
     </form>
 
