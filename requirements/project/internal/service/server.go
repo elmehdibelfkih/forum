@@ -54,7 +54,7 @@ func forumMux() *http.ServeMux {
 	forumux.HandleFunc("/filterby", middleware.AuthMidleware(handler.Selectfilter))
 
 	// static mux
-	// forumux.HandleFunc("/static/", handler.StaticHandler)
+	forumux.HandleFunc("/static/", handler.StaticHandler)
 	return forumux
 }
 

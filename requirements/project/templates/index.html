@@ -37,19 +37,10 @@
 
             <div class="filters">
                 <select name="filter" id="category-filter">
-                    <option value="Cybersecurity">Cybersecurity</option>
-                    <option value="Cloud Computing & Virtualization">Cloud Computing & Virtualization</option>
-                    <option value="Systems Programming">Systems Programming</option>
-                    <option value="IoT (Internet of Things)">IoT (Internet of Things)</option>
-                    <option value="Artificial Intelligence and Machine Learning">Artificial Intelligence and Machine
-                        Learning</option>
-                    <option value="Data Science & Big Data">Data Science & Big Data</option>
-                    <option value="Networking & Telecommunications">Networking & Telecommunications</option>
-                    <option value="DevOps & SRE">DevOps & SRE</option>
-                    <option value="Database Systems">Database Systems</option>
-                    <option value="Reverse Engineering">Reverse Engineering</option>
-                    <option value="Mobile & Embedded Development">Mobile & Embedded Development</option>
-                    <option value="Software Engineering">Software Engineering</option>
+
+                    {{range $key, $value := .Fields}}
+                    <option value="{{$key}}">{{$key}}</option>
+                    {{end}}
 
                     {{if .Authenticated}}
                     <option value="Owned">Owned</option>

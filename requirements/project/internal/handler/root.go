@@ -8,6 +8,9 @@ import (
 )
 
 func RootHandler(w http.ResponseWriter, r *http.Request) { // todo: check the methode
+	var confMap = make(map[string]any)
+
+	confMap["Fields"] = repo.IT_MAJOR_FIELDS
 	if r.URL.Path != "/" {
 		forumerror.NotFoundError(w, r)
 		return
@@ -19,8 +22,11 @@ func RootHandler(w http.ResponseWriter, r *http.Request) { // todo: check the me
 	}
 
 	sessionCookie, err := r.Cookie("session_token")
+	confMap["Authenticated"] = false
+	confMap["Posts"] = data
+
 	if err != nil || sessionCookie.Value == "" {
-		repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "index.html", map[string]any{"Authenticated": false, "Posts": data})
+		repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "index.html", confMap)
 		return
 	}
 
@@ -32,15 +38,18 @@ func RootHandler(w http.ResponseWriter, r *http.Request) { // todo: check the me
 	}
 
 	if !exist {
-		repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "index.html", map[string]any{"Authenticated": false, "Posts": data})
+		repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "index.html", confMap)
 		return
 	}
-	
+
 	user, err := db.GetUserInfo(user_id)
+	confMap["Username"] = user.Username
+	confMap["Authenticated"] = true
+	confMap["Posts"] = data
 
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return
 	}
-	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "index.html", map[string]any{"Authenticated": true, "Username": user.Username, "Posts": data})
+	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "index.html", confMap)
 }
