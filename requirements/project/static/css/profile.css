@@ -1,47 +1,176 @@
-/* 
+/* General reset and background */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1c1b18 0%, #2a2822 100%);
+    color: #f4f1ee;
+    line-height: 1.6;
+    min-height: 100vh;
 }
 
+/* Navigation */
+.nav {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.nav h1 {
+    color: #f5d8a5;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.nav a {
+    color: #f5d8a5;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 10px 16px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    margin-left: 0.5rem;
+}
+
+.nav a:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-1px);
+}
+
+/* Main container */
 .container {
-    height: max-content;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    gap: 2rem;
 }
 
+/* Profile photo section */
 .profile-photo {
-    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
 }
 
+.profile-photo img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 4px solid #fdd395;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(253, 211, 149, 0.2);
+    transition: all 0.3s ease;
+}
+
+.profile-photo img:hover {
+    transform: scale(1.05);
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.3),
+        0 0 0 2px rgba(253, 211, 149, 0.3);
+}
+
+.profile-photo h2 {
+    margin-top: 1rem;
+    color: #fdd395;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Profile card */
 .profile {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
     position: relative;
-    width: 40%;
 }
 
-.profile div{
-    padding: 20px;
+.profile div {
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.to-right{
-    margin: 0;
-    padding: 0;
+.profile div:last-child {
+    border-bottom: none;
+}
+
+.profile h3 {
+    color: #f0e6d2;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.01em;
+}
+
+.profile p {
+    color: #d9c8ae;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Action buttons */
+.to-right {
     position: absolute;
-    right: 10px;
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+    gap: 0.5rem;
 }
 
-.nav {
-    height: 10vh;
-    position: relative;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+.to-right a,
+.to-right button {
+    background: linear-gradient(135deg, #e07b00 0%, #f69500 100%);
+    color: white;
+    text-decoration: none;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
+.to-right a:hover,
+.to-right button:hover {
+    background: linear-gradient(135deg, #c96a00 0%, #e07b00 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(224, 123, 0, 0.3);
+}
+
+/* Delete button specific styling */
 .delete {
-    position: absolute;
-    align-self: center;
-} */
+    background: linear-gradient(135deg, #dc3545 0%, #ff4757 100%) !important;
+}
+
+.delete:hover {
+    background: linear-gradient(135deg, #c82333 0%, #dc3545 100%) !important;

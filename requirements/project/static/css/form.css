@@ -2,100 +2,127 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #0d0d0d;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
     color: #eaeaea;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    line-height: 1.6;
 }
 
 /* Error message */
 .error-container {
-    background-color: rgba(255, 60, 60, 0.1);
-    border: 1px solid #ff4d4d;
+    background: rgba(255, 60, 60, 0.08);
+    border: 1px solid rgba(255, 77, 77, 0.4);
     color: #ffcccc;
     padding: 1rem 1.5rem;
     margin-bottom: 1.5rem;
-    border-radius: 10px;
+    border-radius: 12px;
     text-align: center;
     max-width: 450px;
     width: 100%;
+    backdrop-filter: blur(10px);
 }
 
 /* Form container */
 .form-container {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 15px;
-    padding: 2.5rem;
+    border-radius: 20px;
+    padding: 3rem;
     width: 100%;
     max-width: 450px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
 }
 
 /* Title */
 .form-container h1 {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
     text-align: center;
     color: #fdd395;
+    letter-spacing: -0.02em;
 }
 
 /* Input fields */
 form > div {
-    margin-bottom: 1.4rem;
+    margin-bottom: 1.5rem;
 }
 
 label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
     font-weight: 500;
+    font-size: 0.95rem;
     color: #f0e6d2;
+    letter-spacing: 0.01em;
 }
 
 input[type="text"],
 input[type="password"],
 input[type="email"] {
     width: 100%;
-    padding: 10px 14px;
-    border-radius: 10px;
+    padding: 12px 16px;
+    border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    background-color: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.05);
     color: #fff;
     font-size: 1rem;
-    transition: border 0.2s ease;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 input[type="text"]:focus,
 input[type="password"]:focus,
-input[type="email"]:focus  {
+input[type="email"]:focus {
     outline: none;
     border-color: #fdd395;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(253, 211, 149, 0.1);
+}
+
+input[type="text"]::placeholder,
+input[type="password"]::placeholder,
+input[type="email"]::placeholder {
+    color: rgba(255, 255, 255, 0.4);
 }
 
 /* Submit button */
 button[type="submit"] {
-    background-color: #e07b00;
+    background: linear-gradient(135deg, #e07b00 0%, #f69500 100%);
     color: white;
-    padding: 10px 18px;
+    padding: 12px 20px;
     border: none;
     border-radius: 12px;
     font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: all 0.3s ease;
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
+    letter-spacing: 0.01em;
 }
 
 button[type="submit"]:hover {
-    background-color: #c96a00;
+    background: linear-gradient(135deg, #c96a00 0%, #e07b00 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(224, 123, 0, 0.3);
 }
 
-/* Link to registration */
+button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+/* Links */
 .form-container p {
-    margin-top: 1.5rem;
+    margin-top: 2rem;
     text-align: center;
     font-size: 0.95rem;
     color: #aaa;
@@ -104,8 +131,23 @@ button[type="submit"]:hover {
 .form-container a {
     color: #fdd395;
     text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
 }
 
 .form-container a:hover {
+    color: #f69500;
     text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .form-container {
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+    }
+    
+    .form-container h1 {
+        font-size: 1.8rem;
+    }
 }

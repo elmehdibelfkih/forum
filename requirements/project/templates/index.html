@@ -12,46 +12,56 @@
 <body>
     <header class="nav">
         <div id="project_header">
-             <h1>Forum</h1>
+            <h1>Forum</h1>
         </div>
         <div class="container">
             <div class="profile-icon">
                 {{if .Authenticated}}
-                    <a href="/profile">{{.Username}}</a>
-                    <a href="/logout">Logout</a>
-                    <a href="/post" class="btn-primary">New Post</a>
+                <a href="/profile">{{.Username}}</a>
+                <a href="/logout">Logout</a>
+                <a href="/post" class="btn-primary">New Post</a>
                 {{else}}
-                    <a href="/login">Login</a>
-                    <a href="/register">Sign Up</a>
-                    <a href="/post" class="btn-primary">New Post</a>
+                <a href="/login">Login</a>
+                <a href="/register">Sign Up</a>
+                <a href="/post" class="btn-primary">New Post</a>
                 {{end}}
             </div>
         </div>
     </header>
 
     <section class="filter-section">
-        <form action="/filterby" method="GET">
-            <h2>Filter by Categories</h2>
-            <div class="filters">
-                <input type="submit" name="filter" value="Cybersecurity">
-                <input type="submit" name="filter" value="Cloud Computing & Virtualization">
-                <input type="submit" name="filter" value="Systems Programming">
-                <input type="submit" name="filter" value="IoT (Internet of Things)">
-                <input type="submit" name="filter" value="Artificial Intelligence and Machine Learning">
-                <input type="submit" name="filter" value="Data Science & Big Data">
-                <input type="submit" name="filter" value="Networking & Telecommunications">
-                <input type="submit" name="filter" value="DevOps & SRE">
-                <input type="submit" name="filter" value="Database Systems">
-                <input type="submit" name="filter" value="Reverse Engineering">
-                <input type="submit" name="filter" value="Mobile & Embedded Development">
-                <input type="submit" name="filter" value="Software Engineering">
-                {{if .Authenticated}}
-                    <h3>Additional Filters</h3>
-                    <input type="submit" name="filter" value="Owned">
-                    <input type="submit" name="filter" value="Likes">
-                {{end}}
-            </div>
-        </form>
+   
+            <h3>Select Categories</h3>
+            <form action="/filterby" method="GET">
+                <h2>Filter by Categories</h2>
+
+                <div class="filters">
+                    <select name="filter" id="category-filter">
+                        <option value="Cybersecurity">Cybersecurity</option>
+                        <option value="Cloud Computing & Virtualization">Cloud Computing & Virtualization</option>
+                        <option value="Systems Programming">Systems Programming</option>
+                        <option value="IoT (Internet of Things)">IoT (Internet of Things)</option>
+                        <option value="Artificial Intelligence and Machine Learning">Artificial Intelligence and Machine
+                            Learning</option>
+                        <option value="Data Science & Big Data">Data Science & Big Data</option>
+                        <option value="Networking & Telecommunications">Networking & Telecommunications</option>
+                        <option value="DevOps & SRE">DevOps & SRE</option>
+                        <option value="Database Systems">Database Systems</option>
+                        <option value="Reverse Engineering">Reverse Engineering</option>
+                        <option value="Mobile & Embedded Development">Mobile & Embedded Development</option>
+                        <option value="Software Engineering">Software Engineering</option>
+
+                        {{if .Authenticated}}
+                        <option value="Owned">Owned</option>
+                        <option value="Likes">Likes</option>
+                        {{end}}
+                    </select>
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+     
+
+
     </section>
 
     <main class="home">
