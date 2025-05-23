@@ -12,7 +12,7 @@ body {
     line-height: 1.6;
 }
 
-/* Error message */
+
 .error-container {
     background: rgba(255, 60, 60, 0.08);
     border: 1px solid rgba(255, 77, 77, 0.4);
