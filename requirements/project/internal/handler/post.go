@@ -21,12 +21,19 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetPostHandler(w http.ResponseWriter, r *http.Request) {
-	var errMap = make(map[string]any)
+	var confMap = make(map[string]any)
 	if r.Context().Value(repo.ERROR_CASE) != nil {
-		errMap = r.Context().Value(repo.ERROR_CASE).(map[string]any)
+		confMap = r.Context().Value(repo.ERROR_CASE).(map[string]any)
 	}
-	errMap["Fields"] = repo.IT_MAJOR_FIELDS
-	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "new_post.html", errMap) // when u excute 2 template the get concatinated one in top of the other
+	confMap["Fields"] = repo.IT_MAJOR_FIELDS
+	user_id := r.Context().Value(repo.USER_ID_KEY).(int)
+	user, err := db.GetUserInfo(user_id)
+	if err != nil {
+		forumerror.InternalServerError(w, r, err)
+		return
+	}
+	confMap["Username"] = user.Username
+	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "new_post.html", confMap) // when u excute 2 template the get concatinated one in top of the other
 }
 
 func PostPostHandler(w http.ResponseWriter, r *http.Request) {

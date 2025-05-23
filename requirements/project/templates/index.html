@@ -12,7 +12,7 @@
 <body>
     <header class="nav">
         <div id="project_header">
-            <h1>Forum</h1>
+            <h1><a href="/">FORUM</a></h1>
         </div>
         <div class="container">
             <div class="profile-icon">
@@ -30,36 +30,36 @@
     </header>
 
     <section class="filter-section">
-   
-            <h3>Select Categories</h3>
-            <form action="/filterby" method="GET">
-                <h2>Filter by Categories</h2>
 
-                <div class="filters">
-                    <select name="filter" id="category-filter">
-                        <option value="Cybersecurity">Cybersecurity</option>
-                        <option value="Cloud Computing & Virtualization">Cloud Computing & Virtualization</option>
-                        <option value="Systems Programming">Systems Programming</option>
-                        <option value="IoT (Internet of Things)">IoT (Internet of Things)</option>
-                        <option value="Artificial Intelligence and Machine Learning">Artificial Intelligence and Machine
-                            Learning</option>
-                        <option value="Data Science & Big Data">Data Science & Big Data</option>
-                        <option value="Networking & Telecommunications">Networking & Telecommunications</option>
-                        <option value="DevOps & SRE">DevOps & SRE</option>
-                        <option value="Database Systems">Database Systems</option>
-                        <option value="Reverse Engineering">Reverse Engineering</option>
-                        <option value="Mobile & Embedded Development">Mobile & Embedded Development</option>
-                        <option value="Software Engineering">Software Engineering</option>
+        <h3>Select Categories</h3>
+        <form action="/filterby" method="GET">
+            <h2>Filter by Categories</h2>
 
-                        {{if .Authenticated}}
-                        <option value="Owned">Owned</option>
-                        <option value="Likes">Likes</option>
-                        {{end}}
-                    </select>
-                    <input type="submit" value="Submit">
-                </div>
-            </form>
-     
+            <div class="filters">
+                <select name="filter" id="category-filter">
+                    <option value="Cybersecurity">Cybersecurity</option>
+                    <option value="Cloud Computing & Virtualization">Cloud Computing & Virtualization</option>
+                    <option value="Systems Programming">Systems Programming</option>
+                    <option value="IoT (Internet of Things)">IoT (Internet of Things)</option>
+                    <option value="Artificial Intelligence and Machine Learning">Artificial Intelligence and Machine
+                        Learning</option>
+                    <option value="Data Science & Big Data">Data Science & Big Data</option>
+                    <option value="Networking & Telecommunications">Networking & Telecommunications</option>
+                    <option value="DevOps & SRE">DevOps & SRE</option>
+                    <option value="Database Systems">Database Systems</option>
+                    <option value="Reverse Engineering">Reverse Engineering</option>
+                    <option value="Mobile & Embedded Development">Mobile & Embedded Development</option>
+                    <option value="Software Engineering">Software Engineering</option>
+
+                    {{if .Authenticated}}
+                    <option value="Owned">Owned</option>
+                    <option value="Likes">Likes</option>
+                    {{end}}
+                </select>
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+
 
 
     </section>

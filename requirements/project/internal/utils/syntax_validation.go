@@ -22,35 +22,36 @@ func InitRegex() {
 }
 
 func ValidUsername(s string) bool {
-	if len(s) < 4 || len(s) > 50 {
+	if len(s) < repo.USERNAME_MIN_LEN || len(s) > repo.USERNAME_MAX_LEN {
 		return false
 	}
-	if !repo.UsernameExp.MatchString(s) {
-		return false
-	}
-	return true
+	return repo.UsernameExp.MatchString(s)
 }
 
 func ValidEmail(s string) bool {
-	if len(s) < 4 || len(s) > 50 {
+	if len(s) < repo.EMAIL_MIN_LEN || len(s) > repo.EMAIL_MAX_LEN {
 		return false
 	}
-	if !repo.EmailExp.MatchString(s) {
-		return false
-	}
-	return true
+	return repo.EmailExp.MatchString(s)
 }
 
 func ValidPassword(s string) bool {
-	if len(s) >= 4 && len(s) <= 50 {
-		return true
-	}
-	return false
+	return len(s) >= repo.PASSWORD_MIN_LEN && len(s) <= repo.PASSWORD_MAX_LEN
 }
 
-func ValidComment(commet string) bool {
-	if len(commet) > 500 || len(commet) == 0{
-		return false
-	}
-	return true
+func ValidComment(comment string) bool {
+	return len(comment) >= repo.COMMENT_MIN_LEN && len(comment) <= repo.COMMENT_MAX_LEN
+}
+
+func ValidPost(content string) bool {
+	return len(content) >= repo.POST_MIN_LEN && len(content) <= repo.POST_MAX_LEN
+}
+
+func ValidPostTitle(title string) bool {
+	return len(title) >= repo.TITLE_MIN_LEN && len(title) <= repo.TITLE_MAX_LEN
+}
+
+func Contain(query string) bool {
+	_, exists := repo.IT_MAJOR_FIELDS[query]
+	return exists
 }

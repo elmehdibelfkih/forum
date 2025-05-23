@@ -2,14 +2,14 @@ package service
 
 import (
 	"fmt"
-	auth "forum/internal/auth"
-	db "forum/internal/db"
-	handler "forum/internal/handler"
 	middleware "forum/internal/middleware"
 	repo "forum/internal/repository"
+	handler "forum/internal/handler"
 	utils "forum/internal/utils"
-	"log"
+	auth "forum/internal/auth"
+	db "forum/internal/db"
 	"net/http"
+	"log"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -18,10 +18,6 @@ func InitDependencies() {
 	db.InitDB(repo.DATABASE_LOCATION)
 	InitTemplate(repo.TEMPLATE_PATHS)
 	utils.InitRegex()
-}
-
-func test(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("hello")
 }
 
 func forumMux() *http.ServeMux {
@@ -35,11 +31,6 @@ func forumMux() *http.ServeMux {
 	forumux.HandleFunc("/register", auth.SwitchRegister)
 	forumux.HandleFunc("/logout", auth.LogoutHandler)
 
-	// static files
-	// Serve static files from the "static" directory at "/static/" URL path
-	// fs := http.FileServer(http.Dir("static"))
-	// http.Handle("/static/", http.StripPrefix("/static/", fs))
-
 	// profile mux
 	forumux.HandleFunc("/profile", middleware.AuthMidleware(handler.ProfilHandler))
 	forumux.HandleFunc("/profile/update/{value}", middleware.AuthMidleware(handler.UpddateProfile))
@@ -49,17 +40,21 @@ func forumMux() *http.ServeMux {
 
 	// post mux
 	forumux.HandleFunc("/post", middleware.AuthMidleware(handler.PostHandler))
+
 	// like mux
 	forumux.HandleFunc("/like", middleware.AuthMidleware(handler.LikeHandler))
+
 	// dislike mux
 	forumux.HandleFunc("/dislike", middleware.AuthMidleware(handler.DislikeHandler))
+
 	// comment mux
 	forumux.HandleFunc("/comment", middleware.AuthMidleware(handler.CommentHandler))
+
 	// filter the post by category !!
 	forumux.HandleFunc("/filterby", middleware.AuthMidleware(handler.Selectfilter))
 
 	// static mux
-	forumux.HandleFunc("/static/", handler.StaticHandler)
+	// forumux.HandleFunc("/static/", handler.StaticHandler)
 	return forumux
 }
 

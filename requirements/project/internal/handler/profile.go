@@ -14,30 +14,42 @@ func ProfilHandler(w http.ResponseWriter, r *http.Request) {
 	user_id := r.Context().Value(repo.USER_ID_KEY).(int)
 	user, err := db.GetUserInfo(user_id)
 	if err != nil {
-		forumerror.InternalServerError(w,r, err)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
 	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "profile.html", user) // when u excute 2 template the get concatinated one in top of the other
 }
 
 func UpddateProfile(w http.ResponseWriter, r *http.Request) {
-	var errMap map[string]any
+	var confMap = make(map[string]any)
 	value := r.PathValue("value")
 	if r.Context().Value(repo.ERROR_CASE) != nil {
-		errMap = r.Context().Value(repo.ERROR_CASE).(map[string]any)
+		confMap = r.Context().Value(repo.ERROR_CASE).(map[string]any)
 	}
+
+	user_id := r.Context().Value(repo.USER_ID_KEY).(int)
+	user, err := db.GetUserInfo(user_id)
+	if err != nil {
+		forumerror.InternalServerError(w, r, err)
+		return
+	}
+	confMap["Username"] = user.Username
+
 	switch value {
 	case "username":
-		repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "update.html", map[string]any{"username": true, "Error": errMap["Error"], "Message": errMap["Message"]})
+		confMap["username"] = true
+		repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "update.html", confMap)
 		return
 	case "email":
-		repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "update.html", map[string]any{"email": true, "Error": errMap["Error"], "Message": errMap["Message"]})
+		confMap["email"] = true
+		repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "update.html", confMap)
 		return
 	case "password":
-		repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "update.html", map[string]any{"password": true, "Error": errMap["Error"], "Message": errMap["Message"]})
+		confMap["password"] = true
+		repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "update.html", confMap)
 		return
 	default:
-		http.Error(w, "bad req", http.StatusBadRequest)
+		forumerror.BadRequest(w, r)
 	}
 }
 
@@ -70,7 +82,7 @@ func SaveUsername(w http.ResponseWriter, r *http.Request) {
 
 	hash, err := db.GetUserHashById(user_id)
 	if err != nil {
-		forumerror.InternalServerError(w,r, err)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
 	if !utils.CheckPassword(password, hash) {
@@ -81,7 +93,7 @@ func SaveUsername(w http.ResponseWriter, r *http.Request) {
 
 	dupp, err := db.DupplicatedUsername(new_username)
 	if err != nil {
-		forumerror.InternalServerError(w,r, err)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
 	if dupp {
@@ -92,7 +104,7 @@ func SaveUsername(w http.ResponseWriter, r *http.Request) {
 
 	err = db.UpdateUsernmae(user_id, new_username)
 	if err != nil {
-		forumerror.InternalServerError(w,r, err)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
 
@@ -110,7 +122,7 @@ func SaveEmail(w http.ResponseWriter, r *http.Request) {
 	}
 	hash, err := db.GetUserHashById(user_id)
 	if err != nil {
-		forumerror.InternalServerError(w,r, err)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
 	if !utils.CheckPassword(password, hash) {
@@ -121,7 +133,7 @@ func SaveEmail(w http.ResponseWriter, r *http.Request) {
 
 	dupp, err := db.DupplicatedEmail(new_email)
 	if err != nil {
-		forumerror.InternalServerError(w,r, err)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
 	if dupp {
@@ -132,7 +144,7 @@ func SaveEmail(w http.ResponseWriter, r *http.Request) {
 
 	err = db.UpdateEmail(user_id, new_email)
 	if err != nil {
-		forumerror.InternalServerError(w,r, err)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
 
@@ -147,7 +159,7 @@ func SavePassword(w http.ResponseWriter, r *http.Request) {
 	hash, err := db.GetUserHashById(user_id)
 
 	if err != nil {
-		forumerror.InternalServerError(w,r, err)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
 	if current == new || !utils.ValidPassword(new) {
@@ -167,13 +179,13 @@ func SavePassword(w http.ResponseWriter, r *http.Request) {
 	}
 	new_hash, err := utils.HashPassword(new)
 	if err != nil {
-		forumerror.InternalServerError(w,r, err)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
 
 	err = db.UpdatePassword(user_id, new_hash)
 	if err != nil {
-		forumerror.InternalServerError(w,r, err)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
 
@@ -181,11 +193,19 @@ func SavePassword(w http.ResponseWriter, r *http.Request) {
 }
 
 func ServeDelete(w http.ResponseWriter, r *http.Request) {
-	var errMap map[string]any
+	var confMap = make(map[string]any)
+
 	if r.Context().Value(repo.ERROR_CASE) != nil {
-		errMap = r.Context().Value(repo.ERROR_CASE).(map[string]any)
+		confMap = r.Context().Value(repo.ERROR_CASE).(map[string]any)
 	}
-	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "delete.html", errMap)
+	user_id := r.Context().Value(repo.USER_ID_KEY).(int)
+	user, err := db.GetUserInfo(user_id)
+	if err != nil {
+		forumerror.InternalServerError(w, r, err)
+		return
+	}
+	confMap["Username"] = user.Username
+	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "delete.html", confMap)
 }
 
 func DeleteConfirmation(w http.ResponseWriter, r *http.Request) {
@@ -194,7 +214,7 @@ func DeleteConfirmation(w http.ResponseWriter, r *http.Request) {
 	hash, err := db.GetUserHashById(user_id)
 
 	if err != nil {
-		forumerror.InternalServerError(w,r, err)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
 	if !utils.CheckPassword(password, hash) {
@@ -206,7 +226,7 @@ func DeleteConfirmation(w http.ResponseWriter, r *http.Request) {
 	err = db.DeleteUser(user_id)
 
 	if err != nil {
-		forumerror.InternalServerError(w,r, err)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
 }

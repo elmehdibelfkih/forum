@@ -1,51 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/form.css">
     <title>Forum</title>
 </head>
+
 <body>
-    {{if .Error}}
-        <div class="error-container">
-            {{.Message}}
+    <header class="nav">
+        <div id="project_header">
+            <h1><a href="/">FORUM</a></h1>
         </div>
+        <div class="container">
+            <div class="profile-icon">
+                <a href="/profile">{{.Username}}</a>
+                <a href="/logout">Logout</a>
+                <a href="/post" class="btn-primary">New Post</a>
+            </div>
+        </div>
+    </header>
+    {{if .Error}}
+    <div class="error-container">
+        {{.Message}}
+    </div>
     {{end}}
     {{if .username}}
-        <div class="form-container">
-            <form class="" action="/profile/update/username/save" method="post">
-                <label for="username">Please type your New Username :</label><br>
-                <input type="text" id="username" name="username" required><br>
-                <label for="current">Please type your Password :</label><br>
-                <input type="password" id="current" name="current" required><br>
-                <button type="submit">Save</button>
-            </form>
-        </div>
+    <div class="form-container">
+        <form class="" action="/profile/update/username/save" method="post">
+            <label for="username">Please type your New Username :</label><br>
+            <input type="text" id="username" name="username" required><br>
+            <label for="current">Please type your Password :</label><br>
+            <input type="password" id="current" name="current" required><br>
+            <button type="submit">Save</button>
+        </form>
+    </div>
     {{end}}
     {{if .email}}
-        <div class="form-container">
-            <form action="/profile/update/email/save" method="post">
-                <label for="email">Please type your New Email :</label><br>
-                <input type="text" id="email" name="email" required><br>
-                <label for="current">Please type your Password :</label><br>
-                <input type="password" id="current" name="current" required><br>
-                <button type="submit">Save</button>
-            </form>
-        </div>
+    <div class="form-container">
+        <form action="/profile/update/email/save" method="post">
+            <label for="email">Please type your New Email :</label><br>
+            <input type="text" id="email" name="email" required><br>
+            <label for="current">Please type your Password :</label><br>
+            <input type="password" id="current" name="current" required><br>
+            <button type="submit">Save</button>
+        </form>
+    </div>
     {{end}}
     {{if .password}}
-        <div class="form-container">
-            <form action="/profile/update/password/save" method="post">
-                <label for="current">Please type your Current Password :</label><br>
-                <input type="password" id="current" name="current" required><br>
-                <label for="new">Please type your New Password :</label><br>
-                <input type="password" id="new" name="new" required><br>
-                <label for="confirm">Please Confirm your New Password :</label><br>
-                <input type="password" id="confirm" name="confirm" required><br>
-                <button type="submit">Save</button>
-            </form>
-        </div>
+    <div class="form-container">
+        <form action="/profile/update/password/save" method="post">
+            <label for="current">Please type your Current Password :</label><br>
+            <input type="password" id="current" name="current" required><br>
+            <label for="new">Please type your New Password :</label><br>
+            <input type="password" id="new" name="new" required><br>
+            <label for="confirm">Please Confirm your New Password :</label><br>
+            <input type="password" id="confirm" name="confirm" required><br>
+            <button type="submit">Save</button>
+        </form>
+    </div>
     {{end}}
 </body>
+
 </html>

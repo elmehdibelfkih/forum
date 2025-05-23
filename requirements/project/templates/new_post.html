@@ -7,18 +7,31 @@
     <link rel="stylesheet" href="/static/css/post.css">
     <title>post</title>
 </head>
+
 <body>
-    {{if .Error}}
-        <div class="error-container">
-            {{.Message}}
+    <header class="nav">
+        <div id="project_header">
+            <h1><a href="/">FORUM</a></h1>
         </div>
+        <div class="container">
+            <div class="profile-icon">
+                <a href="/profile">{{.Username}}</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    {{if .Error}}
+    <div class="error-container">
+        {{.Message}}
+    </div>
     {{end}}
     <div class="form-container">
         <h1>post</h1>
         <form action="/post" method="POST">
             <div>
                 <label for="title">Title:</label>
-                <input type="text" id="title" name="title"  maxlength="50" required>
+                <input type="text" id="title" name="title" maxlength="50" required>
             </div>
 
             <div>
@@ -27,26 +40,20 @@
             </div>
 
             <div>
-                <!-- <select name="Categories" id="CategorySelect" multiple required> -->
-                    <!-- {{range $key, $value := .Fields}}
-                        <option value="{{$key}}">{{$key}}</option>
+                <fieldset>
+                    <legend>Select Categories</legend>
+                    {{range $key, $value := .Fields}}
+                    <label>
+                        <input type="checkbox" name="Categories" value="{{$key}}">
+                        {{$key}}
+                    </label><br>
                     {{end}}
-                </select> -->
-            
-            <fieldset>
-                <legend>Select Categories</legend>
-                {{range $key, $value := .Fields}}
-                <label>
-                  <input type="checkbox" name="Categories" value="{{$key}}">
-                  {{$key}}
-                </label><br>
-              {{end}}
-            </fieldset>
-
+                </fieldset>
             </div>
             <button type="submit">post</button>
         </form>
         <p>cancel? <a href="/"> here</a>.</p>
     </div>
 </body>
+
 </html>
