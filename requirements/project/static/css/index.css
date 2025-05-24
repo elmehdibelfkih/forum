@@ -19,6 +19,10 @@ body {
     min-height: 100vh;
 }
 
+.container{
+width: 80vw;
+}
+
 .nav {
     background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(10px);
@@ -144,6 +148,7 @@ main {
 }
 
 .post {
+    width: 100%;
     background: rgba(255, 255, 255, 0.035);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
@@ -171,7 +176,7 @@ main {
     letter-spacing: -0.02em;
 }
 
-.post header p {
+.post header div {
     font-size: 0.9rem;
     color: #d9c8ae;
     margin-bottom: 1.5rem;

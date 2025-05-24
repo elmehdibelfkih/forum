@@ -1,4 +1,4 @@
-/* General reset and background */
+
 body {
     margin: 0;
     padding: 0;
@@ -9,69 +9,117 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    line-height: 1.6;
+    line-height: 1.5;
+    padding: 1rem 0;
 }
 
-/* Error message styling */
+
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.9);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.75rem 1rem;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav h1 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.nav h1 a {
+    color: #fdd395;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.nav .profile-icon {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+}
+
+.nav .profile-icon a {
+    color: #eaeaea;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav .profile-icon a:hover {
+    color: #fdd395;
+}
+
+
 .error-container {
     background: rgba(255, 60, 60, 0.08);
     border: 1px solid rgba(255, 77, 77, 0.4);
     color: #ffdddd;
-    padding: 1rem 1.5rem;
-    margin-bottom: 1.5rem;
-    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
     text-align: center;
     backdrop-filter: blur(10px);
-    max-width: 550px;
+    max-width: 420px;
     width: 100%;
+    font-size: 0.9rem;
+    margin-top: 80px;
 }
 
-/* Form container card */
+
 .form-container {
     background: rgba(255, 255, 255, 0.025);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-    padding: 3rem;
+    border-radius: 16px;
+    padding: 10px;
     width: 100%;
-    max-width: 550px;
+    max-width: 420px;
     box-shadow: 
         0 8px 32px rgba(0, 0, 0, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
+    margin-top: 80px;
 }
 
-/* Heading */
-.form-container h1 {
-    font-size: 2.2rem;
+
+.form-container h4 {
+    width: 100%;
+    font-size: large;
     font-weight: 600;
-    margin-bottom: 2rem;
+    margin-bottom: 10px;
     text-align: center;
     color: #fdd395;
     letter-spacing: -0.02em;
 }
 
-/* Form fields layout */
+
 form > div {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
 }
 
 label {
     display: block;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.5rem;
     font-weight: 500;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #f0e6d2;
     letter-spacing: 0.01em;
 }
 
 input[type="text"] {
     width: 100%;
-    padding: 12px 16px;
-    border-radius: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(255, 255, 255, 0.05);
     color: #fff;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-family: inherit;
     transition: all 0.3s ease;
     box-sizing: border-box;
@@ -81,91 +129,92 @@ input[type="text"]:focus {
     outline: none;
     border-color: #fdd395;
     background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 0 0 3px rgba(253, 211, 149, 0.1);
+    box-shadow: 0 0 0 2px rgba(253, 211, 149, 0.1);
 }
 
 input[type="text"]::placeholder {
     color: rgba(255, 255, 255, 0.4);
 }
 
-/* Textarea for content */
+
 textarea {
     width: 100%;
-    padding: 12px 16px;
-    border-radius: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(255, 255, 255, 0.05);
     color: #fff;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-family: inherit;
     transition: all 0.3s ease;
     box-sizing: border-box;
     resize: vertical;
-    min-height: 120px;
+    min-height: 100px;
 }
 
 textarea:focus {
     outline: none;
     border-color: #fdd395;
     background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 0 0 3px rgba(253, 211, 149, 0.1);
+    box-shadow: 0 0 0 2px rgba(253, 211, 149, 0.1);
 }
 
 textarea::placeholder {
     color: rgba(255, 255, 255, 0.4);
 }
 
-/* Fieldset for categories */
+
 fieldset {
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 1.5rem;
+    border-radius: 8px;
+    padding: 1rem;
     background: rgba(255, 255, 255, 0.02);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
 }
 
 legend {
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #fdd395;
-    padding: 0 8px;
+    padding: 0 6px;
     letter-spacing: 0.01em;
 }
 
 fieldset label {
     display: inline-block;
-    margin-bottom: 0.8rem;
-    margin-right: 1.5rem;
+    margin-bottom: 0.6rem;
+    margin-right: 1rem;
     color: #d8d8d8;
     font-weight: 400;
     cursor: pointer;
     transition: color 0.3s ease;
+    font-size: 0.85rem;
 }
 
 fieldset label:hover {
     color: #f0e6d2;
 }
 
-/* Radio button styling */
-input[type="radio"] {
-    margin-right: 8px;
+
+input[type="radio"], input[type="checkbox"] {
+    margin-right: 6px;
     accent-color: #fdd395;
     cursor: pointer;
 }
 
-/* Submit button */
+
 button[type="submit"] {
     background: linear-gradient(135deg, #e07b00 0%, #f69500 100%);
     color: white;
-    padding: 12px 20px;
+    padding: 10px 16px;
     border: none;
-    border-radius: 12px;
-    font-size: 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     width: 100%;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     letter-spacing: 0.01em;
 }
 
@@ -179,11 +228,11 @@ button[type="submit"]:active {
     transform: translateY(0);
 }
 
-/* Cancel link */
+
 .form-container p {
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     text-align: center;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     color: #aaa;
 }
 
@@ -199,40 +248,112 @@ button[type="submit"]:active {
     text-decoration: underline;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
+
+@media (max-width: 768px) {
     .form-container {
-        padding: 2rem 1.5rem;
-        margin: 1rem;
-        max-width: 90%;
+        max-width: 380px;
+    }
+    
+    .nav {
+        padding: 0.5rem 0.75rem;
+    }
+    
+    .nav h1 {
+        font-size: 1.1rem;
+    }
+    
+    .nav .profile-icon {
+        font-size: 0.8rem;
+        gap: 0.75rem;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 0.5rem;
+    }
+    
+    .form-container {
+        padding: 1.5rem;
+        margin: 0.5rem;
+        max-width: 100%;
+        margin-top: 70px;
+    }
+    
+    .error-container {
+        margin-top: 70px;
+        max-width: 100%;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
     }
     
     .form-container h1 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+        margin-bottom: 1.25rem;
     }
     
     fieldset {
-        padding: 1rem;
+        padding: 0.75rem;
     }
     
     fieldset label {
         display: block;
-        margin-bottom: 0.8rem;
+        margin-bottom: 0.5rem;
         margin-right: 0;
+        font-size: 0.85rem;
     }
 }
 
 @media (max-width: 480px) {
     .form-container {
-        padding: 1.5rem 1rem;
+        padding: 1.25rem 1rem;
     }
     
     .form-container h1 {
-        font-size: 1.6rem;
-        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
     }
     
     input[type="text"], textarea {
-        padding: 10px 12px;
+        padding: 8px 10px;
+        font-size: 0.9rem;
+    }
+    
+    button[type="submit"] {
+        padding: 9px 14px;
+        font-size: 0.9rem;
+    }
+    
+    form > div {
+        margin-bottom: 1rem;
+    }
+    
+    .nav {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+    
+    .nav .profile-icon {
+        order: -1;
+        align-self: flex-end;
+    }
+}
+
+@media (max-width: 360px) {
+    .form-container {
+        padding: 1rem 0.75rem;
+    }
+    
+    .form-container h1 {
+        font-size: 1.4rem;
+    }
+    
+    fieldset {
+        padding: 0.5rem;
+    }
+    
+    input[type="text"], textarea {
+        padding: 7px 9px;
     }
 }
