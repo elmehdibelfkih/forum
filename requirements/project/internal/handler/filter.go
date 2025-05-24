@@ -34,14 +34,14 @@ func Selectfilter(w http.ResponseWriter, r *http.Request) {
 	switch filter {
 	case "Likes":
 		if !auth {
-			http.Error(w, "Login required to view liked posts", http.StatusUnauthorized)
+			forumerror.Unauthorized(w, r)
 			return
 		}
 		posts, err = db.Getposbytlikes(userID)
 
 	case "Owned":
 		if !auth {
-			http.Error(w, "Login required to view your posts", http.StatusUnauthorized)
+			forumerror.Unauthorized(w, r)
 			return
 		}
 		posts, err = db.Getpostbyowner(userID)

@@ -98,3 +98,19 @@ func BadRequest(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Failed to execute error template: %v", tmplErr)
 	}
 }
+
+func Unauthorized(w http.ResponseWriter, r *http.Request) {
+	unauthorizedError := Error{
+		StatusCode:       http.StatusUnauthorized,
+		StatusText:       "Unauthorized",
+		ErrorMessage:     "You are not authorized to access this resource. Authentication is required.",
+		ErrorTitle:       "Access Denied",
+		ErrorDescription: "Please log in with valid credentials to access this endpoint. If you believe this is a mistake, contact support.",
+	}
+
+	w.WriteHeader(unauthorizedError.StatusCode)
+	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "error.html", unauthorizedError)
+	if tmplErr != nil {
+		log.Printf("Failed to execute error template: %v", tmplErr)
+	}
+}

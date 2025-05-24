@@ -78,3 +78,6 @@ Error: near "ON": syntax error
 Error: near "ON": syntax error
 2025/05/19 15:09:55 [2025-05-19T15:09:55+01:00] POST /post
 Error: sql: no rows in result set
+2025/05/24 02:10:53 [2025-05-24T02:10:53+01:00] GET /static/error.css
+Error: stat static/error.css: no such file or directory
+2025/05/24 02:10:53 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)

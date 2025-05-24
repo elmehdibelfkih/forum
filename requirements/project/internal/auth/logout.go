@@ -21,7 +21,7 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	// Invalidate the session on server side
 	hasSession, err := db.ResetUserSession(sessionToken)
 	if err != nil {
-		forumerror.InternalServerError(w,r, err)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
 
@@ -39,7 +39,7 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Handle invalid sessions
 	if !hasSession {
-		http.Error(w, "Session not found or already expired", http.StatusUnauthorized)
+		forumerror.Unauthorized(w, r)
 		return
 	}
 

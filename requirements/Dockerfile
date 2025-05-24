@@ -1,5 +1,5 @@
 # Build Stage
-FROM golang:1.23.0 AS builder
+FROM golang:1.24.3 AS builder
 WORKDIR /app/project
 COPY ./project/. ./
 RUN go build -o forum main.go

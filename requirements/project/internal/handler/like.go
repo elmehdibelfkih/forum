@@ -1,11 +1,9 @@
 package handler
 
 import (
-	"forum/internal/db"
 	forumerror "forum/internal/error"
 	repo "forum/internal/repository"
-
-	// repo "forum/internal/repository"
+	"forum/internal/db"
 	"net/http"
 	"strconv"
 )

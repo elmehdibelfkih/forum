@@ -34,7 +34,7 @@ func GetPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	confMap["Username"] = user.Username
-	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "new_post.html", confMap) // when u excute 2 template the get concatinated one in top of the other
+	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "new_post.html", confMap)
 }
 
 func PostPostHandler(w http.ResponseWriter, r *http.Request) {

@@ -9,7 +9,6 @@ import (
 	"strconv"
 )
 
-// TODO: check the bad request example: change the post id in the heden form
 func CommentHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		forumerror.MethodNotAllowed(w, r)
