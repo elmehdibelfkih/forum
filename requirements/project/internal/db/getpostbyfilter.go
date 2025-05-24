@@ -1,6 +1,7 @@
 package db
 
 import (
+	"database/sql"
 	"strings"
 
 	repo "forum/internal/repository"
@@ -43,8 +44,8 @@ func Getposbytlikes(userId int) (repo.PageData, error) {
 
 		// Split and parse comments if they exist
 		if commentsStr != "" {
-			comments := strings.Split(commentsStr, ",")
-			for _, c := range comments {
+			comments := strings.SplitSeq(commentsStr, ",")
+			for c := range comments {
 				parts := strings.SplitN(c, ":", 2)
 				if len(parts) == 2 {
 					commentMap := map[string]string{
@@ -57,6 +58,11 @@ func Getposbytlikes(userId int) (repo.PageData, error) {
 
 		// Check if the post was edited
 		post.IsEdited = post.Created_at != post.Updated_at
+		post.IsEdited = post.Created_at != post.Updated_at
+		post.IsLikedByUser, err = IsPostLikedByUser(post.UserId, post.Id)
+		if err != nil && err != sql.ErrNoRows {
+			return data, err
+		}
 
 		data.Posts = append(data.Posts, post)
 	}
@@ -119,6 +125,11 @@ func Getpostbyowner(userId int) (repo.PageData, error) {
 
 		// Check if the post was edited
 		post.IsEdited = post.Created_at != post.Updated_at
+		post.IsEdited = post.Created_at != post.Updated_at
+		post.IsLikedByUser, err = IsPostLikedByUser(post.UserId, post.Id)
+		if err != nil && err != sql.ErrNoRows {
+			return data, err
+		}
 
 		data.Posts = append(data.Posts, post)
 	}
@@ -131,9 +142,9 @@ func Getpostbyowner(userId int) (repo.PageData, error) {
 }
 
 func GePostbycategory(category string) (repo.PageData, error) {
- 
-	// i want to get all post by the category there the user want 
-	// i have post_category and i have a table of category 
+
+	// i want to get all post by the category there the user want
+	// i have post_category and i have a table of category
 	// and when user creat post i register it at category_post...!!
 	rows, err := repo.DB.Query(repo.GET_POST_BYCATEGORY, category)
 	if err != nil {
@@ -185,7 +196,11 @@ func GePostbycategory(category string) (repo.PageData, error) {
 
 		// Check if the post was edited
 		post.IsEdited = post.Created_at != post.Updated_at
-
+		post.IsEdited = post.Created_at != post.Updated_at
+		post.IsLikedByUser, err = IsPostLikedByUser(post.UserId, post.Id)
+		if err != nil && err != sql.ErrNoRows {
+			return data, err
+		}
 		data.Posts = append(data.Posts, post)
 	}
 
@@ -193,6 +208,6 @@ func GePostbycategory(category string) (repo.PageData, error) {
 		return data, err
 	}
 
-	return data, nil	
-	
+	return data, nil
+
 }

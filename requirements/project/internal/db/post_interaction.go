@@ -51,8 +51,8 @@ func GetAllPostsInfo() (repo.PageData, error) {
 			post.Catigories = strings.Split(categoriesStr, ",")
 		}
 		if commentsStr != "" {
-			comments := strings.Split(commentsStr, ",")
-			for _, c := range comments {
+			comments := strings.SplitSeq(commentsStr, ",")
+			for c := range comments {
 				parts := strings.SplitN(c, ":", 2)
 				if len(parts) == 2 {
 					commentMap := map[string]string{
@@ -62,7 +62,12 @@ func GetAllPostsInfo() (repo.PageData, error) {
 				}
 			}
 		}
+		
 		post.IsEdited = post.Created_at != post.Updated_at
+		post.IsLikedByUser , err = IsPostLikedByUser(post.UserId, post.Id)
+		if err != nil && err != sql.ErrNoRows {
+			return data, err
+		}
 
 		data.Posts = append(data.Posts, post)
 	}
