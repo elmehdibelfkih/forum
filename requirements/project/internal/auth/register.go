@@ -16,7 +16,7 @@ func SwitchRegister(w http.ResponseWriter, r *http.Request) {
 	case http.MethodPost:
 		SubmitRegister(w, r)
 	default:
-		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
+		forumerror.MethodNotAllowed(w, r)
 	}
 }
 

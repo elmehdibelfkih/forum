@@ -65,7 +65,7 @@ func SaveChanges(w http.ResponseWriter, r *http.Request) {
 		SavePassword(w, r)
 		return
 	default:
-		http.Error(w, "bad req", http.StatusBadRequest)
+		forumerror.BadRequest(w, r)
 		return
 	}
 }

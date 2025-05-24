@@ -69,6 +69,7 @@ const (
 	// context keys
 	USER_ID_KEY contextKey = "user_id"
 	ERROR_CASE  contextKey = "error_case"
+	
 	// user not login or login !
 	PUBLIC contextKey = "Public"
 

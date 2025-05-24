@@ -1,24 +1,25 @@
 package handler
 
 import (
+	forumerror "forum/internal/error"
 	"net/http"
 	"os"
 )
 
 func StaticHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
-		http.Error(w, "Oops!?, Method Not Allowed try again", http.StatusMethodNotAllowed)
+		forumerror.MethodNotAllowed(w, r)
 	}
 	url := r.URL.Path[1:]
 	file, err := os.Stat(url)
 	if err != nil {
 		if os.IsNotExist(err) {
-			http.Error(w, "Oops!?, Error Not Found", http.StatusNotFound)
+			forumerror.NotFoundError(w, r)
 		}
-		http.Error(w, "Oops!?, Internal Server Error", http.StatusInternalServerError)
+		forumerror.InternalServerError(w, r, err)
 	}
 	if file.IsDir() {
-		http.Error(w, "Oops!?, Error Not Found", http.StatusNotFound)
+		forumerror.NotFoundError(w, r)
 	}
 	http.ServeFile(w, r, url)
 }

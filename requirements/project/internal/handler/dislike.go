@@ -10,14 +10,14 @@ import (
 
 func DislikeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "StatusMethodNotAllowed", http.StatusMethodNotAllowed)
+		forumerror.MethodNotAllowed(w, r)
 		return
 	}
 
 	postId, err := strconv.ParseInt(r.FormValue("post_id"), 10, 0)
 	IsPostExist, err2 := db.IsPostExist(int(postId))
 	if err != nil || !IsPostExist {
-		http.Error(w, "StatusBadRequest", http.StatusBadRequest)
+		forumerror.BadRequest(w, r)
 		return
 	}
 	if err2 != nil {
@@ -27,6 +27,7 @@ func DislikeHandler(w http.ResponseWriter, r *http.Request) {
 	err = db.AddRemovePostDeslike(r.Context().Value(repo.USER_ID_KEY).(int), int(postId))
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
+		return
 	}
 
 	http.Redirect(w, r, "/", http.StatusSeeOther)

@@ -12,14 +12,14 @@ import (
 
 func LikeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "StatusMethodNotAllowed", http.StatusMethodNotAllowed)
+		forumerror.MethodNotAllowed(w, r)
 		return
 	}
 
 	postId, err := strconv.ParseInt(r.FormValue("post_id"), 10, 0)
 	IsPostExist, err2 := db.IsPostExist(int(postId))
 	if err != nil || !IsPostExist {
-		http.Error(w, "StatusBadRequest", http.StatusBadRequest)
+		forumerror.BadRequest(w, r)
 		return
 	}
 	if err2 != nil {
