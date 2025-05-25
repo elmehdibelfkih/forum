@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"forum/internal/db"
 	forumerror "forum/internal/error"
 	repo "forum/internal/repository"
@@ -35,8 +36,9 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	err = db.AddNewComment(r.Context().Value(repo.USER_ID_KEY).(int), int(postId), r.FormValue("comment"))
 	if err != nil {
-		forumerror.InternalServerError(w,r, err)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	link := fmt.Sprintf("/#%d", postId)
+	http.Redirect(w, r, link, http.StatusSeeOther)
 }

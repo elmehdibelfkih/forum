@@ -15,12 +15,11 @@ func AddNewPost(user_id int, titel string, content string) (int, error) {
 	return int(id), err
 }
 
-// TODO: gel all catigories
 // TODO: add offset and limit
-func GetAllPostsInfo() (repo.PageData, error) {
+func GetAllPostsInfo(page int) (repo.PageData, error) {
 
 	var data repo.PageData
-	rows, err := repo.DB.Query(repo.SELECT_ALL_POSTS, 2)
+	rows, err := repo.DB.Query(repo.SELECT_ALL_POSTS, repo.PAGE_POSTS_QUANTITY, (page-1) * repo.PAGE_POSTS_QUANTITY)
 	if err != nil {
 		return data, err
 	}

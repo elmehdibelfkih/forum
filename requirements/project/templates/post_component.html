@@ -1,5 +1,5 @@
 {{define "post_component"}}
-<article class="post">
+<article class="post" id="{{.Id}}">
   <header>
     <h2>{{.Title}}</h2>
     <div>Published by <strong>{{.Publisher}}</strong> in <em>{{range .Catigories}}{{.}}, {{end}}</em></div>

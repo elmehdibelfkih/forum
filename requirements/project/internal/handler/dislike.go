@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"forum/internal/db"
 	forumerror "forum/internal/error"
 	repo "forum/internal/repository"
@@ -29,6 +30,6 @@ func DislikeHandler(w http.ResponseWriter, r *http.Request) {
 		forumerror.InternalServerError(w, r, err)
 		return
 	}
-
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	link := fmt.Sprintf("/#%d", postId)
+	http.Redirect(w, r, link, http.StatusSeeOther)
 }

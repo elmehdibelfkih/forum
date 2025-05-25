@@ -1,9 +1,10 @@
 package handler
 
 import (
+	"fmt"
+	"forum/internal/db"
 	forumerror "forum/internal/error"
 	repo "forum/internal/repository"
-	"forum/internal/db"
 	"net/http"
 	"strconv"
 )
@@ -28,5 +29,6 @@ func LikeHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 	}
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	link := fmt.Sprintf("/#%d", postId)
+	http.Redirect(w, r, link, http.StatusSeeOther)
 }

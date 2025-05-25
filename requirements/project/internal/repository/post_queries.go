@@ -49,7 +49,7 @@ const (
     )
     ORDER BY p.created_at DESC;
 `
-  // query to get all post by the owned user !!
+	// query to get all post by the owned user !!
 	GET_POST_BYOWNED = `
     SELECT 
     p.id,
@@ -92,7 +92,7 @@ const (
     WHERE p.user_id = ?
       ORDER BY p.created_at DESC;
 	`
-  GET_POST_BYCATEGORY = `
+	GET_POST_BYCATEGORY = `
     SELECT 
     p.id,
     p.user_id,
@@ -117,9 +117,9 @@ const (
     ORDER BY p.created_at DESC;
   `
 	// SELECT queries
-	IS_POST_EXIST = `SELECT 1 FROM posts WHERE id = ? LIMIT 1`
-	IS_LIKED      = `SELECT is_like FROM likes_dislikes WHERE user_id = ? AND post_id = ?`
-	IS_DISLIKED   = `SELECT is_dislike FROM likes_dislikes WHERE user_id = ? AND post_id = ?`
+	IS_POST_EXIST           = `SELECT 1 FROM posts WHERE id = ? LIMIT 1`
+	IS_LIKED                = `SELECT is_like FROM likes_dislikes WHERE user_id = ? AND post_id = ?`
+	IS_DISLIKED             = `SELECT is_dislike FROM likes_dislikes WHERE user_id = ? AND post_id = ?`
 	MAP_POSTS_WITH_CATEGORY = `INSERT INTO post_categories (post_id, category_id) VALUES (?, ?)`
 
 	//SELECT queries
@@ -179,6 +179,7 @@ SELECT
   GROUP BY comments.post_id
   ) AS com ON com.post_id = posts.id
 
-  ORDER BY posts.created_at DESC;
+  ORDER BY posts.created_at DESC
+  LIMIT ? OFFSET ?;
   `
 )

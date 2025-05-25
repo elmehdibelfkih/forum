@@ -73,6 +73,9 @@ const (
 	PUBLIC contextKey = "Public"
 
 	INIT_FIELDS_QUERY = `INSERT OR IGNORE INTO categories (name) VALUES (?)`
+
+	PAGE_POSTS_QUANTITY = 10
+	
 )
 
 // IT major fields
