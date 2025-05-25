@@ -75,6 +75,7 @@ func Selectfilter(w http.ResponseWriter, r *http.Request) {
         "Authenticated": auth,
         "Username":      username,
         "Posts":         posts,
+        "Fields":          repo.IT_MAJOR_FIELDS,
     }
     err = repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "index.html", data)
 	if err != nil { 
