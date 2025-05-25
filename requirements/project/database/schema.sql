@@ -78,3 +78,11 @@ CREATE TABLE IF NOT EXISTS post_categories (
     FOREIGN KEY(post_id) REFERENCES posts(id) ON DELETE CASCADE,
     FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE CASCADE
 );
+
+
+-- Metadata Table for Posts
+-- todo: update this table to count posts wen a post is created or deleted
+CREATE TABLE IF NOT EXISTS post_metadata (
+    id INTEGER PRIMARY KEY,
+    post_count INTEGER NOT NULL
+);

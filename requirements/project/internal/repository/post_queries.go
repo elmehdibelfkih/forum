@@ -2,7 +2,20 @@ package repository
 
 const (
 	// INSERT queries
-	INSERT_NEW_POST         = `INSERT INTO posts (user_id, title, content) VALUES (?, ?, ?)`
+	INSERT_NEW_POST = `
+  INSERT INTO posts (user_id, title, content) VALUES (?, ?, ?);
+  UPDATE post_metadata SET post_count = post_count + 1;
+  `
+	INIT_POST_META_DATA = `INSERT OR IGNORE INTO post_metadata (id, post_count) VALUES (1, 0);`
+	INIT_FIELDS_QUERY = `INSERT OR IGNORE INTO categories (name) VALUES (?)`
+
+
+	DELETE_POST = `
+  DELETE FROM posts WHERE id = ?;
+  UPDATE post_metadata SET post_count = post_count - 1;
+`
+	GET_POST_COUNT = `SELECT post_count FROM post_metadata`
+
 	INSERT_NEW_COMMENT      = `INSERT INTO comments (user_id, post_id, comment) VALUES (?, ?, ?)`
 	INSERT_NEW_LIKE_DISLIKE = `INSERT INTO likes_dislikes (user_id, post_id, is_like, is_dislike) VALUES (?, ?, ?, ?)`
 	GET_POST_BYLIKES        = `

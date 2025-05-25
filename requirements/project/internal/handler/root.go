@@ -8,37 +8,21 @@ import (
 	"strconv"
 )
 
-// todo: fix the pagination logic
 func RootHandler(w http.ResponseWriter, r *http.Request) { // todo: check the methode
-	var confMap = make(map[string]any)
-
-	// pagination
-	query := r.URL.Query()
-	pageStr := query.Get("page")
-	page := 1
-	if pageStr != "" {
-		if p, err := strconv.Atoi(pageStr); err == nil && p > 0 {
-			page = p
-		} else {
-			forumerror.BadRequest(w, r)
-		}
-	}
-	confMap["CurrentPage"] = pageStr
-	if page == 1 {
-		confMap["HasPrev"] = false
-	} else {
-		confMap["HasPrev"] = true
-		confMap["PrevPage"] = strconv.Itoa(page-1)
-	}
-	confMap["HasNext"] = true
-	confMap["NextPage"] = strconv.Itoa(page+1)
-	// end of pagination
-
-	confMap["Fields"] = repo.IT_MAJOR_FIELDS
 	if r.URL.Path != "/" {
 		forumerror.NotFoundError(w, r)
 		return
 	}
+
+	var confMap = make(map[string]any)
+
+	confMap["Fields"] = repo.IT_MAJOR_FIELDS
+
+	page, err := Pagination(w, r, confMap)
+	if err != nil {
+		return
+	}
+
 	data, err := db.GetAllPostsInfo(page)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
@@ -69,4 +53,37 @@ func RootHandler(w http.ResponseWriter, r *http.Request) { // todo: check the me
 		return
 	}
 	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "index.html", confMap)
+}
+
+func Pagination(w http.ResponseWriter, r *http.Request, confMap map[string]any) (int, error) {
+	query := r.URL.Query()
+	pageStr := query.Get("page")
+	page := 1
+	if pageStr != "" {
+		if p, err := strconv.Atoi(pageStr); err == nil && p > 0 {
+			page = p
+		} else {
+			forumerror.BadRequest(w, r)
+			return -1, err
+		}
+	}
+	confMap["CurrentPage"] = pageStr
+	confMap["PrintCurrentPage"] = page != 1
+	if page == 1 {
+		confMap["HasPrev"] = false
+	} else {
+		confMap["HasPrev"] = true
+		confMap["PrevPage"] = strconv.Itoa(page - 1)
+	}
+
+	count, err := db.GetPostsCount()
+	if err != nil {
+		forumerror.InternalServerError(w, r, err)
+		return -1, err
+
+	}
+
+	confMap["HasNext"] = count >= page * repo.PAGE_POSTS_QUANTITY
+	confMap["NextPage"] = strconv.Itoa(page + 1)
+	return page, nil
 }

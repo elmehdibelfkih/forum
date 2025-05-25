@@ -59,9 +59,9 @@
         {{if .HasPrev}}
         <a href="/?page={{.PrevPage}}">Previous</a>
         {{end}}
-
-        Page {{.CurrentPage}}
-
+        {{if .PrintCurrentPage}}
+            Page {{.CurrentPage}}
+        {{end}}
         {{if .HasNext}}
         <a href="/?page={{.NextPage}}">Next</a>
         {{end}}

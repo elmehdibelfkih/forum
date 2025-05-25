@@ -194,3 +194,15 @@ func MapPostCategory(postId int, categoryId int) error {
 	_, err := repo.DB.Exec(repo.MAP_POSTS_WITH_CATEGORY, postId, categoryId)
 	return err
 }
+
+func GetPostsCount() (int, error) {
+	var count int
+
+	err := repo.DB.QueryRow(repo.GET_POST_COUNT).Scan(&count)
+	if err == sql.ErrNoRows {
+		return 0, nil
+	} else if err != nil {
+		return -1, err
+	}
+	return count, nil
+}
