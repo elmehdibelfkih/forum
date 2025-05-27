@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func PostHandler(w http.ResponseWriter, r *http.Request) {
+func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		GetPostHandler(w, r)
 	} else if r.Method == http.MethodPost {

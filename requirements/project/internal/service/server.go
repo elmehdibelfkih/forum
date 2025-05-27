@@ -2,14 +2,14 @@ package service
 
 import (
 	"fmt"
-	middleware "forum/internal/middleware"
-	repo "forum/internal/repository"
-	handler "forum/internal/handler"
-	utils "forum/internal/utils"
 	auth "forum/internal/auth"
 	db "forum/internal/db"
-	"net/http"
+	handler "forum/internal/handler"
+	middleware "forum/internal/middleware"
+	repo "forum/internal/repository"
+	utils "forum/internal/utils"
 	"log"
+	"net/http"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -39,7 +39,7 @@ func forumMux() *http.ServeMux {
 	forumux.HandleFunc("/profile/delete/confirm", middleware.AuthMidleware(handler.DeleteConfirmation))
 
 	// post mux
-	forumux.HandleFunc("/post", middleware.AuthMidleware(handler.PostHandler))
+	forumux.HandleFunc("/post", middleware.AuthMidleware(handler.NewPostHandler))
 
 	// like mux
 	forumux.HandleFunc("/like", middleware.AuthMidleware(handler.LikeHandler))

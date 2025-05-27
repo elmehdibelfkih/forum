@@ -67,6 +67,10 @@ func GetAllPostsInfo(page int) (repo.PageData, error) {
 		if err != nil && err != sql.ErrNoRows {
 			return data, err
 		}
+		post.IsDislikedByUser , err = IsPostDisikedByUser(post.UserId, post.Id)
+		if err != nil && err != sql.ErrNoRows {
+			return data, err
+		}
 
 		data.Posts = append(data.Posts, post)
 	}

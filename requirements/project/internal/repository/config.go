@@ -23,19 +23,20 @@ type User struct {
 }
 
 type Post struct {
-	Id            int
-	UserId        int
-	Title         string
-	Content       string
-	Publisher     string
-	Catigories    []string
-	Likes         int
-	Dislikes      int
-	Comments      []map[string]string
-	Created_at    string
-	Updated_at    string
-	IsEdited      bool
-	IsLikedByUser bool
+	Id               int
+	UserId           int
+	Title            string
+	Content          string
+	Publisher        string
+	Catigories       []string
+	Likes            int
+	Dislikes         int
+	Comments         []map[string]string
+	Created_at       string
+	Updated_at       string
+	IsEdited         bool
+	IsLikedByUser    bool
+	IsDislikedByUser bool
 }
 
 type PageData struct {
@@ -72,9 +73,7 @@ const (
 	// user not login or login !
 	PUBLIC contextKey = "Public"
 
-
 	PAGE_POSTS_QUANTITY = 10
-	
 )
 
 // IT major fields

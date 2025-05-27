@@ -83,7 +83,7 @@ func Pagination(w http.ResponseWriter, r *http.Request, confMap map[string]any) 
 
 	}
 
-	confMap["HasNext"] = count >= page * repo.PAGE_POSTS_QUANTITY
+	confMap["HasNext"] = count > page * repo.PAGE_POSTS_QUANTITY
 	confMap["NextPage"] = strconv.Itoa(page + 1)
 	return page, nil
 }
