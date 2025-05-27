@@ -7,8 +7,7 @@ const (
   UPDATE post_metadata SET post_count = post_count + 1;
   `
 	INIT_POST_META_DATA = `INSERT OR IGNORE INTO post_metadata (id, post_count) VALUES (1, 0);`
-	INIT_FIELDS_QUERY = `INSERT OR IGNORE INTO categories (name) VALUES (?)`
-
+	INIT_FIELDS_QUERY   = `INSERT OR IGNORE INTO categories (name) VALUES (?)`
 
 	DELETE_POST = `
   DELETE FROM posts WHERE id = ?;
@@ -134,6 +133,7 @@ const (
 	IS_LIKED                = `SELECT is_like FROM likes_dislikes WHERE user_id = ? AND post_id = ?`
 	IS_DISLIKED             = `SELECT is_dislike FROM likes_dislikes WHERE user_id = ? AND post_id = ?`
 	MAP_POSTS_WITH_CATEGORY = `INSERT INTO post_categories (post_id, category_id) VALUES (?, ?)`
+	SELECT_TODAY_POSTS      = `SELECT COUNT(*) FROM posts WHERE user_id = ?  AND created_at >= DATE('now')` // FIXME: fix the time
 
 	//SELECT queries
 	SELECT_CATEGORY_ID = `SELECT id FROM categories WHERE name = ?`

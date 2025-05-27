@@ -74,6 +74,7 @@ const (
 	PUBLIC contextKey = "Public"
 
 	PAGE_POSTS_QUANTITY = 10
+	DAY_POST_LIMIT = 1
 )
 
 // IT major fields

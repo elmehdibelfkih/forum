@@ -8,16 +8,16 @@ import (
 )
 
 func SelectUserSession(session_id string) (int, bool, error) {
-	var user_id int
+	var userId int
 
-	err := repo.DB.QueryRow(repo.SELECT_USER_BY_SESSION_TOKEN, session_id).Scan(&user_id)
+	err := repo.DB.QueryRow(repo.SELECT_USER_BY_SESSION_TOKEN, session_id).Scan(&userId)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return user_id, false, nil // not logged in
+			return userId, false, nil // not logged in
 		}
-		return user_id, false, err // err in database
+		return userId, false, err // err in database
 	}
-	return user_id, true, nil // logged in
+	return userId, true, nil // logged in
 }
 
 func UpdateUserSession(id int, token string) error {
@@ -88,10 +88,10 @@ func GetUserHashByUsername(username string) (int, string, error) {
 	return id, hash, nil
 }
 
-func GetUserInfo(user_id int) (repo.User, error) {
+func GetUserInfo(userId int) (repo.User, error) {
 	var user repo.User
 
-	err := repo.DB.QueryRow(repo.SELECT_USER_BY_ID, user_id).Scan(&user.Id, &user.Username,
+	err := repo.DB.QueryRow(repo.SELECT_USER_BY_ID, userId).Scan(&user.Id, &user.Username,
 		&user.Email, &user.Password_hash, &user.Created_at, &user.Updated_at)
 	if err != nil {
 		return user, err
@@ -159,20 +159,21 @@ func UpdatePassword(id int, password string) error {
 	return err
 }
 
-func DeleteUser(user_id int) error {
-	_, err := repo.DB.Exec(repo.DELETE_USER, user_id)
+func DeleteUser(userId int) error {
+	_, err := repo.DB.Exec(repo.DELETE_USER, userId)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func GetUserNameById(user_id int) (string, error) {
+func GetUserNameById(userId int) (string, error) {
 	var userName string
 
-	err := repo.DB.QueryRow(repo.SELECT_USERNAME_BY_ID, user_id).Scan(&userName)
+	err := repo.DB.QueryRow(repo.SELECT_USERNAME_BY_ID, userId).Scan(&userName)
 	if err != nil {
 		return userName, err
 	}
 	return userName, nil
 }
+

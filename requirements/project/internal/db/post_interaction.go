@@ -210,3 +210,14 @@ func GetPostsCount() (int, error) {
 	}
 	return count, nil
 }
+
+func IsUserCanPostToday(userId int) (bool, error) {
+	var postCount int
+
+	err := repo.DB.QueryRow(repo.SELECT_TODAY_POSTS, userId).Scan(&postCount)
+	if err != nil {
+		return false, err
+	}
+	return postCount < repo.DAY_POST_LIMIT, nil
+
+}

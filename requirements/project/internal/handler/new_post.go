@@ -27,8 +27,8 @@ func GetPostHandler(w http.ResponseWriter, r *http.Request) {
 		confMap = r.Context().Value(repo.ERROR_CASE).(map[string]any)
 	}
 	confMap["Fields"] = repo.IT_MAJOR_FIELDS
-	user_id := r.Context().Value(repo.USER_ID_KEY).(int)
-	user, err := db.GetUserInfo(user_id)
+	userId := r.Context().Value(repo.USER_ID_KEY).(int)
+	user, err := db.GetUserInfo(userId)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return
@@ -38,7 +38,17 @@ func GetPostHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func PostPostHandler(w http.ResponseWriter, r *http.Request) {
-	user_id := r.Context().Value(repo.USER_ID_KEY).(int)
+	userId := r.Context().Value(repo.USER_ID_KEY).(int)
+
+	IsUserCanPostToday, err := db.IsUserCanPostToday(userId)
+	if !IsUserCanPostToday {
+		forumerror.BadRequest(w, r) // todo: replace bad request by valid response
+		return
+	}
+	if err != nil {
+		forumerror.InternalServerError(w, r, err)
+		return
+	}
 
 	escapedTitle := html.EscapeString(r.FormValue("title"))
 	escapedContent := html.EscapeString(r.FormValue("content"))
@@ -46,7 +56,7 @@ func PostPostHandler(w http.ResponseWriter, r *http.Request) {
 		forumerror.BadRequest(w, r)
 		return
 	}
-	postId, err := db.AddNewPost(user_id, escapedTitle, escapedContent)
+	postId, err := db.AddNewPost(userId, escapedTitle, escapedContent)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return
