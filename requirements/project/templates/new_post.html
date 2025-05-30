@@ -9,10 +9,8 @@
 </head>
 
 <body>
-    <header class="nav">
-        <div id="project_header">
-            <h1><a href="/">FORUM</a></h1>
-        </div>
+    <header>
+        <h1><a href="/">FORUM</a></h1>
         <div class="container">
             <div class="profile-icon">
                 <a href="/profile">{{.Username}}</a>
@@ -34,7 +32,8 @@
             </div>
 
             <div>
-                <input type="text" id="content" name="content" maxlength="400" placeholder="insert content here..." required>
+                <textarea id="content" name="content" maxlength="400" placeholder="insert content here..."
+                    required></textarea>
             </div>
 
             <div>
@@ -48,10 +47,23 @@
                     {{end}}
                 </fieldset>
             </div>
-            <button type="submit">post</button>
+            <button type="submit">Post</button>
         </form>
         <p>cancel? <a href="/"> here</a>.</p>
     </div>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025 FORUM — Built with ❤️ by the Forum Team</p>
+            <nav class="footer-links">
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/terms">Terms</a>
+            </nav>
+        </div>
+    </footer>
+
 </body>
+
 
 </html>

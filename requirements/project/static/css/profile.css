@@ -1,93 +1,68 @@
-/* General reset and background */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
 body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
     color: #eaeaea;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
     min-height: 100vh;
-    line-height: 1.5;
-    padding-top: 80px;
+    line-height: 1.6;
+    gap: 15vh;
 }
 
-/* Navigation header */
-.nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.9);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 0.75rem 1rem;
-    z-index: 100;
+
+header{
+    background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(10px);
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: sticky;
+    z-index: 1000;
 }
 
-.nav h1 {
-    margin: 0;
-    font-size: 1.2rem;
+header h1 {
+    color: #f5d8a5;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
 }
 
-.nav h1 a {
-    color: #fdd395;
+header a {
+    color: #f5d8a5;
     text-decoration: none;
-    font-weight: 600;
-}
-
-.profile-icon {
-    display: flex;
-    gap: 1rem;
-    font-size: 0.9rem;
-    align-items: center;
-}
-
-.profile-icon a {
-    color: #eaeaea;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
-}
-
-.profile-icon .btn-primary {
-    background: linear-gradient(135deg, #e07b00 0%, #f69500 100%);
-    color: white;
     font-weight: 500;
-    border-radius: 8px;
-    padding: 0.5rem 1rem;
-    font-size: 0.85rem;
+    padding: 10px 16px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    margin-left: 0.5rem;
 }
 
-.profile-icon .btn-primary:hover {
-    background: linear-gradient(135deg, #c96a00 0%, #e07b00 100%);
+header a:hover {
+    background: rgba(255, 255, 255, 0.08);
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(224, 123, 0, 0.3);
 }
 
-.profile-icon a:not(.btn-primary):hover {
-    color: #fdd395;
-    background: rgba(255, 255, 255, 0.05);
-}
-
-/* Container */
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 2rem 1rem;
-    min-height: calc(100vh - 80px);
-}
-
-/* Profile card */
 .profile {
     background: rgba(255, 255, 255, 0.025);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
     padding: 2rem;
-    width: 100%;
+    width: 60%;
     max-width: 480px;
     box-shadow: 
         0 8px 32px rgba(0, 0, 0, 0.3),
@@ -185,11 +160,11 @@ body {
         max-width: 420px;
     }
     
-    .nav {
+    header {
         padding: 0.5rem 0.75rem;
     }
     
-    .nav h1 {
+    header h1 {
         font-size: 1.1rem;
     }
     
@@ -205,13 +180,6 @@ body {
 }
 
 @media (max-width: 600px) {
-    body {
-        padding-top: 70px;
-    }
-    
-    .container {
-        padding: 1rem 0.5rem;
-    }
     
     .profile {
         padding: 1.5rem;
@@ -254,7 +222,7 @@ body {
         margin-top: 1.25rem;
     }
     
-    .nav {
+    header {
         flex-direction: column;
         gap: 0.5rem;
         padding: 0.5rem;

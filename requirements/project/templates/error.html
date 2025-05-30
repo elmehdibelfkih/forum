@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/error.css">
     <title>Document</title>
 </head>
+
 <body>
-        <div class="error-container">
+    <div class="error-container">
         <h1 class="error-title">{{.ErrorTitle}}</h1>
         <p class="error-message">{{.ErrorMessage}}</p>
         <p class="error-description">{{.ErrorDescription}}</p>
@@ -18,5 +20,17 @@
         <a href="/" class="home-button">Go Home</a>
     </div>
     <div class="error-code">{{.StatusCode}}</div>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025 FORUM — Built with ❤️ by the Forum Team</p>
+            <nav class="footer-links">
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/terms">Terms</a>
+            </nav>
+        </div>
+    </footer>
 </body>
+
 </html>

@@ -1,4 +1,11 @@
-/* General page style */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
 body {
     margin: 0;
     padding: 0;
@@ -7,45 +14,49 @@ body {
     color: #eaeaea;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
     align-items: center;
+    width: 100vw;
     min-height: 100vh;
     line-height: 1.6;
+    gap: 15vh;
 }
 
-/* Header Navigation */
-.nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(15px);
+
+header{
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem 2rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 1rem 2rem;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: sticky;
     z-index: 1000;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
 
-#project_header h1 {
-    margin: 0;
-    font-size: 1.8rem;
+header h1 {
+    color: #f5d8a5;
+    font-size: 1.5rem;
     font-weight: 700;
     letter-spacing: -0.02em;
 }
 
-#project_header h1 a {
-    color: #fdd395;
+header a {
+    color: #f5d8a5;
     text-decoration: none;
-    transition: color 0.3s ease;
+    font-weight: 500;
+    padding: 10px 16px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    margin-left: 0.5rem;
 }
 
-#project_header h1 a:hover {
-    color: #f69500;
+header a:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-1px);
 }
+
 
 .container {
     display: flex;
@@ -90,12 +101,7 @@ body {
     border-color: rgba(255, 107, 107, 0.2);
 }
 
-/* Add top padding to body to account for fixed header */
-body {
-    padding-top: 80px;
-}
 
-/* Error message */
 .error-container {
     background: rgba(255, 60, 60, 0.08);
     border: 1px solid rgba(255, 77, 77, 0.4);
@@ -232,7 +238,7 @@ button[type="submit"]:active {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .nav {
+    header {
         padding: 1rem;
         flex-direction: column;
         gap: 1rem;
@@ -244,10 +250,6 @@ button[type="submit"]:active {
     
     .profile-icon {
         gap: 1rem;
-    }
-    
-    body {
-        padding-top: 120px;
     }
 }
 

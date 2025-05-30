@@ -1,9 +1,10 @@
 {{define "post_component"}}
-<article class="post" id="{{.Id}}">
-  <header>
+<div class="post">
+
+  <div class="post_head">
     <h2>{{.Title}}</h2>
     <div>Published by <strong>{{.Publisher}}</strong> in <em>{{range .Catigories}}{{.}}, {{end}}</em></div>
-  </header>
+  </div>
 
   <section>
     <p>{{.Content}}</p>
@@ -20,7 +21,6 @@
         <input type="hidden" name="post_id" value="{{.Id}}">
         <button type="submit">👎{{.Dislikes}}</button>
       </form>
-
     </div>
     <form id="form_comment" action="/comment" method="POST">
           <input type="hidden" name="post_id" value="{{.Id}}">
@@ -39,7 +39,6 @@
     {{else}}
       <p>No comments yet.</p>
     {{end}}
-
     {{if not .IsEdited}}
       <p><time datetime="{{.Created_at}}">Created: {{.Created_at}}</time></p>
     {{else}}
@@ -49,5 +48,5 @@
       </p>
     {{end}}
   </footer>
-</article>
+</div>
 {{end}}

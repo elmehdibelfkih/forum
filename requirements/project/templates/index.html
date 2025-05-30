@@ -10,63 +10,73 @@
 </head>
 
 <body>
-    <header class="nav">
+    <header>
         <div id="project_header">
             <h1><a href="/">FORUM</a></h1>
         </div>
-        <div class="container">
-            <div class="profile-icon">
-                {{if .Authenticated}}
-                <a href="/profile">{{.Username}}</a>
-                <a href="/logout">Logout</a>
-                <a href="/post" class="btn-primary">New Post</a>
-                {{else}}
-                <a href="/login">Login</a>
-                <a href="/register">Sign Up</a>
-                <a href="/post" class="btn-primary">New Post</a>
+        <form action="/filterby" method="GET">
+            <h3>Filter by Categories</h3>
+
+
+            <select name="filter" id="category-filter">
+                {{range $key, $value := .Fields}}
+                <option value="{{$key}}">{{$key}}</option>
                 {{end}}
-            </div>
+
+                {{if .Authenticated}}
+                <option value="Owned">Owned</option>
+                <option value="Likes">Likes</option>
+                {{end}}
+            </select>
+            <input type="submit" value="Submit">
+
+        </form>
+        </section>
+
+        <div class="profile-icon">
+            {{if .Authenticated}}
+            <a href="/profile">{{.Username}}</a>
+            <a href="/logout">Logout</a>
+            <a href="/post" class="btn-primary">New Post</a>
+            {{else}}
+            <a href="/login">Login</a>
+            <a href="/register">Sign Up</a>
+            <a href="/post" class="btn-primary">New Post</a>
+            {{end}}
         </div>
+
     </header>
 
     <section class="filter-section">
-        <form action="/filterby" method="GET">
-            <h2>Filter by Categories</h2>
-            <div class="filters">
-                <select name="filter" id="category-filter">
 
-                    {{range $key, $value := .Fields}}
-                    <option value="{{$key}}">{{$key}}</option>
-                    {{end}}
-
-                    {{if .Authenticated}}
-                    <option value="Owned">Owned</option>
-                    <option value="Likes">Likes</option>
-                    {{end}}
-                </select>
-                <input type="submit" value="Submit">
+        <main class="home">
+            <div class="container">
+                {{block "content" .Posts}}{{end}}
             </div>
-        </form>
-    </section>
+        </main>
 
-    <main class="home">
-        <div class="container">
-            {{block "content" .Posts}}{{end}}
-        </div>
-    </main>
-
-    <div class="pagination">
-        {{if .HasPrev}}
-        <a href="/?page={{.PrevPage}}">Previous</a>
-        {{end}}
-        {{if .PrintCurrentPage}}
+        <div class="pagination">
+            {{if .HasPrev}}
+            <a href="/?page={{.PrevPage}}">Previous</a>
+            {{end}}
+            {{if .PrintCurrentPage}}
             Page {{.CurrentPage}}
-        {{end}}
-        {{if .HasNext}}
-        <a href="/?page={{.NextPage}}">Next</a>
-        {{end}}
-    </div>
+            {{end}}
+            {{if .HasNext}}
+            <a href="/?page={{.NextPage}}">Next</a>
+            {{end}}
+        </div>
 
+        <footer>
+            <div class="footer-container">
+                <p>&copy; 2025 FORUM — Built with ❤️ by the Forum Team</p>
+                <nav class="footer-links">
+                    <a href="/about">About</a>
+                    <a href="/contact">Contact</a>
+                    <a href="/terms">Terms</a>
+                </nav>
+            </div>
+        </footer>
 </body>
 
 </html>

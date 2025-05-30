@@ -9,7 +9,8 @@
 </head>
 
 <body>
-    <header class="nav">
+
+    <header>
         <div id="project_header">
             <h1><a href="/">FORUM</a></h1>
         </div>
@@ -19,25 +20,34 @@
         </div>
     </header>
 
-    <div class="container">
-        <div class="profile">
-            <div>
-                Username : <span class="to-right">{{.Username}} <a href="/profile/update/username"><span
-                            class="update-icon">🔄</span></a></span>
-            </div>
-            <div>
-                Email : <span class="to-right">{{.Email}} <a href="/profile/update/email"><span
-                            class="update-icon">🔄</span></a></span>
-            </div>
-            <div>
-                Password <span class="to-right"><a href="/profile/update/password"><span
-                            class="update-icon">🔄</span></a></span>
-            </div>
 
-            <a class="delete" href="/profile/delete">Delete This Account</a>
+    <div class="profile">
+        <div>
+            Username : <span class="to-right">{{.Username}} <a href="/profile/update/username"><span
+                        class="update-icon">↻</span></a></span>
         </div>
+        <div>
+            Email : <span class="to-right">{{.Email}} <a href="/profile/update/email"><span
+                        class="update-icon">↻</span></a></span>
+        </div>
+        <div>
+            Password <span class="to-right">***********<a href="/profile/update/password"><span
+                        class="update-icon">↻</span></a></span>
+        </div>
+
+        <a class="delete" href="/profile/delete">Delete This Account</a>
     </div>
 
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025 FORUM — Built with ❤️ by the Forum Team</p>
+            <nav class="footer-links">
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/terms">Terms</a>
+            </nav>
+        </div>
+    </footer>
 
 </body>
 
