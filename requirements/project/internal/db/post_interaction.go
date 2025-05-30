@@ -15,7 +15,6 @@ func AddNewPost(user_id int, titel string, content string) (int, error) {
 	return int(id), err
 }
 
-// TODO: add offset and limit
 func GetAllPostsInfo(page int) (repo.PageData, error) {
 
 	var data repo.PageData

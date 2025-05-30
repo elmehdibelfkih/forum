@@ -11,72 +11,95 @@
 
 <body>
     <header>
+
         <div id="project_header">
             <h1><a href="/">FORUM</a></h1>
         </div>
-        <form action="/filterby" method="GET">
-            <h3>Filter by Categories</h3>
 
+        <!-- filter section -->
+        <section class="filter-section"></section>
 
+        <h3>Filter by Categories</h3>
+
+        <select id="category-filter">
+            <option value="">-- Select a category --</option>
+            {{range $key, $value := .Fields}}
+            <option value="/?filter={{$key}}">{{$key}}</option>
+            {{end}}
+
+            {{if .Authenticated}}
+            <option value="/?filter=Owned">Owned</option>
+            <option value="/?filter=Likes">Likes</option>
+            {{end}}
+        </select>
+
+        <script>
+            document.getElementById('category-filter').addEventListener('change', function () {
+                if (this.value) {
+                    window.location.href = this.value;
+                }
+            });
+        </script>
+
+        <!-- <form action="/filterby" method="POST"> -->
+        <!-- <h3>Filter by Categories</h3>
             <select name="filter" id="category-filter">
                 {{range $key, $value := .Fields}}
                 <option value="{{$key}}">{{$key}}</option>
+                <a href="/?filter={{$key}}">{{$key}}</a>
                 {{end}}
-
                 {{if .Authenticated}}
                 <option value="Owned">Owned</option>
                 <option value="Likes">Likes</option>
                 {{end}}
-            </select>
-            <input type="submit" value="Submit">
-
-        </form>
+            </select> -->
+        <!-- <input type="submit" value="Submit"> -->
+        <!-- </form> -->
         </section>
 
         <div class="profile-icon">
             {{if .Authenticated}}
+            <a href="/post" class="btn-primary">New Post</a>
             <a href="/profile">{{.Username}}</a>
             <a href="/logout">Logout</a>
-            <a href="/post" class="btn-primary">New Post</a>
             {{else}}
             <a href="/login">Login</a>
             <a href="/register">Sign Up</a>
-            <a href="/post" class="btn-primary">New Post</a>
             {{end}}
         </div>
 
     </header>
 
-    <section class="filter-section">
 
-        <main class="home">
-            <div class="container">
-                {{block "content" .Posts}}{{end}}
-            </div>
-        </main>
 
-        <div class="pagination">
-            {{if .HasPrev}}
-            <a href="/?page={{.PrevPage}}">Previous</a>
-            {{end}}
-            {{if .PrintCurrentPage}}
-            Page {{.CurrentPage}}
-            {{end}}
-            {{if .HasNext}}
-            <a href="/?page={{.NextPage}}">Next</a>
-            {{end}}
+    <main class="home">
+        <div class="container">
+            {{block "content" .Posts}}{{end}}
         </div>
+    </main>
 
-        <footer>
-            <div class="footer-container">
-                <p>&copy; 2025 FORUM — Built with ❤️ by the Forum Team</p>
-                <nav class="footer-links">
-                    <a href="/about">About</a>
-                    <a href="/contact">Contact</a>
-                    <a href="/terms">Terms</a>
-                </nav>
-            </div>
-        </footer>
+    <div class="pagination">
+        {{if .HasPrev}}
+        <a href="{{.PrevPage}}">◀</a>
+        {{end}}
+        {{if .PrintCurrentPage}}
+        Page {{.CurrentPage}}
+        {{end}}
+        {{if .HasNext}}
+        <a href="{{.NextPage}}">▶</a>
+        {{end}}
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025 FORUM — Built with ❤️ by the Forum Team</p>
+            <nav class="footer-links">
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/terms">Terms</a>
+            </nav>
+        </div>
+    </footer>
 </body>
 
 </html>
