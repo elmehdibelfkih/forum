@@ -3,21 +3,35 @@ package repository
 const (
 	// INSERT queries
 	INSERT_NEW_POST = `
-  INSERT INTO posts (user_id, title, content) VALUES (?, ?, ?);
-  UPDATE post_metadata SET post_count = post_count + 1;
-  `
-	INIT_POST_META_DATA = `INSERT OR IGNORE INTO post_metadata (id, post_count) VALUES (1, 0);`
-	INIT_FIELDS_QUERY   = `INSERT OR IGNORE INTO categories (name) VALUES (?)`
+                            INSERT INTO posts (user_id, title, content) VALUES (?, ?, ?);
+                            UPDATE post_metadata SET post_count = post_count + 1;`
+	INSERT_NEW_COMMENT      = `INSERT INTO comments (user_id, post_id, comment) VALUES (?, ?, ?)`
+	INIT_POST_META_DATA     = `INSERT OR IGNORE INTO post_metadata (id, post_count) VALUES (1, 0);`
+	INIT_FIELDS_QUERY       = `INSERT OR IGNORE INTO categories (name) VALUES (?)`
+	INSERT_NEW_LIKE_DISLIKE = `INSERT INTO likes_dislikes (user_id, post_id, is_like, is_dislike) VALUES (?, ?, ?, ?)`
+	MAP_POSTS_WITH_CATEGORY = `INSERT INTO post_categories (post_id, category_id) VALUES (?, ?)`
 
+	// DELETE queries
 	DELETE_POST = `
-  DELETE FROM posts WHERE id = ?;
-  UPDATE post_metadata SET post_count = post_count - 1;
-`
+                DELETE FROM posts WHERE id = ?;
+                UPDATE post_metadata SET post_count = post_count - 1;`
+
+	// SELECT queries
+	IS_POST_EXIST      = `SELECT 1 FROM posts WHERE id = ? LIMIT 1`
+	IS_LIKED           = `SELECT is_like FROM likes_dislikes WHERE user_id = ? AND post_id = ?`
+	IS_DISLIKED        = `SELECT is_dislike FROM likes_dislikes WHERE user_id = ? AND post_id = ?`
+	SELECT_TODAY_POSTS = `SELECT COUNT(*) FROM posts WHERE user_id = ?  AND created_at >= DATE('now')` // FIXME: fix the time
+	SELECT_CATEGORY_ID = `SELECT id FROM categories WHERE name = ?`
+
+
+	// UDDATE queries
+	UPDATE_LIKE    = `UPDATE likes_dislikes SET is_like = ?, is_dislike = 0 WHERE user_id = ? AND post_id = ?`
+	UPDATE_DISLIKE = `UPDATE likes_dislikes SET is_like = 0, is_dislike = ? WHERE user_id = ? AND post_id = ?`
 	GET_POST_COUNT = `SELECT post_count FROM post_metadata`
 
-	INSERT_NEW_COMMENT      = `INSERT INTO comments (user_id, post_id, comment) VALUES (?, ?, ?)`
-	INSERT_NEW_LIKE_DISLIKE = `INSERT INTO likes_dislikes (user_id, post_id, is_like, is_dislike) VALUES (?, ?, ?, ?)`
-	GET_POST_BYLIKES        = `
+
+  // JOIN queries
+	GET_POST_BYLIKES = `
 	 SELECT 
     p.id,
     p.user_id,
@@ -30,38 +44,38 @@ const (
     IFNULL(cm.comments, '') AS comments,
     p.created_at,
     p.updated_at
-    FROM posts p
-    JOIN users u ON u.id = p.user_id
-    LEFT JOIN (
-    SELECT 
-        pc.post_id,
-        GROUP_CONCAT(DISTINCT c.name) AS categories
-    FROM post_categories pc
-    JOIN categories c ON c.id = pc.category_id
+  FROM posts p
+  JOIN users u ON u.id = p.user_id
+  LEFT JOIN (
+  SELECT 
+    pc.post_id,
+  GROUP_CONCAT(DISTINCT c.name) AS categories
+  FROM post_categories pc
+  JOIN categories c ON c.id = pc.category_id
     GROUP BY pc.post_id
     ) pc ON pc.post_id = p.id
-    LEFT JOIN (
-    SELECT 
-        ld.post_id,
-        COUNT(DISTINCT CASE WHEN ld.is_like = 1 THEN ld.user_id END) AS likes,
-        COUNT(DISTINCT CASE WHEN ld.is_dislike = 1 THEN ld.user_id END) AS dislikes
-    FROM likes_dislikes ld
+  LEFT JOIN (
+  SELECT 
+    ld.post_id,
+    COUNT(DISTINCT CASE WHEN ld.is_like = 1 THEN ld.user_id END) AS likes,
+    COUNT(DISTINCT CASE WHEN ld.is_dislike = 1 THEN ld.user_id END) AS dislikes
+  FROM likes_dislikes ld
     GROUP BY ld.post_id 
     ) ld ON ld.post_id = p.id
-    LEFT JOIN (
-    SELECT 
-        cm.post_id,
-        GROUP_CONCAT(DISTINCT commenter.username || ':' || cm.comment ORDER BY datetime(cm.created_at) DESC) AS comments
-    FROM comments cm
-    JOIN users commenter ON commenter.id = cm.user_id
+  LEFT JOIN (
+  SELECT 
+    cm.post_id,
+    GROUP_CONCAT(DISTINCT commenter.username || ':' || cm.comment ORDER BY datetime(cm.created_at) DESC) AS comments
+  FROM comments cm
+  JOIN users commenter ON commenter.id = cm.user_id
     GROUP BY cm.post_id
     ) cm ON cm.post_id = p.id
-    WHERE p.id IN (
+  WHERE p.id IN (
       SELECT post_id FROM likes_dislikes WHERE user_id = ? AND is_like = 1
     )
-    ORDER BY p.created_at DESC;
+  ORDER BY p.created_at DESC
+  LIMIT ? OFFSET ?;
 `
-	// query to get all post by the owned user !!
 	GET_POST_BYOWNED = `
     SELECT 
     p.id,
@@ -102,7 +116,8 @@ const (
     GROUP BY cm.post_id
     ) cm ON cm.post_id = p.id
     WHERE p.user_id = ?
-      ORDER BY p.created_at DESC;
+      ORDER BY p.created_at DESC
+        LIMIT ? OFFSET ?;
 	`
 	GET_POST_BYCATEGORY = `
     SELECT 
@@ -126,21 +141,9 @@ const (
     LEFT JOIN users commenter ON commenter.id = cm.user_id
     WHERE c.name = ?
     GROUP BY p.id
-    ORDER BY p.created_at DESC;
+    ORDER BY p.created_at DESC
+    LIMIT ? OFFSET ?;
   `
-	// SELECT queries
-	IS_POST_EXIST           = `SELECT 1 FROM posts WHERE id = ? LIMIT 1`
-	IS_LIKED                = `SELECT is_like FROM likes_dislikes WHERE user_id = ? AND post_id = ?`
-	IS_DISLIKED             = `SELECT is_dislike FROM likes_dislikes WHERE user_id = ? AND post_id = ?`
-	MAP_POSTS_WITH_CATEGORY = `INSERT INTO post_categories (post_id, category_id) VALUES (?, ?)`
-	SELECT_TODAY_POSTS      = `SELECT COUNT(*) FROM posts WHERE user_id = ?  AND created_at >= DATE('now')` // FIXME: fix the time
-
-	//SELECT queries
-	SELECT_CATEGORY_ID = `SELECT id FROM categories WHERE name = ?`
-
-	// UDDATE queries
-	UPDATE_LIKE    = `UPDATE likes_dislikes SET is_like = ?, is_dislike = 0 WHERE user_id = ? AND post_id = ?`
-	UPDATE_DISLIKE = `UPDATE likes_dislikes SET is_like = 0, is_dislike = ? WHERE user_id = ? AND post_id = ?`
 
 	// todo: sort the comments by time
 	SELECT_ALL_POSTS = `

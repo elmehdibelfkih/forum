@@ -7,14 +7,14 @@ import (
 	repo "forum/internal/repository"
 )
 
-func Getposbytlikes(userId int) (repo.PageData, error) {
-	rows, err := repo.DB.Query(repo.GET_POST_BYLIKES, userId)
+func Getposbytlikes(userId int, page int) (repo.PageData, error) {
+	var data repo.PageData
+
+	rows, err := repo.DB.Query(repo.GET_POST_BYLIKES, userId, repo.PAGE_POSTS_QUANTITY, (page-1)*repo.PAGE_POSTS_QUANTITY)
 	if err != nil {
-		return repo.PageData{}, err
+		return data, err
 	}
 	defer rows.Close()
-
-	var data repo.PageData
 
 	for rows.Next() {
 		var post repo.Post
@@ -36,13 +36,9 @@ func Getposbytlikes(userId int) (repo.PageData, error) {
 		if err != nil {
 			return data, err
 		}
-
-		// Split categories if they exist
 		if categoriesStr != "" {
 			post.Catigories = strings.Split(categoriesStr, ",")
 		}
-
-		// Split and parse comments if they exist
 		if commentsStr != "" {
 			comments := strings.SplitSeq(commentsStr, ",")
 			for c := range comments {
@@ -55,33 +51,32 @@ func Getposbytlikes(userId int) (repo.PageData, error) {
 				}
 			}
 		}
-
-		// Check if the post was edited
-		post.IsEdited = post.Created_at != post.Updated_at
 		post.IsEdited = post.Created_at != post.Updated_at
 		post.IsLikedByUser, err = IsPostLikedByUser(post.UserId, post.Id)
 		if err != nil && err != sql.ErrNoRows {
 			return data, err
 		}
-
+		post.IsDislikedByUser, err = IsPostDisikedByUser(post.UserId, post.Id)
+		if err != nil && err != sql.ErrNoRows {
+			return data, err
+		}
 		data.Posts = append(data.Posts, post)
 	}
 
 	if err := rows.Err(); err != nil {
 		return data, err
 	}
-
 	return data, nil
 }
-func Getpostbyowner(userId int) (repo.PageData, error) {
 
-	rows, err := repo.DB.Query(repo.GET_POST_BYOWNED, userId)
+func Getpostbyowner(userId int, page int) (repo.PageData, error) {
+	var data repo.PageData
+
+	rows, err := repo.DB.Query(repo.GET_POST_BYOWNED, userId, repo.PAGE_POSTS_QUANTITY, (page-1)*repo.PAGE_POSTS_QUANTITY)
 	if err != nil {
-		return repo.PageData{}, err
+		return data, err
 	}
 	defer rows.Close()
-
-	var data repo.PageData
 
 	for rows.Next() {
 		var post repo.Post
@@ -103,16 +98,12 @@ func Getpostbyowner(userId int) (repo.PageData, error) {
 		if err != nil {
 			return data, err
 		}
-
-		// Split categories if they exist
 		if categoriesStr != "" {
 			post.Catigories = strings.Split(categoriesStr, ",")
 		}
-
-		// Split and parse comments if they exist
 		if commentsStr != "" {
-			comments := strings.Split(commentsStr, ",")
-			for _, c := range comments {
+			comments := strings.SplitSeq(commentsStr, ",")
+			for c := range comments {
 				parts := strings.SplitN(c, ":", 2)
 				if len(parts) == 2 {
 					commentMap := map[string]string{
@@ -122,37 +113,31 @@ func Getpostbyowner(userId int) (repo.PageData, error) {
 				}
 			}
 		}
-
-		// Check if the post was edited
-		post.IsEdited = post.Created_at != post.Updated_at
 		post.IsEdited = post.Created_at != post.Updated_at
 		post.IsLikedByUser, err = IsPostLikedByUser(post.UserId, post.Id)
 		if err != nil && err != sql.ErrNoRows {
 			return data, err
 		}
-
+		post.IsDislikedByUser, err = IsPostDisikedByUser(post.UserId, post.Id)
+		if err != nil && err != sql.ErrNoRows {
+			return data, err
+		}
 		data.Posts = append(data.Posts, post)
 	}
-
 	if err := rows.Err(); err != nil {
 		return data, err
 	}
-
 	return data, nil
 }
 
-func GePostbycategory(category string) (repo.PageData, error) {
+func GePostbycategory(category string, page int) (repo.PageData, error) {
+	var data repo.PageData
 
-	// i want to get all post by the category there the user want
-	// i have post_category and i have a table of category
-	// and when user creat post i register it at category_post...!!
-	rows, err := repo.DB.Query(repo.GET_POST_BYCATEGORY, category)
+	rows, err := repo.DB.Query(repo.GET_POST_BYCATEGORY, category, repo.PAGE_POSTS_QUANTITY, (page-1)*repo.PAGE_POSTS_QUANTITY)
 	if err != nil {
-		return repo.PageData{}, err
+		return data, err
 	}
 	defer rows.Close()
-
-	var data repo.PageData
 
 	for rows.Next() {
 		var post repo.Post
@@ -174,16 +159,12 @@ func GePostbycategory(category string) (repo.PageData, error) {
 		if err != nil {
 			return data, err
 		}
-
-		// Split categories if they exist
 		if categoriesStr != "" {
 			post.Catigories = strings.Split(categoriesStr, ",")
 		}
-
-		// Split and parse comments if they exist
 		if commentsStr != "" {
-			comments := strings.Split(commentsStr, ",")
-			for _, c := range comments {
+			comments := strings.SplitSeq(commentsStr, ",")
+			for c := range comments {
 				parts := strings.SplitN(c, ":", 2)
 				if len(parts) == 2 {
 					commentMap := map[string]string{
@@ -193,21 +174,19 @@ func GePostbycategory(category string) (repo.PageData, error) {
 				}
 			}
 		}
-
-		// Check if the post was edited
-		post.IsEdited = post.Created_at != post.Updated_at
 		post.IsEdited = post.Created_at != post.Updated_at
 		post.IsLikedByUser, err = IsPostLikedByUser(post.UserId, post.Id)
 		if err != nil && err != sql.ErrNoRows {
 			return data, err
 		}
+		post.IsDislikedByUser, err = IsPostDisikedByUser(post.UserId, post.Id)
+		if err != nil && err != sql.ErrNoRows {
+			return data, err
+		}
 		data.Posts = append(data.Posts, post)
 	}
-
 	if err := rows.Err(); err != nil {
 		return data, err
 	}
-
 	return data, nil
-
 }

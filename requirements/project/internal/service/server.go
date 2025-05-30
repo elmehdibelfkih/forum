@@ -50,9 +50,6 @@ func forumMux() *http.ServeMux {
 	// comment mux
 	forumux.HandleFunc("/comment", middleware.AuthMidleware(handler.CommentHandler))
 
-	// filter the post by category !!
-	forumux.HandleFunc("/filterby", middleware.AuthMidleware(handler.Selectfilter))
-
 	// static mux
 	forumux.HandleFunc("/static/", handler.StaticHandler)
 	return forumux

@@ -81,15 +81,15 @@ const (
 var IT_MAJOR_FIELDS = map[string]bool{
 	"Software Engineering":                         true,
 	"Artificial Intelligence and Machine Learning": true,
-	"Data Science & Big Data":                      true,
+	"Data Science and Big Data":                      true,
 	"Cybersecurity":                                true,
-	"Networking & Telecommunications":              true,
-	"Cloud Computing & Virtualization":             true,
-	"DevOps & SRE":                                 true,
+	"Networking and Telecommunications":              true,
+	"Cloud Computing and Virtualization":             true,
+	"DevOps and SRE":                                 true,
 	"Database Systems":                             true,
 	"Systems Programming":                          true,
 	"Reverse Engineering":                          true,
-	"Mobile & Embedded Development":                true,
+	"Mobile and Embedded Development":                true,
 	"IoT (Internet of Things)":                     true,
 }
 

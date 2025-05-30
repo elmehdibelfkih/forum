@@ -99,3 +99,9 @@ Error: stat static/css/post.css: no such file or directory
 2025/05/27 23:04:10 [2025-05-27T23:04:10+01:00] GET /static/css/post.css
 Error: stat static/css/post.css: no such file or directory
 2025/05/27 23:04:10 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
+2025/05/30 04:47:08 [2025-05-30T04:47:08+01:00] GET /
+Error: datatype mismatch
+2025/05/30 04:49:30 [2025-05-30T04:49:30+01:00] GET /
+Error: near "LIMIT": syntax error
+2025/05/30 04:50:27 [2025-05-30T04:50:27+01:00] GET /
+Error: datatype mismatch

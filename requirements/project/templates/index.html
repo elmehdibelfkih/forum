@@ -17,7 +17,7 @@
         </div>
 
         <!-- filter section -->
-        <section class="filter-section"></section>
+        <!-- <section class="filter-section"></section> -->
 
         <h3>Filter by Categories</h3>
 
@@ -40,22 +40,6 @@
                 }
             });
         </script>
-
-        <!-- <form action="/filterby" method="POST"> -->
-        <!-- <h3>Filter by Categories</h3>
-            <select name="filter" id="category-filter">
-                {{range $key, $value := .Fields}}
-                <option value="{{$key}}">{{$key}}</option>
-                <a href="/?filter={{$key}}">{{$key}}</a>
-                {{end}}
-                {{if .Authenticated}}
-                <option value="Owned">Owned</option>
-                <option value="Likes">Likes</option>
-                {{end}}
-            </select> -->
-        <!-- <input type="submit" value="Submit"> -->
-        <!-- </form> -->
-        </section>
 
         <div class="profile-icon">
             {{if .Authenticated}}
