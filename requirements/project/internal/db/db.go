@@ -31,7 +31,19 @@ func CreateTable(db *sql.DB) error {
 
 func InitData() {
 	for key := range repo.IT_MAJOR_FIELDS {
-		_, err := repo.DB.Exec(repo.INIT_FIELDS_QUERY, key)
+		ret, err := repo.DB.Exec(repo.INIT_FIELDS_QUERY, key)
+		if err != nil {
+			log.Fatal(err)
+		}
+		rowAf, err := ret.RowsAffected()
+		if rowAf == 0 {
+			break
+		}
+		catId, err := ret.LastInsertId()
+		if err != nil {
+			log.Fatal(err)
+		}
+		_, err = repo.DB.Exec(repo.INIT_POST_CATEGORIES_COUNT, int(catId))
 		if err != nil {
 			log.Fatal(err)
 		}

@@ -76,12 +76,14 @@ func Pagination(w http.ResponseWriter, r *http.Request, confMap map[string]any) 
 		confMap["PrevPage"] = r.URL.Path + "?" + prevQuery.Encode()
 	}
 
-	count, err := db.GetPostsCount()
+	count, err := db.GetPostsCount(query.Get("filter"))
+	println(count)
+
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return -1, err
 	}
-
+	// todo: fix the count logic
 	hasNext := count > page*repo.PAGE_POSTS_QUANTITY
 	confMap["HasNext"] = hasNext
 	if hasNext {
@@ -115,7 +117,7 @@ func GetPostsByFilter(w http.ResponseWriter, r *http.Request, confMap map[string
 	case "Owned":
 		sessionCookie, err := r.Cookie("session_token")
 		if err != nil || sessionCookie.Value == "" {
-			forumerror.BadRequest(w, r)
+			forumerror.Unauthorized(w, r)
 			return errors.New("err")
 		}
 		userId, exist, err := db.SelectUserSession(sessionCookie.Value)
@@ -124,7 +126,7 @@ func GetPostsByFilter(w http.ResponseWriter, r *http.Request, confMap map[string
 			return err
 		}
 		if !exist {
-			forumerror.BadRequest(w, r)
+			forumerror.Unauthorized(w, r)
 			return errors.New("not auth")
 		}
 		data, err := db.Getpostbyowner(userId, page)
@@ -136,7 +138,7 @@ func GetPostsByFilter(w http.ResponseWriter, r *http.Request, confMap map[string
 	case "Likes":
 		sessionCookie, err := r.Cookie("session_token")
 		if err != nil || sessionCookie.Value == "" {
-			forumerror.BadRequest(w, r)
+			forumerror.Unauthorized(w, r)
 			return errors.New("err")
 		}
 		userId, exist, err := db.SelectUserSession(sessionCookie.Value)
@@ -145,7 +147,7 @@ func GetPostsByFilter(w http.ResponseWriter, r *http.Request, confMap map[string
 			return err
 		}
 		if !exist {
-			forumerror.BadRequest(w, r)
+			forumerror.Unauthorized(w, r)
 			return errors.New("not auth")
 		}
 		data, err := db.Getposbytlikes(userId, page)

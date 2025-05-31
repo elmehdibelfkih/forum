@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func AuthMidleware(next http.HandlerFunc) http.HandlerFunc {
+func InjectUser(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		sessionCookie, err := r.Cookie("session_token")
 
@@ -31,7 +31,7 @@ func AuthMidleware(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		ctx := context.WithValue(r.Context(), repo.USER_ID_KEY, user_id)
+		ctx := context.WithValue(r.Context(), repo.USER_ID_KEY, user_id) //avoid collisions
 		next(w, r.WithContext(ctx))
 	}
 }

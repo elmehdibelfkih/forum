@@ -74,22 +74,22 @@ const (
 	PUBLIC contextKey = "Public"
 
 	PAGE_POSTS_QUANTITY = 10
-	DAY_POST_LIMIT = 10
+	DAY_POST_LIMIT      = 20
 )
 
 // IT major fields
 var IT_MAJOR_FIELDS = map[string]bool{
 	"Software Engineering":                         true,
 	"Artificial Intelligence and Machine Learning": true,
-	"Data Science and Big Data":                      true,
+	"Data Science and Big Data":                    true,
 	"Cybersecurity":                                true,
-	"Networking and Telecommunications":              true,
-	"Cloud Computing and Virtualization":             true,
-	"DevOps and SRE":                                 true,
+	"Networking and Telecommunications":            true,
+	"Cloud Computing and Virtualization":           true,
+	"DevOps and SRE":                               true,
 	"Database Systems":                             true,
 	"Systems Programming":                          true,
 	"Reverse Engineering":                          true,
-	"Mobile and Embedded Development":                true,
+	"Mobile and Embedded Development":              true,
 	"IoT (Internet of Things)":                     true,
 }
 

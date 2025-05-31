@@ -18,7 +18,7 @@ func AddNewPost(user_id int, titel string, content string) (int, error) {
 func GetAllPostsInfo(page int) (repo.PageData, error) {
 
 	var data repo.PageData
-	rows, err := repo.DB.Query(repo.SELECT_ALL_POSTS, repo.PAGE_POSTS_QUANTITY, (page-1) * repo.PAGE_POSTS_QUANTITY)
+	rows, err := repo.DB.Query(repo.SELECT_ALL_POSTS, repo.PAGE_POSTS_QUANTITY, (page-1)*repo.PAGE_POSTS_QUANTITY)
 	if err != nil {
 		return data, err
 	}
@@ -60,13 +60,13 @@ func GetAllPostsInfo(page int) (repo.PageData, error) {
 				}
 			}
 		}
-		
+
 		post.IsEdited = post.Created_at != post.Updated_at
-		post.IsLikedByUser , err = IsPostLikedByUser(post.UserId, post.Id)
+		post.IsLikedByUser, err = IsPostLikedByUser(post.UserId, post.Id)
 		if err != nil && err != sql.ErrNoRows {
 			return data, err
 		}
-		post.IsDislikedByUser , err = IsPostDisikedByUser(post.UserId, post.Id)
+		post.IsDislikedByUser, err = IsPostDisikedByUser(post.UserId, post.Id)
 		if err != nil && err != sql.ErrNoRows {
 			return data, err
 		}
@@ -194,14 +194,33 @@ func GetCategoryId(category string) (int, error) {
 }
 
 func MapPostCategory(postId int, categoryId int) error {
-	_, err := repo.DB.Exec(repo.MAP_POSTS_WITH_CATEGORY, postId, categoryId)
+	_, err := repo.DB.Exec(repo.MAP_POSTS_WITH_CATEGORY, postId, categoryId, categoryId)
 	return err
 }
 
-func GetPostsCount() (int, error) {
+func GetPostsCount(filter string) (int, error) {
 	var count int
+	var query string
 
-	err := repo.DB.QueryRow(repo.GET_POST_COUNT).Scan(&count)
+	if filter == "Owned" {
+		query = repo.GET_POST_COUNT
+	} else if filter == "Likes" {
+		query = repo.GET_POST_COUNT
+	} else if repo.IT_MAJOR_FIELDS[filter] {
+		query = repo.GET_POST_COUNT_BY_CAT
+		err := repo.DB.QueryRow(query, filter).Scan(&count)
+		
+		if err == sql.ErrNoRows {
+			return 0, nil
+		} else if err != nil {
+			return -1, err
+		}
+		return count, nil
+	} else {
+		query = repo.GET_POST_COUNT
+	}
+
+	err := repo.DB.QueryRow(query).Scan(&count)
 	if err == sql.ErrNoRows {
 		return 0, nil
 	} else if err != nil {

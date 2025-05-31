@@ -5,11 +5,14 @@ const (
 	INSERT_NEW_POST = `
                             INSERT INTO posts (user_id, title, content) VALUES (?, ?, ?);
                             UPDATE post_metadata SET post_count = post_count + 1;`
-	INSERT_NEW_COMMENT      = `INSERT INTO comments (user_id, post_id, comment) VALUES (?, ?, ?)`
-	INIT_POST_META_DATA     = `INSERT OR IGNORE INTO post_metadata (id, post_count) VALUES (1, 0);`
-	INIT_FIELDS_QUERY       = `INSERT OR IGNORE INTO categories (name) VALUES (?)`
-	INSERT_NEW_LIKE_DISLIKE = `INSERT INTO likes_dislikes (user_id, post_id, is_like, is_dislike) VALUES (?, ?, ?, ?)`
-	MAP_POSTS_WITH_CATEGORY = `INSERT INTO post_categories (post_id, category_id) VALUES (?, ?)`
+	INSERT_NEW_COMMENT         = `INSERT INTO comments (user_id, post_id, comment) VALUES (?, ?, ?)`
+	INIT_POST_META_DATA        = `INSERT OR IGNORE INTO post_metadata (id, post_count) VALUES (1, 0);`
+	INIT_FIELDS_QUERY          = `INSERT OR IGNORE INTO categories (name) VALUES (?)`
+	INIT_POST_CATEGORIES_COUNT = `INSERT OR IGNORE INTO post_categories_count (category_id, post_count) VALUES (?, 0)`
+	INSERT_NEW_LIKE_DISLIKE    = `INSERT INTO likes_dislikes (user_id, post_id, is_like, is_dislike) VALUES (?, ?, ?, ?)`
+  // todo: update the post categories count on delete
+	MAP_POSTS_WITH_CATEGORY    = `INSERT INTO post_categories (post_id, category_id) VALUES (?, ?);
+                                UPDATE post_categories_count SET post_count = post_count + 1 WHERE category_id = ?;`
 
 	// DELETE queries
 	DELETE_POST = `
@@ -23,14 +26,15 @@ const (
 	SELECT_TODAY_POSTS = `SELECT COUNT(*) FROM posts WHERE user_id = ?  AND created_at >= DATE('now')` // FIXME: fix the time
 	SELECT_CATEGORY_ID = `SELECT id FROM categories WHERE name = ?`
 
-
 	// UDDATE queries
 	UPDATE_LIKE    = `UPDATE likes_dislikes SET is_like = ?, is_dislike = 0 WHERE user_id = ? AND post_id = ?`
 	UPDATE_DISLIKE = `UPDATE likes_dislikes SET is_like = 0, is_dislike = ? WHERE user_id = ? AND post_id = ?`
 	GET_POST_COUNT = `SELECT post_count FROM post_metadata`
 
+  GET_POST_COUNT_BY_CAT = `SELECT pcc.post_count FROM post_categories_count pcc JOIN categories c ON pcc.category_id = c.id WHERE c.name = ?`
+  
 
-  // JOIN queries
+	// JOIN queries
 	GET_POST_BYLIKES = `
 	 SELECT 
     p.id,

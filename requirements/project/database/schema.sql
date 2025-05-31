@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS categories (
 );
 
 -- Post-Categories Many-to-Many Mapping Table
-CREATE TABLE IF NOT EXISTS post_categories (
+CREATE TABLE IF NOT EXISTS post_categories_count (
     post_id INTEGER NOT NULL,
     category_id INTEGER NOT NULL,
     PRIMARY KEY(post_id, category_id),
@@ -85,4 +85,11 @@ CREATE TABLE IF NOT EXISTS post_categories (
 CREATE TABLE IF NOT EXISTS post_metadata (
     id INTEGER PRIMARY KEY,
     post_count INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS post_categories_count (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    category_id INTEGER NOT NULL,
+    post_count INTEGER NOT NULL,
+    FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE CASCADE
 );

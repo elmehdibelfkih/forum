@@ -105,3 +105,7 @@ Error: datatype mismatch
 Error: near "LIMIT": syntax error
 2025/05/30 04:50:27 [2025-05-30T04:50:27+01:00] GET /
 Error: datatype mismatch
+2025/05/31 01:58:00 [2025-05-31T01:58:00+01:00] GET /
+Error: ambiguous column name: post_count
+2025/05/31 01:58:22 [2025-05-31T01:58:22+01:00] GET /
+Error: ambiguous column name: post_count
