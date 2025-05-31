@@ -11,8 +11,8 @@ import (
 )
 
 func ProfilHandler(w http.ResponseWriter, r *http.Request) {
-	user_id := r.Context().Value(repo.USER_ID_KEY).(int)
-	user, err := db.GetUserInfo(user_id)
+	userId := r.Context().Value(repo.USER_ID_KEY).(int)
+	user, err := db.GetUserInfo(userId)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return
@@ -27,8 +27,8 @@ func UpddateProfile(w http.ResponseWriter, r *http.Request) {
 		confMap = r.Context().Value(repo.ERROR_CASE).(map[string]any)
 	}
 
-	user_id := r.Context().Value(repo.USER_ID_KEY).(int)
-	user, err := db.GetUserInfo(user_id)
+	userId := r.Context().Value(repo.USER_ID_KEY).(int)
+	user, err := db.GetUserInfo(userId)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return
@@ -71,7 +71,7 @@ func SaveChanges(w http.ResponseWriter, r *http.Request) {
 }
 
 func SaveUsername(w http.ResponseWriter, r *http.Request) {
-	user_id := r.Context().Value(repo.USER_ID_KEY).(int)
+	userId := r.Context().Value(repo.USER_ID_KEY).(int)
 	new_username := r.FormValue("username")
 	password := r.FormValue("current")
 	if !utils.ValidUsername(new_username) {
@@ -80,7 +80,7 @@ func SaveUsername(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	hash, err := db.GetUserHashById(user_id)
+	hash, err := db.GetUserHashById(userId)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return
@@ -102,7 +102,7 @@ func SaveUsername(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = db.UpdateUsernmae(user_id, new_username)
+	err = db.UpdateUsernmae(userId, new_username)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return
@@ -112,7 +112,7 @@ func SaveUsername(w http.ResponseWriter, r *http.Request) {
 }
 
 func SaveEmail(w http.ResponseWriter, r *http.Request) {
-	user_id := r.Context().Value(repo.USER_ID_KEY).(int)
+	userId := r.Context().Value(repo.USER_ID_KEY).(int)
 	new_email := r.FormValue("email")
 	password := r.FormValue("current")
 	if !utils.ValidEmail(new_email) {
@@ -120,7 +120,7 @@ func SaveEmail(w http.ResponseWriter, r *http.Request) {
 		UpddateProfile(w, r.WithContext(ctx))
 		return
 	}
-	hash, err := db.GetUserHashById(user_id)
+	hash, err := db.GetUserHashById(userId)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return
@@ -142,7 +142,7 @@ func SaveEmail(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = db.UpdateEmail(user_id, new_email)
+	err = db.UpdateEmail(userId, new_email)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return
@@ -152,11 +152,11 @@ func SaveEmail(w http.ResponseWriter, r *http.Request) {
 }
 
 func SavePassword(w http.ResponseWriter, r *http.Request) {
-	user_id := r.Context().Value(repo.USER_ID_KEY).(int)
+	userId := r.Context().Value(repo.USER_ID_KEY).(int)
 	current := r.FormValue("current")
 	new := r.FormValue("new")
 	confirm := r.FormValue("confirm")
-	hash, err := db.GetUserHashById(user_id)
+	hash, err := db.GetUserHashById(userId)
 
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
@@ -183,7 +183,7 @@ func SavePassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = db.UpdatePassword(user_id, new_hash)
+	err = db.UpdatePassword(userId, new_hash)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return
@@ -198,8 +198,8 @@ func ServeDelete(w http.ResponseWriter, r *http.Request) {
 	if r.Context().Value(repo.ERROR_CASE) != nil {
 		confMap = r.Context().Value(repo.ERROR_CASE).(map[string]any)
 	}
-	user_id := r.Context().Value(repo.USER_ID_KEY).(int)
-	user, err := db.GetUserInfo(user_id)
+	userId := r.Context().Value(repo.USER_ID_KEY).(int)
+	user, err := db.GetUserInfo(userId)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return
@@ -209,9 +209,9 @@ func ServeDelete(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteConfirmation(w http.ResponseWriter, r *http.Request) {
-	user_id := r.Context().Value(repo.USER_ID_KEY).(int)
+	userId := r.Context().Value(repo.USER_ID_KEY).(int)
 	password := r.FormValue("password")
-	hash, err := db.GetUserHashById(user_id)
+	hash, err := db.GetUserHashById(userId)
 
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
@@ -223,7 +223,7 @@ func DeleteConfirmation(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	auth.LogoutHandler(w, r)
-	err = db.DeleteUser(user_id)
+	err = db.DeleteUser(userId)
 
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)

@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-func AddNewPost(user_id int, titel string, content string) (int, error) {
-	res, err := repo.DB.Exec(repo.INSERT_NEW_POST, user_id, titel, content)
+func AddNewPost(userId int, titel string, content string) (int, error) {
+	res, err := repo.DB.Exec(repo.INSERT_NEW_POST, userId, titel, content)
 	if err != nil {
 		return -1, err
 	}
@@ -209,7 +209,7 @@ func GetPostsCount(filter string) (int, error) {
 	} else if repo.IT_MAJOR_FIELDS[filter] {
 		query = repo.GET_POST_COUNT_BY_CAT
 		err := repo.DB.QueryRow(query, filter).Scan(&count)
-		
+
 		if err == sql.ErrNoRows {
 			return 0, nil
 		} else if err != nil {

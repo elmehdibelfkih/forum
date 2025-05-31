@@ -18,7 +18,12 @@ func RootHandler(w http.ResponseWriter, r *http.Request) { // todo: check the me
 	var confMap = make(map[string]any)
 
 	confMap["Fields"] = repo.IT_MAJOR_FIELDS
-	confMap["Authenticated"] = false
+	if r.Context().Value(repo.USER_ID_KEY).(int) == -1 {
+		confMap["Authenticated"] = false
+	} else {
+		confMap["Authenticated"] = true
+		confMap["Username"] = r.Context().Value(repo.USER_NAME).(string)
+	}
 
 	page, err := Pagination(w, r, confMap)
 	if err != nil {
@@ -27,27 +32,6 @@ func RootHandler(w http.ResponseWriter, r *http.Request) { // todo: check the me
 
 	err = GetPostsByFilter(w, r, confMap, page)
 	if err != nil {
-		return
-	}
-	sessionCookie, err := r.Cookie("session_token")
-	if err != nil || sessionCookie.Value == "" {
-		repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "index.html", confMap)
-		return
-	}
-	userId, exist, err := db.SelectUserSession(sessionCookie.Value)
-	if err != nil {
-		forumerror.InternalServerError(w, r, err)
-		return
-	}
-	if !exist {
-		repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "index.html", confMap)
-		return
-	}
-	user, err := db.GetUserInfo(userId)
-	confMap["Username"] = user.Username
-	confMap["Authenticated"] = true
-	if err != nil {
-		forumerror.InternalServerError(w, r, err)
 		return
 	}
 	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "index.html", confMap)
@@ -77,7 +61,6 @@ func Pagination(w http.ResponseWriter, r *http.Request, confMap map[string]any) 
 	}
 
 	count, err := db.GetPostsCount(query.Get("filter"))
-	println(count)
 
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
@@ -97,7 +80,7 @@ func Pagination(w http.ResponseWriter, r *http.Request, confMap map[string]any) 
 
 func GetPostsByFilter(w http.ResponseWriter, r *http.Request, confMap map[string]any, page int) error {
 	query := r.URL.Query()
-	
+
 	filter := query.Get("filter")
 	if filter == "" {
 		data, err := db.GetAllPostsInfo(page)
@@ -112,22 +95,12 @@ func GetPostsByFilter(w http.ResponseWriter, r *http.Request, confMap map[string
 		forumerror.BadRequest(w, r)
 		return errors.New("resource not found")
 	}
-	
+	userId := r.Context().Value(repo.USER_ID_KEY).(int)
 	switch filter {
 	case "Owned":
-		sessionCookie, err := r.Cookie("session_token")
-		if err != nil || sessionCookie.Value == "" {
+		if !confMap["Authenticated"].(bool) {
 			forumerror.Unauthorized(w, r)
 			return errors.New("err")
-		}
-		userId, exist, err := db.SelectUserSession(sessionCookie.Value)
-		if err != nil {
-			forumerror.InternalServerError(w, r, err)
-			return err
-		}
-		if !exist {
-			forumerror.Unauthorized(w, r)
-			return errors.New("not auth")
 		}
 		data, err := db.Getpostbyowner(userId, page)
 		if err != nil {
@@ -136,19 +109,9 @@ func GetPostsByFilter(w http.ResponseWriter, r *http.Request, confMap map[string
 		}
 		confMap["Posts"] = data
 	case "Likes":
-		sessionCookie, err := r.Cookie("session_token")
-		if err != nil || sessionCookie.Value == "" {
+		if !confMap["Authenticated"].(bool) {
 			forumerror.Unauthorized(w, r)
 			return errors.New("err")
-		}
-		userId, exist, err := db.SelectUserSession(sessionCookie.Value)
-		if err != nil {
-			forumerror.InternalServerError(w, r, err)
-			return err
-		}
-		if !exist {
-			forumerror.Unauthorized(w, r)
-			return errors.New("not auth")
 		}
 		data, err := db.Getposbytlikes(userId, page)
 		if err != nil {

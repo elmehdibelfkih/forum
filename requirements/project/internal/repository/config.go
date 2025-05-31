@@ -67,11 +67,9 @@ const (
 	SERVER_RUN_MESSAGE = "\033[2mServer running on http://localhost:8080\033[0m"
 
 	// context keys
-	USER_ID_KEY contextKey = "user_id"
+	USER_ID_KEY contextKey = "userId"
 	ERROR_CASE  contextKey = "error_case"
-
-	// user not login or login !
-	PUBLIC contextKey = "Public"
+	USER_NAME   contextKey = "userName"
 
 	PAGE_POSTS_QUANTITY = 10
 	DAY_POST_LIMIT      = 20

@@ -38,7 +38,7 @@ func SubmitLogin(w http.ResponseWriter, r *http.Request) {
 	exist, err := db.AlreadyExists(username, username)
 
 	if err != nil {
-		forumerror.InternalServerError(w,r, err)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
 
@@ -48,10 +48,10 @@ func SubmitLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user_id, hash, err := db.GetUserHashByUsername(username)
+	userId, hash, err := db.GetUserHashByUsername(username)
 
 	if err != nil {
-		forumerror.InternalServerError(w,r, err)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
 
@@ -71,10 +71,10 @@ func SubmitLogin(w http.ResponseWriter, r *http.Request) {
 		SameSite: http.SameSiteStrictMode,
 	})
 
-	err = db.UpdateUserSession(user_id, session)
+	err = db.UpdateUserSession(userId, session)
 
 	if err != nil {
-		forumerror.InternalServerError(w,r, err)
+		forumerror.InternalServerError(w, r, err)
 		return
 	}
 

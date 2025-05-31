@@ -17,17 +17,17 @@ Error: near "WHERE": syntax error
 2025/05/16 01:21:20 [2025-05-16T01:21:20+01:00] POST /like
 Error: CHECK constraint failed: is_like IN (0, 1)
 2025/05/16 02:28:52 [2025-05-16T02:28:52+01:00] POST /like
-Error: UNIQUE constraint failed: likes_dislikes.user_id, likes_dislikes.post_id
+Error: UNIQUE constraint failed: likes_dislikes.userId, likes_dislikes.post_id
 2025/05/16 02:29:00 [2025-05-16T02:29:00+01:00] POST /like
-Error: UNIQUE constraint failed: likes_dislikes.user_id, likes_dislikes.post_id
+Error: UNIQUE constraint failed: likes_dislikes.userId, likes_dislikes.post_id
 2025/05/16 02:32:06 [2025-05-16T02:32:06+01:00] POST /like
-Error: UNIQUE constraint failed: likes_dislikes.user_id, likes_dislikes.post_id
+Error: UNIQUE constraint failed: likes_dislikes.userId, likes_dislikes.post_id
 2025/05/16 02:32:12 [2025-05-16T02:32:12+01:00] POST /like
-Error: UNIQUE constraint failed: likes_dislikes.user_id, likes_dislikes.post_id
+Error: UNIQUE constraint failed: likes_dislikes.userId, likes_dislikes.post_id
 2025/05/16 20:36:16 [2025-05-16T20:36:16+01:00] POST /like
-Error: UNIQUE constraint failed: likes_dislikes.user_id, likes_dislikes.post_id
+Error: UNIQUE constraint failed: likes_dislikes.userId, likes_dislikes.post_id
 2025/05/16 20:37:05 [2025-05-16T20:37:05+01:00] POST /like
-Error: UNIQUE constraint failed: likes_dislikes.user_id, likes_dislikes.post_id
+Error: UNIQUE constraint failed: likes_dislikes.userId, likes_dislikes.post_id
 2025/05/16 23:33:33 [2025-05-16T23:33:33+01:00] POST /like
 Error: no such table: likejs_dislikes
 2025/05/16 23:37:59 [2025-05-16T23:37:59+01:00] POST /like
@@ -109,3 +109,7 @@ Error: datatype mismatch
 Error: ambiguous column name: post_count
 2025/05/31 01:58:22 [2025-05-31T01:58:22+01:00] GET /
 Error: ambiguous column name: post_count
+2025/05/31 14:22:05 [2025-05-31T14:22:05+01:00] GET /
+Error: no such column: userId
+2025/05/31 14:22:19 [2025-05-31T14:22:19+01:00] GET /
+Error: no such column: userId

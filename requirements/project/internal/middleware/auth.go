@@ -19,7 +19,7 @@ func AuthMidleware(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		user_id, exist, err := db.SelectUserSession(sessionCookie.Value)
+		userId, exist, err := db.SelectUserSession(sessionCookie.Value)
 
 		if err != nil {
 			forumerror.InternalServerError(w, r, err)
@@ -31,7 +31,7 @@ func AuthMidleware(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		ctx := context.WithValue(r.Context(), repo.USER_ID_KEY, user_id)
+		ctx := context.WithValue(r.Context(), repo.USER_ID_KEY, userId)
 		next(w, r.WithContext(ctx))
 	}
 }

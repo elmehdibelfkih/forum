@@ -24,7 +24,7 @@ func forumMux() *http.ServeMux {
 	forumux := http.NewServeMux()
 
 	// root mux
-	forumux.HandleFunc("/", handler.RootHandler)
+	forumux.HandleFunc("/", middleware.InjectUser(handler.RootHandler))
 
 	// authontication mux
 	forumux.HandleFunc("/login", auth.SwitchLogin)

@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"context"
-	auth "forum/internal/auth"
 	db "forum/internal/db"
 	forumerror "forum/internal/error"
 	repo "forum/internal/repository"
@@ -13,25 +12,32 @@ func InjectUser(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		sessionCookie, err := r.Cookie("session_token")
 
-		// At mdileware i will check if he is login
 		if err != nil || sessionCookie.Value == "" {
-			auth.ServLogin(w, r)
+			ctx := context.WithValue(r.Context(), repo.USER_ID_KEY, -1)
+			next(w, r.WithContext(ctx))
 			return
 		}
-
-		user_id, exist, err := db.SelectUserSession(sessionCookie.Value)
-
+		userId, exist, err := db.SelectUserSession(sessionCookie.Value)
 		if err != nil {
 			forumerror.InternalServerError(w, r, err)
 			return
 		}
-
+		ctx := r.Context()
 		if !exist {
-			auth.ServLogin(w, r)
+			ctx = context.WithValue(ctx, repo.USER_ID_KEY, -1)
+			next(w, r.WithContext(ctx))
 			return
 		}
 
-		ctx := context.WithValue(r.Context(), repo.USER_ID_KEY, user_id) //avoid collisions
+		ctx = context.WithValue(ctx, repo.USER_ID_KEY, userId)
+
+		usrName, err := db.GetUserNameById(userId)
+		if err != nil {
+			forumerror.InternalServerError(w, r, err)
+			return
+		}
+		ctx = context.WithValue(ctx, repo.USER_NAME, usrName)
 		next(w, r.WithContext(ctx))
+
 	}
 }
