@@ -113,3 +113,11 @@ Error: ambiguous column name: post_count
 Error: no such column: userId
 2025/05/31 14:22:19 [2025-05-31T14:22:19+01:00] GET /
 Error: no such column: userId
+2025/05/31 17:14:09 [2025-05-31T17:14:09+01:00] GET /
+Error: no such table: post_categories
+2025/05/31 17:14:11 [2025-05-31T17:14:11+01:00] GET /
+Error: no such table: post_categories
+2025/05/31 17:14:12 [2025-05-31T17:14:12+01:00] GET /
+Error: no such table: post_categories
+2025/05/31 17:15:00 [2025-05-31T17:15:00+01:00] GET /
+Error: no such table: post_categories

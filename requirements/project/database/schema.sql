@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS categories (
 );
 
 -- Post-Categories Many-to-Many Mapping Table
-CREATE TABLE IF NOT EXISTS post_categories_count (
+CREATE TABLE IF NOT EXISTS post_categories (
     post_id INTEGER NOT NULL,
     category_id INTEGER NOT NULL,
     PRIMARY KEY(post_id, category_id),
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS post_metadata (
     post_count INTEGER NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS post_categories_count (
+CREATE TABLE IF NOT EXISTS categories_count (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     category_id INTEGER NOT NULL,
     post_count INTEGER NOT NULL,
