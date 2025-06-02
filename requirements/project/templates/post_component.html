@@ -1,7 +1,7 @@
 {{define "post_component"}}
 <div class="post">
 
-  <div class="post_head">
+  <div class="post_head" id="{{.Id}}">
     <h2>{{.Title}}</h2>
     <div>Published by <strong>{{.Publisher}}</strong> in <em>{{range .Catigories}}{{.}}, {{end}}</em></div>
   </div>

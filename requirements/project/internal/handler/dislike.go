@@ -30,6 +30,6 @@ func DislikeHandler(w http.ResponseWriter, r *http.Request) {
 		forumerror.InternalServerError(w, r, err)
 		return
 	}
-	link := fmt.Sprintf("/#%d", postId)
+	link := fmt.Sprintf("%s#%d", r.Header.Get("Referer"), postId)
 	http.Redirect(w, r, link, http.StatusSeeOther)
 }
