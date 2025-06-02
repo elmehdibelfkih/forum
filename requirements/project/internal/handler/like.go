@@ -14,7 +14,6 @@ func LikeHandler(w http.ResponseWriter, r *http.Request) {
 		forumerror.MethodNotAllowed(w, r)
 		return
 	}
-
 	postId, err := strconv.ParseInt(r.FormValue("post_id"), 10, 0)
 	IsPostExist, err2 := db.IsPostExist(int(postId))
 	if err != nil || !IsPostExist {
@@ -29,6 +28,6 @@ func LikeHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 	}
-	link := fmt.Sprintf("/#%d", postId)
+	link := fmt.Sprintf("%s#%d", r.Header.Get("Referer"), postId)
 	http.Redirect(w, r, link, http.StatusSeeOther)
 }
