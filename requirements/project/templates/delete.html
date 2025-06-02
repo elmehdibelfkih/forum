@@ -27,13 +27,13 @@
         {{.Message}}
     </div>
     {{end}}
-    <div class="form-container">
         <form method="post"> <!-- TODO blocking enter press-->
-            <input type="password" name="password" id="password" placeholder="Enter Your Password"><br>
-            <button formaction="/profile">cancel</button>
-            <button formaction="/profile/delete/confirm">delete</button>
+            <input type="password" name="password" id="password" placeholder="Enter Your Password..."><br>
+            <div class="buttons">
+                <button formaction="/profile">cancel</button>
+                <button formaction="/profile/delete/confirm">delete</button>
+            </div>
         </form>
-    </div>
 
     <footer>
         <div class="footer-container">

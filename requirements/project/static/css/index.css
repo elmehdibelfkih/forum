@@ -17,6 +17,7 @@ body {
     align-items: center;
     min-height: 100vh;
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
 
@@ -398,13 +399,15 @@ main {
 }
 
 footer {
-    width: 100%;
+    bottom: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    width: 100vw;
     height: 10vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* border: 1px white solid; */
+    margin-top: 2vmin;
 }
 
 footer .footer-container {
@@ -484,6 +487,7 @@ footer .footer-container {
     justify-content: center;
     align-items: center;
 }
+
 .pagination a {
     /* border: 1px white solid; */
     color: #c96a00;

@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -19,10 +18,11 @@ body {
     min-height: 100vh;
     line-height: 1.6;
     gap: 15vh;
+    overflow-x: hidden;
 }
 
 
-header{
+header {
     background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(10px);
     padding: 1.5rem 2rem;
@@ -64,14 +64,14 @@ header a:hover {
     padding: 2rem;
     width: 60%;
     max-width: 480px;
-    box-shadow: 
+    box-shadow:
         0 8px 32px rgba(0, 0, 0, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
 }
 
 /* Profile items */
-.profile > div {
+.profile>div {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -80,17 +80,17 @@ header a:hover {
     font-size: 0.95rem;
 }
 
-.profile > div:last-of-type {
+.profile>div:last-of-type {
     border-bottom: none;
 }
 
-.profile > div:first-child {
+.profile>div:first-child {
     padding-top: 0;
 }
 
 /* Profile labels */
-.profile > div > span:first-child,
-.profile > div:not(:has(span)) {
+.profile>div>span:first-child,
+.profile>div:not(:has(span)) {
     color: #f0e6d2;
     font-weight: 500;
     min-width: 80px;
@@ -159,20 +159,20 @@ header a:hover {
     .profile {
         max-width: 420px;
     }
-    
+
     header {
         padding: 0.5rem 0.75rem;
     }
-    
+
     header h1 {
         font-size: 1.1rem;
     }
-    
+
     .profile-icon {
         font-size: 0.8rem;
         gap: 0.75rem;
     }
-    
+
     .profile-icon .btn-primary {
         padding: 0.4rem 0.8rem;
         font-size: 0.8rem;
@@ -180,27 +180,27 @@ header a:hover {
 }
 
 @media (max-width: 600px) {
-    
+
     .profile {
         padding: 1.5rem;
         margin: 0 0.5rem;
         max-width: 100%;
     }
-    
-    .profile > div {
+
+    .profile>div {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem;
         padding: 0.75rem 0;
     }
-    
+
     .to-right {
         align-self: flex-end;
         gap: 0.5rem;
     }
-    
-    .profile > div > span:first-child,
-    .profile > div:not(:has(span)) {
+
+    .profile>div>span:first-child,
+    .profile>div:not(:has(span)) {
         min-width: auto;
         width: 100%;
     }
@@ -210,29 +210,29 @@ header a:hover {
     .profile {
         padding: 1.25rem 1rem;
     }
-    
-    .profile > div {
+
+    .profile>div {
         font-size: 0.9rem;
         padding: 0.6rem 0;
     }
-    
+
     .delete {
         padding: 0.6rem 0.8rem;
         font-size: 0.85rem;
         margin-top: 1.25rem;
     }
-    
+
     header {
         flex-direction: column;
         gap: 0.5rem;
         padding: 0.5rem;
     }
-    
+
     .profile-icon {
         order: -1;
         align-self: flex-end;
     }
-    
+
     .update-icon {
         width: 20px;
         height: 20px;
@@ -244,20 +244,20 @@ header a:hover {
     .profile {
         padding: 1rem 0.75rem;
     }
-    
+
     .container {
         padding: 0.75rem 0.25rem;
     }
-    
-    .profile > div {
+
+    .profile>div {
         font-size: 0.85rem;
     }
-    
+
     .profile-icon .btn-primary {
         padding: 0.35rem 0.6rem;
         font-size: 0.75rem;
     }
-    
+
     .delete {
         font-size: 0.8rem;
     }
