@@ -67,7 +67,6 @@ func Pagination(w http.ResponseWriter, r *http.Request, confMap map[string]any) 
 	}
 
 	count, err := db.GetPostsCount(query.Get("filter"), r.Context().Value(repo.USER_ID_KEY).(int))
-	println(count)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return -1, err
