@@ -28,11 +28,11 @@
         <h4>post</h4>
         <form action="/post" method="POST">
             <div>
-                <input type="text" id="title" name="title" placeholder="title..." maxlength="50" required>
+                <input type="text" id="title" name="title" placeholder="title..." minlength="1" maxlength="100" required>
             </div>
 
             <div>
-                <textarea id="content" name="content" maxlength="400" placeholder="insert content here..."
+                <textarea id="content" name="content" minlength="1" maxlength="10000" placeholder="insert content here..."
                     required></textarea>
             </div>
 
