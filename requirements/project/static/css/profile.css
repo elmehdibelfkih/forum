@@ -13,6 +13,7 @@ body {
     color: #eaeaea;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     width: 100vw;
     min-height: 100vh;
@@ -152,6 +153,23 @@ header a:hover {
     color: #ffcccc;
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(255, 60, 60, 0.2);
+}
+
+footer {
+    bottom: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2vmin;
+}
+
+footer .footer-container {
+    width: fit-content;
+    height: fit-content;
 }
 
 /* Responsive breakpoints */

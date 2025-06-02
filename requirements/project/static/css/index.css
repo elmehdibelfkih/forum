@@ -480,11 +480,11 @@ footer .footer-container {
 
 .pagination {
     /* border: 1px white solid; */
-    width: 10vw;
+    width: 20vw;
     height: 10vh;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-evenly;
     align-items: center;
 }
 
