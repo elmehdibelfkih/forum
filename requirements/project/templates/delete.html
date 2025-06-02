@@ -15,9 +15,9 @@
         </div>
         <div class="container">
             <div class="profile-icon">
+                <a href="/post" class="btn-primary">New Post</a>
                 <a href="/profile">{{.Username}}</a>
                 <a href="/logout">Logout</a>
-                <a href="/post" class="btn-primary">New Post</a>
             </div>
         </div>
     </header>
@@ -29,8 +29,7 @@
     {{end}}
     <div class="form-container">
         <form method="post"> <!-- TODO blocking enter press-->
-            <label for="password">Enter Your Password</label><br>
-            <input type="password" name="password" id="password"><br>
+            <input type="password" name="password" id="password" placeholder="Enter Your Password"><br>
             <button formaction="/profile">cancel</button>
             <button formaction="/profile/delete/confirm">delete</button>
         </form>
@@ -39,11 +38,6 @@
     <footer>
         <div class="footer-container">
             <p>&copy; 2025 FORUM — Built with ❤️ by the Forum Team</p>
-            <!-- <nav class="footer-links">
-                <a href="/about">About</a>
-                <a href="/contact">Contact</a>
-                <a href="/terms">Terms</a>
-            </nav> -->
         </div>
     </footer>
 </body>

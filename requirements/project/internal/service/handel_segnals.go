@@ -26,17 +26,7 @@ func HandleSignals(server *http.Server) {
 	if err := server.Shutdown(ctx); err != nil {
 		log.Printf("server shutdown error: %v", err)
 	}
-
-	// TODO: close any other ersources
 	db.CloseDB()
-
-	print("\033[31mshutdowning... \033[0m")
-	// for range 4 {
-	// 	print("\b\b\b\b    ")
-	// 	time.Sleep(100 * time.Millisecond)
-	// 	print("\b\b\b\b\033[31m... \033[0m")
-	// 	time.Sleep(200 * time.Millisecond)
-	// }
-	println()
+	println("\033[31mshutdowning... \033[0m")
 	fmt.Println("\033[32mExited cleanly.\033[31m")
 }

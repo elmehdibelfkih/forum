@@ -2,9 +2,8 @@ package db
 
 import (
 	"database/sql"
-	"strings"
-
 	repo "forum/internal/repository"
+	"strings"
 )
 
 func Getposbytlikes(userId int, page int) (repo.PageData, error) {

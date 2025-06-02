@@ -9,9 +9,13 @@ import (
 	"strconv"
 )
 
-func RootHandler(w http.ResponseWriter, r *http.Request) { // todo: check the methode
+func RootHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		forumerror.NotFoundError(w, r)
+		return
+	}
+	if r.Method != http.MethodGet {
+		forumerror.MethodNotAllowed(w, r)
 		return
 	}
 
@@ -71,7 +75,6 @@ func Pagination(w http.ResponseWriter, r *http.Request, confMap map[string]any) 
 		forumerror.InternalServerError(w, r, err)
 		return -1, err
 	}
-	// todo: fix the count logic
 	hasNext := count > page*repo.PAGE_POSTS_QUANTITY
 	confMap["HasNext"] = hasNext
 	if hasNext {

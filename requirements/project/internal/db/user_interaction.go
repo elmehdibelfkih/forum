@@ -176,4 +176,3 @@ func GetUserNameById(userId int) (string, error) {
 	}
 	return userName, nil
 }
-

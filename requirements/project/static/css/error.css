@@ -19,7 +19,7 @@ body {
 }
 
 
-header{
+header {
     background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(10px);
     padding: 1.5rem 2rem;
@@ -102,7 +102,7 @@ header a:hover {
     border-radius: 16px;
     padding: 3rem;
     text-align: center;
-    box-shadow: 
+    box-shadow:
         0 8px 32px rgba(0, 0, 0, 0.2),
         0 0 0 1px rgba(255, 255, 255, 0.05);
     position: relative;
@@ -197,33 +197,33 @@ header a:hover {
         padding: 1.5rem;
         gap: 1rem;
     }
-    
+
     #project_header h1 {
         margin-bottom: 0.5rem;
     }
-    
+
     .profile-icon {
         gap: 0.5rem;
     }
-    
+
     .profile-icon a {
         padding: 8px 12px;
         font-size: 0.9rem;
     }
-    
+
     .error-container {
         margin: 2rem 1rem;
         padding: 2rem 1.5rem;
     }
-    
+
     .error-title {
         font-size: 2rem;
     }
-    
+
     .error-message {
         font-size: 1.1rem;
     }
-    
+
     .error-code {
         font-size: 12rem;
         right: -20px;
@@ -234,25 +234,25 @@ header a:hover {
     .nav {
         padding: 1rem;
     }
-    
+
     .error-container {
         padding: 1.5rem;
         margin: 1rem 0.5rem;
     }
-    
+
     .error-title {
         font-size: 1.8rem;
     }
-    
+
     .error-details {
         padding: 1rem;
     }
-    
+
     .home-button {
         padding: 10px 16px;
         font-size: 0.9rem;
     }
-    
+
     .error-code {
         font-size: 8rem;
     }

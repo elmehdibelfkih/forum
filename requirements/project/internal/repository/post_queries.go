@@ -12,7 +12,7 @@ const (
 	INSERT_NEW_LIKE_DISLIKE    = `INSERT INTO likes_dislikes (user_id, post_id, is_like, is_dislike) VALUES (?, ?, ?, ?)`
 	// todo: update the post categories count on delete
 	MAP_POSTS_WITH_CATEGORY = `INSERT INTO post_categories (post_id, category_id) VALUES (?, ?);
-                                UPDATE categories_count SET post_count = post_count + 1 WHERE category_id = ?;`
+                            UPDATE categories_count SET post_count = post_count + 1 WHERE category_id = ?;`
 
 	// DELETE queries
 	DELETE_POST = `
@@ -23,15 +23,15 @@ const (
 	IS_POST_EXIST      = `SELECT 1 FROM posts WHERE id = ? LIMIT 1`
 	IS_LIKED           = `SELECT is_like FROM likes_dislikes WHERE user_id = ? AND post_id = ?`
 	IS_DISLIKED        = `SELECT is_dislike FROM likes_dislikes WHERE user_id = ? AND post_id = ?`
-	SELECT_TODAY_POSTS = `SELECT COUNT(*) FROM posts WHERE user_id = ?  AND created_at >= DATE('now')` // FIXME: fix the time
+	SELECT_TODAY_POSTS = `SELECT COUNT(*) FROM posts WHERE user_id = ?  AND created_at >= DATE('now')`
 	SELECT_CATEGORY_ID = `SELECT id FROM categories WHERE name = ?`
 
 	// UDDATE queries
-	UPDATE_LIKE    = `UPDATE likes_dislikes SET is_like = ?, is_dislike = 0 WHERE user_id = ? AND post_id = ?`
-	UPDATE_DISLIKE = `UPDATE likes_dislikes SET is_like = 0, is_dislike = ? WHERE user_id = ? AND post_id = ?`
-	GET_POST_COUNT = `SELECT post_count FROM post_metadata`
-  GET_OWNED_POST_COUNT = `SELECT COUNT(*) FROM posts WHERE user_id = ?`
-  GET_LIKED_POST_COUNT = `SELECT COUNT(*) FROM likes_dislikes WHERE user_id = ? AND is_like == 1`
+	UPDATE_LIKE          = `UPDATE likes_dislikes SET is_like = ?, is_dislike = 0 WHERE user_id = ? AND post_id = ?`
+	UPDATE_DISLIKE       = `UPDATE likes_dislikes SET is_like = 0, is_dislike = ? WHERE user_id = ? AND post_id = ?`
+	GET_POST_COUNT       = `SELECT post_count FROM post_metadata`
+	GET_OWNED_POST_COUNT = `SELECT COUNT(*) FROM posts WHERE user_id = ?`
+	GET_LIKED_POST_COUNT = `SELECT COUNT(*) FROM likes_dislikes WHERE user_id = ? AND is_like == 1`
 
 	GET_POST_COUNT_BY_CAT = `SELECT pcc.post_count FROM categories_count pcc JOIN categories c ON pcc.category_id = c.id WHERE c.name = ?`
 
