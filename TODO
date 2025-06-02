@@ -27,3 +27,5 @@ the values:
 
 FIXME: fix the pages titles
 
+FIXME: there is an error should be handled, if credentials are invalid, you should redirect to 
+		the same page to clear the form, to avoid repeatitive requests
