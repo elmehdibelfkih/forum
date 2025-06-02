@@ -1,7 +1,7 @@
-FIXME: change the input methods (input to textarea)
+// DONE: change the input methods (input to textarea)
 
-FIXME: fix the maxlength and minlength of all inputs 
-the values: 
+// DONE: fix the maxlength and minlength of all inputs 
+// the values: 
 	EMAIL_MIN_LEN = 6
 	EMAIL_MAX_LEN = 254
 
@@ -25,7 +25,7 @@ the values:
 	COMMENT_MIN_LEN = 1
 	COMMENT_MAX_LEN = 1_000
 
-FIXME: fix the pages titles
+// DONE: fix the pages titles
 
-FIXME: there is an error should be handled, if credentials are invalid, you should redirect to 
-		the same page to clear the form, to avoid repeatitive requests
+FIXME: 'there is an error should be handled, if credentials are invalid, you should redirect to \
+//       the same page to clear the form, to avoid repeatitive'
