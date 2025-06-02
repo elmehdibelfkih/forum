@@ -24,7 +24,7 @@ type User struct {
 
 type Post struct {
 	Id               int
-	UserId           int
+	PublisherId      int
 	Title            string
 	Content          string
 	Publisher        string

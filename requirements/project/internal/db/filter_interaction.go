@@ -22,7 +22,7 @@ func Getposbytlikes(userId int, page int) (repo.PageData, error) {
 
 		err := rows.Scan(
 			&post.Id,
-			&post.UserId,
+			&post.Publisher,
 			&post.Title,
 			&post.Content,
 			&post.Publisher,
@@ -52,14 +52,7 @@ func Getposbytlikes(userId int, page int) (repo.PageData, error) {
 			}
 		}
 		post.IsEdited = post.Created_at != post.Updated_at
-		post.IsLikedByUser, err = IsPostLikedByUser(post.UserId, post.Id)
-		if err != nil && err != sql.ErrNoRows {
-			return data, err
-		}
-		post.IsDislikedByUser, err = IsPostDisikedByUser(post.UserId, post.Id)
-		if err != nil && err != sql.ErrNoRows {
-			return data, err
-		}
+		post.IsLikedByUser = true
 		data.Posts = append(data.Posts, post)
 	}
 
@@ -84,7 +77,7 @@ func Getpostbyowner(userId int, page int) (repo.PageData, error) {
 
 		err := rows.Scan(
 			&post.Id,
-			&post.UserId,
+			&post.Publisher,
 			&post.Title,
 			&post.Content,
 			&post.Publisher,
@@ -114,11 +107,11 @@ func Getpostbyowner(userId int, page int) (repo.PageData, error) {
 			}
 		}
 		post.IsEdited = post.Created_at != post.Updated_at
-		post.IsLikedByUser, err = IsPostLikedByUser(post.UserId, post.Id)
+		post.IsLikedByUser, err = IsPostLikedByUser(userId, post.Id)
 		if err != nil && err != sql.ErrNoRows {
 			return data, err
 		}
-		post.IsDislikedByUser, err = IsPostDisikedByUser(post.UserId, post.Id)
+		post.IsDislikedByUser, err = IsPostDisikedByUser(userId, post.Id)
 		if err != nil && err != sql.ErrNoRows {
 			return data, err
 		}
@@ -130,7 +123,7 @@ func Getpostbyowner(userId int, page int) (repo.PageData, error) {
 	return data, nil
 }
 
-func GePostbycategory(category string, page int) (repo.PageData, error) {
+func GePostbycategory(category string, page int, userId int) (repo.PageData, error) {
 	var data repo.PageData
 
 	rows, err := repo.DB.Query(repo.GET_POST_BYCATEGORY, category, repo.PAGE_POSTS_QUANTITY, (page-1)*repo.PAGE_POSTS_QUANTITY)
@@ -145,7 +138,7 @@ func GePostbycategory(category string, page int) (repo.PageData, error) {
 
 		err := rows.Scan(
 			&post.Id,
-			&post.UserId,
+			&post.Publisher,
 			&post.Title,
 			&post.Content,
 			&post.Publisher,
@@ -175,11 +168,11 @@ func GePostbycategory(category string, page int) (repo.PageData, error) {
 			}
 		}
 		post.IsEdited = post.Created_at != post.Updated_at
-		post.IsLikedByUser, err = IsPostLikedByUser(post.UserId, post.Id)
+		post.IsLikedByUser, err = IsPostLikedByUser(userId, post.Id)
 		if err != nil && err != sql.ErrNoRows {
 			return data, err
 		}
-		post.IsDislikedByUser, err = IsPostDisikedByUser(post.UserId, post.Id)
+		post.IsDislikedByUser, err = IsPostDisikedByUser(userId, post.Id)
 		if err != nil && err != sql.ErrNoRows {
 			return data, err
 		}

@@ -15,7 +15,7 @@ func AddNewPost(userId int, titel string, content string) (int, error) {
 	return int(id), err
 }
 
-func GetAllPostsInfo(page int) (repo.PageData, error) {
+func GetAllPostsInfo(page int, userId int) (repo.PageData, error) {
 
 	var data repo.PageData
 	rows, err := repo.DB.Query(repo.SELECT_ALL_POSTS, repo.PAGE_POSTS_QUANTITY, (page-1)*repo.PAGE_POSTS_QUANTITY)
@@ -31,7 +31,7 @@ func GetAllPostsInfo(page int) (repo.PageData, error) {
 
 		err := rows.Scan(
 			&post.Id,
-			&post.UserId,
+			&post.Publisher,
 			&post.Title,
 			&post.Content,
 			&post.Publisher,
@@ -62,11 +62,11 @@ func GetAllPostsInfo(page int) (repo.PageData, error) {
 		}
 
 		post.IsEdited = post.Created_at != post.Updated_at
-		post.IsLikedByUser, err = IsPostLikedByUser(post.UserId, post.Id)
+		post.IsLikedByUser, err = IsPostLikedByUser(userId, post.Id)
 		if err != nil && err != sql.ErrNoRows {
 			return data, err
 		}
-		post.IsDislikedByUser, err = IsPostDisikedByUser(post.UserId, post.Id)
+		post.IsDislikedByUser, err = IsPostDisikedByUser(userId, post.Id)
 		if err != nil && err != sql.ErrNoRows {
 			return data, err
 		}
@@ -198,35 +198,43 @@ func MapPostCategory(postId int, categoryId int) error {
 	return err
 }
 
-func GetPostsCount(filter string) (int, error) {
+func GetPostsCount(filter string, userId int) (int, error) {
 	var count int
 	var query string
+	var param any
 
-	if filter == "Owned" {
-		query = repo.GET_POST_COUNT
-	} else if filter == "Likes" {
-		query = repo.GET_POST_COUNT
-	} else if repo.IT_MAJOR_FIELDS[filter] {
-		query = repo.GET_POST_COUNT_BY_CAT
-		err := repo.DB.QueryRow(query, filter).Scan(&count)
-
+	if filter == "" {
+		err := repo.DB.QueryRow(repo.GET_POST_COUNT).Scan(&count)
 		if err == sql.ErrNoRows {
 			return 0, nil
 		} else if err != nil {
 			return -1, err
 		}
 		return count, nil
-	} else {
-		query = repo.GET_POST_COUNT
 	}
 
-	err := repo.DB.QueryRow(query).Scan(&count)
+	if filter == "Owned" {
+		query = repo.GET_OWNED_POST_COUNT
+		param = userId
+
+	} else if filter == "Likes" {
+		query = repo.GET_LIKED_POST_COUNT
+		param = userId
+
+	} else if repo.IT_MAJOR_FIELDS[filter] {
+		query = repo.GET_POST_COUNT_BY_CAT
+		param = filter
+	}
+
+	err := repo.DB.QueryRow(query, param).Scan(&count)
+
 	if err == sql.ErrNoRows {
 		return 0, nil
 	} else if err != nil {
 		return -1, err
 	}
 	return count, nil
+
 }
 
 func IsUserCanPostToday(userId int) (bool, error) {

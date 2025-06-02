@@ -40,6 +40,12 @@ func RootHandler(w http.ResponseWriter, r *http.Request) { // todo: check the me
 func Pagination(w http.ResponseWriter, r *http.Request, confMap map[string]any) (int, error) {
 	query := r.URL.Query()
 	page := 1
+	filter := query.Get("filter")
+
+	if filter != "" && filter != "Owned" && filter != "Likes" && !repo.IT_MAJOR_FIELDS[filter] {
+		forumerror.BadRequest(w, r)
+		return -1, errors.New("invalid filter")
+	}
 
 	if pageStr := query.Get("page"); pageStr != "" {
 		p, err := strconv.Atoi(pageStr)
@@ -60,8 +66,8 @@ func Pagination(w http.ResponseWriter, r *http.Request, confMap map[string]any) 
 		confMap["PrevPage"] = r.URL.Path + "?" + prevQuery.Encode()
 	}
 
-	count, err := db.GetPostsCount(query.Get("filter"))
-
+	count, err := db.GetPostsCount(query.Get("filter"), r.Context().Value(repo.USER_ID_KEY).(int))
+	println(count)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return -1, err
@@ -80,10 +86,11 @@ func Pagination(w http.ResponseWriter, r *http.Request, confMap map[string]any) 
 
 func GetPostsByFilter(w http.ResponseWriter, r *http.Request, confMap map[string]any, page int) error {
 	query := r.URL.Query()
+	userId := r.Context().Value(repo.USER_ID_KEY).(int)
 
 	filter := query.Get("filter")
 	if filter == "" {
-		data, err := db.GetAllPostsInfo(page)
+		data, err := db.GetAllPostsInfo(page, userId)
 		if err != nil {
 			forumerror.InternalServerError(w, r, err)
 			return err
@@ -95,7 +102,6 @@ func GetPostsByFilter(w http.ResponseWriter, r *http.Request, confMap map[string
 		forumerror.BadRequest(w, r)
 		return errors.New("resource not found")
 	}
-	userId := r.Context().Value(repo.USER_ID_KEY).(int)
 	switch filter {
 	case "Owned":
 		if !confMap["Authenticated"].(bool) {
@@ -120,7 +126,7 @@ func GetPostsByFilter(w http.ResponseWriter, r *http.Request, confMap map[string
 		}
 		confMap["Posts"] = data
 	default:
-		data, err := db.GePostbycategory(filter, page)
+		data, err := db.GePostbycategory(filter, page, userId)
 		if err != nil {
 			forumerror.InternalServerError(w, r, err)
 			return err
