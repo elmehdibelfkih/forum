@@ -47,9 +47,9 @@
     {{if .password}}
     <!-- <div class="form-container"> -->
         <form action="/profile/update/password/save" method="post">
-            <input type="password" id="current" name="current" placeholder="Please type your Current Password" required><br>
-            <input type="password" id="new" name="new" placeholder="Please type your New Password" required><br>
-            <input type="password" id="confirm" name="confirm" placeholder="Please Confirm your New Password" required><br>
+            <input type="password" id="current" name="current" minlength="8" maxlength="72" placeholder="Please type your Current Password" required><br>
+            <input type="password" id="new" name="new" minlength="8" maxlength="72" placeholder="Please type your New Password" required><br>
+            <input type="password" id="confirm" name="confirm" minlength="8" maxlength="72" placeholder="Please Confirm your New Password" required><br>
             <button type="submit">Save</button>
         </form>
     <!-- </div> -->

@@ -33,7 +33,6 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: sticky;
     z-index: 1000;
 }
 
@@ -75,6 +74,7 @@ header a:hover {
 /* Profile items */
 .profile>div {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 0;
@@ -101,6 +101,8 @@ header a:hover {
 /* Right side content */
 .to-right {
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     gap: 0.75rem;
     color: #eaeaea;
