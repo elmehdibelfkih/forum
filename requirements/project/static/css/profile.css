@@ -15,13 +15,12 @@ body {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    width: 100vw;
+    width: 100%;
     min-height: 100vh;
     line-height: 1.6;
-    gap: 15vh;
+    gap: 2rem;
     overflow-x: hidden;
 }
-
 
 header {
     background: rgba(255, 255, 255, 0.04);
@@ -29,7 +28,7 @@ header {
     padding: 1.5rem 2rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     width: 100%;
-    height: 8vh;
+    min-height: 8vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -63,8 +62,9 @@ header a:hover {
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
     padding: 2rem;
-    width: 60%;
+    width: 90%;
     max-width: 480px;
+    margin: 2rem auto;
     box-shadow:
         0 8px 32px rgba(0, 0, 0, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.05);
@@ -72,7 +72,7 @@ header a:hover {
 }
 
 /* Profile items */
-.profile>div {
+.profile > div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -82,31 +82,34 @@ header a:hover {
     font-size: 0.95rem;
 }
 
-.profile>div:last-of-type {
+.profile > div:last-of-type {
     border-bottom: none;
 }
 
-.profile>div:first-child {
+.profile > div:first-child {
     padding-top: 0;
 }
 
 /* Profile labels */
-.profile>div>span:first-child,
-.profile>div:not(:has(span)) {
+.profile > div > span:first-child,
+.profile > div:not(:has(span)) {
     color: #f0e6d2;
     font-weight: 500;
     min-width: 80px;
+    flex-shrink: 0;
 }
 
 /* Right side content */
 .to-right {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     gap: 0.75rem;
     color: #eaeaea;
     font-weight: 400;
+    flex: 1;
+    text-align: right;
 }
 
 /* Update icons */
@@ -121,6 +124,7 @@ header a:hover {
     transition: all 0.3s ease;
     font-size: 0.75rem;
     text-decoration: none;
+    flex-shrink: 0;
 }
 
 .update-icon:hover {
@@ -159,15 +163,15 @@ header a:hover {
 }
 
 footer {
-    bottom: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
-    width: 100vw;
-    height: 8vh;
+    width: 100%;
+    min-height: 8vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 2vmin;
+    padding: 1rem;
+    margin-top: auto;
 }
 
 footer .footer-container {
@@ -175,111 +179,213 @@ footer .footer-container {
     height: fit-content;
 }
 
-/* Responsive breakpoints */
+/* Tablet styles */
 @media (max-width: 768px) {
-    .profile {
-        max-width: 420px;
+    html,
+    body {
+        gap: 1.5rem;
     }
 
     header {
-        padding: 0.5rem 0.75rem;
+        padding: 1rem 1.5rem;
+        min-height: auto;
     }
 
     header h1 {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
     }
 
-    .profile-icon {
-        font-size: 0.8rem;
-        gap: 0.75rem;
+    .profile {
+        width: 95%;
+        max-width: 420px;
+        padding: 1.75rem;
     }
 
-    .profile-icon .btn-primary {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.8rem;
+    .profile > div > span:first-child,
+    .profile > div:not(:has(span)) {
+        min-width: 70px;
+    }
+
+    .update-icon {
+        width: 22px;
+        height: 22px;
+        font-size: 0.7rem;
     }
 }
 
+/* Mobile landscape and small tablets */
 @media (max-width: 600px) {
-
-    .profile {
-        padding: 1.5rem;
-        margin: 0 0.5rem;
-        max-width: 100%;
+    html,
+    body {
+        gap: 1rem;
     }
 
-    .profile>div {
+    .profile {
+        width: calc(100% - 1rem);
+        max-width: none;
+        padding: 1.5rem;
+        margin: 1rem 0.5rem;
+    }
+
+    .profile > div {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem;
         padding: 0.75rem 0;
     }
 
+    .profile > div > span:first-child,
+    .profile > div:not(:has(span)) {
+        min-width: auto;
+        width: 100%;
+        margin-bottom: 0.25rem;
+    }
+
     .to-right {
         align-self: flex-end;
         gap: 0.5rem;
-    }
-
-    .profile>div>span:first-child,
-    .profile>div:not(:has(span)) {
-        min-width: auto;
+        text-align: right;
+        justify-content: flex-end;
         width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .profile {
-        padding: 1.25rem 1rem;
-    }
-
-    .profile>div {
-        font-size: 0.9rem;
-        padding: 0.6rem 0;
     }
 
     .delete {
-        padding: 0.6rem 0.8rem;
-        font-size: 0.85rem;
         margin-top: 1.25rem;
+    }
+}
+
+/* Mobile portrait */
+@media (max-width: 480px) {
+    html,
+    body {
+        gap: 0.5rem;
     }
 
     header {
         flex-direction: column;
-        gap: 0.5rem;
-        padding: 0.5rem;
+        gap: 0.75rem;
+        padding: 1rem;
+        text-align: center;
     }
 
-    .profile-icon {
-        order: -1;
-        align-self: flex-end;
+    header h1 {
+        font-size: 1.2rem;
+    }
+
+    header a {
+        margin-left: 0.25rem;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+
+    .profile {
+        width: calc(100% - 1rem);
+        padding: 1.25rem 1rem;
+        margin: 0.5rem;
+    }
+
+    .profile > div {
+        font-size: 0.9rem;
+        padding: 0.6rem 0;
+    }
+
+    .to-right {
+        gap: 0.4rem;
     }
 
     .update-icon {
         width: 20px;
         height: 20px;
-        font-size: 0.7rem;
-    }
-}
-
-@media (max-width: 360px) {
-    .profile {
-        padding: 1rem 0.75rem;
-    }
-
-    .container {
-        padding: 0.75rem 0.25rem;
-    }
-
-    .profile>div {
-        font-size: 0.85rem;
-    }
-
-    .profile-icon .btn-primary {
-        padding: 0.35rem 0.6rem;
-        font-size: 0.75rem;
+        font-size: 0.65rem;
     }
 
     .delete {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.85rem;
+        margin-top: 1rem;
+    }
+
+    footer {
+        padding: 0.75rem;
+    }
+}
+
+/* Very small mobile devices */
+@media (max-width: 360px) {
+    header {
+        padding: 0.75rem;
+    }
+
+    header h1 {
+        font-size: 1.1rem;
+    }
+
+    header a {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+        margin-left: 0.15rem;
+    }
+
+    .profile {
+        width: calc(100% - 0.5rem);
+        padding: 1rem 0.75rem;
+        margin: 0.25rem;
+    }
+
+    .profile > div {
+        font-size: 0.85rem;
+        padding: 0.5rem 0;
+    }
+
+    .to-right {
+        gap: 0.3rem;
+    }
+
+    .update-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 0.6rem;
+    }
+
+    .delete {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.6rem;
+        margin-top: 0.75rem;
+    }
+
+    footer {
+        padding: 0.5rem;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 320px) {
+    .profile {
+        width: calc(100% - 0.25rem);
+        padding: 0.75rem 0.5rem;
+        margin: 0.125rem;
+    }
+
+    .profile > div {
+        font-size: 0.8rem;
+        padding: 0.4rem 0;
+    }
+
+    .delete {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.5rem;
+    }
+
+    header {
+        padding: 0.5rem;
+    }
+
+    header h1 {
+        font-size: 1rem;
+    }
+
+    header a {
+        padding: 5px 8px;
         font-size: 0.8rem;
     }
 }
