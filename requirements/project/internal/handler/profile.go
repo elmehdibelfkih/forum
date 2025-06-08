@@ -21,6 +21,11 @@ func ProfilHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpddateProfile(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method != http.MethodGet {
+		forumerror.BadRequest(w, r)
+		return
+	}
 	var confMap = make(map[string]any)
 	value := r.PathValue("value")
 	if r.Context().Value(repo.ERROR_CASE) != nil {
@@ -54,7 +59,10 @@ func UpddateProfile(w http.ResponseWriter, r *http.Request) {
 }
 
 func SaveChanges(w http.ResponseWriter, r *http.Request) {
-
+	if r.Method != http.MethodPost {
+		forumerror.BadRequest(w, r)
+		return
+	}
 	switch r.PathValue("value") {
 	case "username":
 		SaveUsername(w, r)
@@ -230,6 +238,10 @@ func SavePassword(w http.ResponseWriter, r *http.Request) {
 }
 
 func ServeDelete(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		forumerror.BadRequest(w, r)
+		return
+	}
 	var confMap = make(map[string]any)
 
 	if r.Context().Value(repo.ERROR_CASE) != nil {
@@ -246,6 +258,11 @@ func ServeDelete(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteConfirmation(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		forumerror.BadRequest(w, r)
+		return
+	}
+
 	userId := r.Context().Value(repo.USER_ID_KEY).(int)
 	password := r.FormValue("password")
 	hash, err := db.GetUserHashById(userId)

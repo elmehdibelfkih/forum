@@ -33,9 +33,9 @@ func forumMux() *http.ServeMux {
 
 	// profile mux
 	forumux.HandleFunc("/profile", middleware.AuthMidleware(handler.ProfilHandler))
-	forumux.HandleFunc("GET /profile/update/{value}", middleware.AuthMidleware(handler.UpddateProfile))
-	forumux.HandleFunc("POST /profile/update/{value}/save", middleware.AuthMidleware(handler.SaveChanges))
-	forumux.HandleFunc("GET /profile/delete", middleware.AuthMidleware(handler.ServeDelete))
+	forumux.HandleFunc("/profile/update/{value}", middleware.AuthMidleware(handler.UpddateProfile))
+	forumux.HandleFunc("/profile/update/{value}/save", middleware.AuthMidleware(handler.SaveChanges))
+	forumux.HandleFunc("/profile/delete", middleware.AuthMidleware(handler.ServeDelete))
 	forumux.HandleFunc("POST /profile/delete/confirm", middleware.AuthMidleware(handler.DeleteConfirmation))
 
 	// post mux
