@@ -49,11 +49,12 @@ func UpddateProfile(w http.ResponseWriter, r *http.Request) {
 		repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "update.html", confMap)
 		return
 	default:
-		forumerror.BadRequest(w, r)
+		forumerror.BadRequest(w, r) // if value is nil the mux will use the root handler
 	}
 }
 
 func SaveChanges(w http.ResponseWriter, r *http.Request) {
+
 	switch r.PathValue("value") {
 	case "username":
 		SaveUsername(w, r)
@@ -74,6 +75,18 @@ func SaveUsername(w http.ResponseWriter, r *http.Request) {
 	userId := r.Context().Value(repo.USER_ID_KEY).(int)
 	new_username := r.FormValue("username")
 	password := r.FormValue("current")
+
+	allow, err := db.IsUpdateAllowed(userId)
+	if err != nil {
+		forumerror.InternalServerError(w, r, err)
+		return
+	}
+	if !allow {
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "You have to wait a 72 hours after your last update \nbefore commiting another"})
+		UpddateProfile(w, r.WithContext(ctx))
+		return
+	}
+
 	if !utils.ValidUsername(new_username) {
 		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Please enter a valid username"})
 		UpddateProfile(w, r.WithContext(ctx))
@@ -115,6 +128,18 @@ func SaveEmail(w http.ResponseWriter, r *http.Request) {
 	userId := r.Context().Value(repo.USER_ID_KEY).(int)
 	new_email := r.FormValue("email")
 	password := r.FormValue("current")
+
+	allow, err := db.IsUpdateAllowed(userId)
+	if err != nil {
+		forumerror.InternalServerError(w, r, err)
+		return
+	}
+	if !allow {
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "You have to wait a 72 hours after your last update \nbefore commiting another"})
+		UpddateProfile(w, r.WithContext(ctx))
+		return
+	}
+
 	if !utils.ValidEmail(new_email) {
 		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Invalid email try again"})
 		UpddateProfile(w, r.WithContext(ctx))
@@ -156,6 +181,18 @@ func SavePassword(w http.ResponseWriter, r *http.Request) {
 	current := r.FormValue("current")
 	new := r.FormValue("new")
 	confirm := r.FormValue("confirm")
+
+	allow, err := db.IsUpdateAllowed(userId)
+	if err != nil {
+		forumerror.InternalServerError(w, r, err)
+		return
+	}
+	if !allow {
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "You have to wait a 72 hours after your last update \nbefore commiting another"})
+		UpddateProfile(w, r.WithContext(ctx))
+		return
+	}
+
 	hash, err := db.GetUserHashById(userId)
 
 	if err != nil {

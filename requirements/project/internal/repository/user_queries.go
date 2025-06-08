@@ -15,6 +15,7 @@ const (
 	CHECK_EMAIL_DUP                          = `SELECT COUNT(*) FROM users WHERE email = ?`
 	CHECK_USERNAME_DUP                       = `SELECT COUNT(*) FROM users WHERE username = ?`
 	SELECT_USERNAME_BY_ID                    = `SELECT username FROM users WHERE id = ?`
+	SELECT_TIME                              = `SELECT created_at,updated_at FROM users WHERE id = ?`
 
 	// update queries
 	UPDATE_SESSION_EXPIRING_TIME = `UPDATE sessions SET expires_at = DATETIME('now', '+1 hour'), session_token = ? WHERE user_id = ?`
