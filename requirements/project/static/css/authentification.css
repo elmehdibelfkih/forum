@@ -81,28 +81,26 @@ header a:hover {
     border: 1px solid transparent;
 }
 
-header .profile-icon h1 {
-    color: #f5d8a5;
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+.profile-icon a:hover {
+    color: #fdd395;
+    background: rgba(253, 211, 149, 0.1);
+    border-color: rgba(253, 211, 149, 0.2);
 }
 
-header .profile-icon a {
-    color: #f5d8a5;
-    text-decoration: none;
-    font-weight: 500;
-    padding: 10px 16px;
-    border-radius: 25px;
-    transition: all 0.3s ease;
-    margin-left: 0.5rem;
+.profile-icon a:first-child {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-header .profile-icon a:hover {
-    background: rgba(255, 255, 255, 0.08);
-    transform: translateY(-1px);
+.profile-icon a:last-child {
+    color: #ff6b6b;
 }
 
+.profile-icon a:last-child:hover {
+    color: #ff5252;
+    background: rgba(255, 107, 107, 0.1);
+    border-color: rgba(255, 107, 107, 0.2);
+}
 
 
 .error-container {
@@ -135,57 +133,42 @@ header .profile-icon a:hover {
 }
 
 /* Form container */
-form {
-    padding: 2vmin;
+.form-container {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
     padding: 3rem;
-    width: 40%;
-    height: fit-content;
-    min-width: 500px;
+    width: 50vw;
+    max-width: 450px;
     box-shadow:
         0 8px 32px rgba(0, 0, 0, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
+}
+
+.form-container form {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     gap: 1vmin;
-}
-
-form .buttons{
-    width: 60%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 6vmin;
-}
-
-form input{
-    width: 80%;
+    /* border: 1px white solid; */
 }
 
 /* Title */
-form button {
-    background: linear-gradient(135deg, #e07b00 0%, #f69500 100%);
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 25px;
+.form-container h1 {
+    font-size: 2.2rem;
     font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.95rem;
-    letter-spacing: 0.01em;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: #fdd395;
+    letter-spacing: -0.02em;
 }
 
-form button:hover {
-    background: linear-gradient(135deg, #c96a00 0%, #e07b00 100%);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(224, 123, 0, 0.3);
+/* Input fields */
+form>div {
+    margin-bottom: 1.5rem;
 }
 
 label {
@@ -254,26 +237,26 @@ button[type="submit"]:active {
 }
 
 /* Links */
-form p {
+.form-container p {
     margin-top: 2rem;
     text-align: center;
     font-size: 0.95rem;
     color: #aaa;
 }
 
-form a {
+.form-container a {
     color: #fdd395;
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
-form a:hover {
+.form-container a:hover {
     color: #f69500;
     text-decoration: underline;
 }
 
-footer{
+footer {
     bottom: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     width: 100vw;
@@ -282,46 +265,88 @@ footer{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 2vmin;
 }
 
 /* Responsive */
+@media (max-width: 992px) {
+    .form-container {
+        width: 70vw;
+    }
+}
+
 @media (max-width: 768px) {
-    header {
+    html,
+    body {
+        gap: 10vh;
+    }
+
+    .form-container {
+        width: 80vw;
+        padding: 2.5rem 2rem;
+    }
+
+    button[type="submit"] {
+        width: 60%;
+    }
+
+    footer {
+        height: auto;
         padding: 1rem;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    #project_header h1 {
-        font-size: 1.5rem;
-    }
-
-    .profile-icon {
-        gap: 1rem;
     }
 }
 
 @media (max-width: 480px) {
-    form {
-        padding: 2rem 1.5rem;
-        margin: 1rem;
+    html,
+    body {
+        padding: 0 1rem;
+        gap: 8vh;
     }
 
-    form h1 {
-        font-size: 1.8rem;
+    header {
+        height: auto;
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem 0.5rem;
     }
 
-    .nav {
-        padding: 0.8rem;
+    header h1 {
+        font-size: 1.4rem;
     }
 
-    #project_header h1 {
-        font-size: 1.3rem;
+    .form-container {
+        width: 100%;
+        padding: 2rem 1rem;
     }
 
-    .profile-icon a {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.85rem;
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+        padding: 10px 14px;
+        font-size: 0.95rem;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        padding: 10px 0;
+        font-size: 0.95rem;
+    }
+
+    .form-container h1 {
+        font-size: 1.6rem;
+    }
+
+    .form-container p {
+        font-size: 0.9rem;
+    }
+
+    .footer-container {
+        text-align: center;
+        padding: 0.5rem;
+    }
+
+    .error-container {
+        font-size: 0.9rem;
+        padding: 0.8rem 1rem;
+        width: 90%;
     }
 }
