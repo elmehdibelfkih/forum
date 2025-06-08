@@ -58,5 +58,7 @@ func SubmitRegister(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, "/login", http.StatusSeeOther)
+	// sign in from registration
+	SubmitLogin(w, r)
+	// http.Redirect(w, r, "/login", http.StatusSeeOther)
 }
