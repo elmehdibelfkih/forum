@@ -26,7 +26,3 @@ const (
 	// delete queries
 	DELETE_USER = `DELETE FROM users WHERE id = ?`
 )
-
-func AddNewComment() error {
-	return nil
-}

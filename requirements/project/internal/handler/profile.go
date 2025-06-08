@@ -116,7 +116,7 @@ func SaveEmail(w http.ResponseWriter, r *http.Request) {
 	new_email := r.FormValue("email")
 	password := r.FormValue("current")
 	if !utils.ValidEmail(new_email) {
-		ctx := context.WithValue(r.Context(), repo.USER_ID_KEY, map[string]any{"Error": true, "Message": "Invalid email try again"})
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Invalid email try again"})
 		UpddateProfile(w, r.WithContext(ctx))
 		return
 	}
@@ -137,7 +137,7 @@ func SaveEmail(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if dupp {
-		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Email Alredy exists try again"})
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Please a new email"})
 		UpddateProfile(w, r.WithContext(ctx))
 		return
 	}
