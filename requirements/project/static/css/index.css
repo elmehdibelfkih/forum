@@ -432,13 +432,16 @@ footer .footer-container {
     margin: 2rem 0;
 }
 
-.pagination a {
-    color: #c96a00;
-    text-decoration: none;
-    font-size: 2rem;
-    font-weight: 900;
-    padding: 0.5rem;
+.pagination a i {
+    color: #f69500;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
 }
+
+.pagination a:hover i {
+    color: #f69500;
+}
+
 
 /* Tablet styles */
 @media (max-width: 768px) {
