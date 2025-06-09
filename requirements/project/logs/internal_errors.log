@@ -147,3 +147,15 @@ Error: stat static/css.login.css: no such file or directory
 2025/06/02 19:02:30 [2025-06-02T19:02:30+01:00] GET /static/css.login.css
 Error: stat static/css.login.css: no such file or directory
 2025/06/02 19:02:30 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
+2025/06/07 15:18:37 [2025-06-07T15:18:37+01:00] GET /static/components/right_aside.js
+Error: stat static/components/right_aside.js: no such file or directory
+2025/06/07 15:18:37 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
+2025/06/07 15:18:49 [2025-06-07T15:18:49+01:00] GET /static/components/right_aside.js
+Error: stat static/components/right_aside.js: no such file or directory
+2025/06/07 15:18:49 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
+2025/06/07 15:19:01 [2025-06-07T15:19:01+01:00] GET /static/home.js
+Error: stat static/home.js: no such file or directory
+2025/06/07 15:19:01 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
+2025/06/07 15:19:24 [2025-06-07T15:19:24+01:00] GET /static/home.js
+Error: stat static/home.js: no such file or directory
+2025/06/07 15:19:24 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)

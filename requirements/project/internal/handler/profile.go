@@ -21,6 +21,11 @@ func ProfilHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpddateProfile(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method != http.MethodGet {
+		forumerror.BadRequest(w, r)
+		return
+	}
 	var confMap = make(map[string]any)
 	value := r.PathValue("value")
 	if r.Context().Value(repo.ERROR_CASE) != nil {
@@ -49,11 +54,15 @@ func UpddateProfile(w http.ResponseWriter, r *http.Request) {
 		repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "update.html", confMap)
 		return
 	default:
-		forumerror.BadRequest(w, r)
+		forumerror.BadRequest(w, r) // if value is nil the mux will use the root handler
 	}
 }
 
 func SaveChanges(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		forumerror.BadRequest(w, r)
+		return
+	}
 	switch r.PathValue("value") {
 	case "username":
 		SaveUsername(w, r)
@@ -74,6 +83,18 @@ func SaveUsername(w http.ResponseWriter, r *http.Request) {
 	userId := r.Context().Value(repo.USER_ID_KEY).(int)
 	new_username := r.FormValue("username")
 	password := r.FormValue("current")
+
+	allow, err := db.IsUpdateAllowed(userId)
+	if err != nil {
+		forumerror.InternalServerError(w, r, err)
+		return
+	}
+	if !allow {
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "You have to wait a 72 hours after your last update \nbefore commiting another"})
+		UpddateProfile(w, r.WithContext(ctx))
+		return
+	}
+
 	if !utils.ValidUsername(new_username) {
 		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Please enter a valid username"})
 		UpddateProfile(w, r.WithContext(ctx))
@@ -115,8 +136,20 @@ func SaveEmail(w http.ResponseWriter, r *http.Request) {
 	userId := r.Context().Value(repo.USER_ID_KEY).(int)
 	new_email := r.FormValue("email")
 	password := r.FormValue("current")
+
+	allow, err := db.IsUpdateAllowed(userId)
+	if err != nil {
+		forumerror.InternalServerError(w, r, err)
+		return
+	}
+	if !allow {
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "You have to wait a 72 hours after your last update \nbefore commiting another"})
+		UpddateProfile(w, r.WithContext(ctx))
+		return
+	}
+
 	if !utils.ValidEmail(new_email) {
-		ctx := context.WithValue(r.Context(), repo.USER_ID_KEY, map[string]any{"Error": true, "Message": "Invalid email try again"})
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Invalid email try again"})
 		UpddateProfile(w, r.WithContext(ctx))
 		return
 	}
@@ -137,7 +170,7 @@ func SaveEmail(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if dupp {
-		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Email Alredy exists try again"})
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Please a new email"})
 		UpddateProfile(w, r.WithContext(ctx))
 		return
 	}
@@ -156,12 +189,24 @@ func SavePassword(w http.ResponseWriter, r *http.Request) {
 	current := r.FormValue("current")
 	new := r.FormValue("new")
 	confirm := r.FormValue("confirm")
-	hash, err := db.GetUserHashById(userId)
 
+	allow, err := db.IsUpdateAllowed(userId)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return
 	}
+	if !allow {
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "You have to wait a 72 hours after your last update \nbefore commiting another"})
+		UpddateProfile(w, r.WithContext(ctx))
+		return
+	}
+
+	hash, err := db.GetUserHashById(userId)
+	if err != nil {
+		forumerror.InternalServerError(w, r, err)
+		return
+	}
+
 	if current == new || !utils.ValidPassword(new) {
 		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "You used an Old password"})
 		UpddateProfile(w, r.WithContext(ctx))
@@ -193,6 +238,10 @@ func SavePassword(w http.ResponseWriter, r *http.Request) {
 }
 
 func ServeDelete(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		forumerror.BadRequest(w, r)
+		return
+	}
 	var confMap = make(map[string]any)
 
 	if r.Context().Value(repo.ERROR_CASE) != nil {
@@ -209,6 +258,11 @@ func ServeDelete(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteConfirmation(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		forumerror.BadRequest(w, r)
+		return
+	}
+
 	userId := r.Context().Value(repo.USER_ID_KEY).(int)
 	password := r.FormValue("password")
 	hash, err := db.GetUserHashById(userId)
@@ -217,14 +271,21 @@ func DeleteConfirmation(w http.ResponseWriter, r *http.Request) {
 		forumerror.InternalServerError(w, r, err)
 		return
 	}
+
+	if len(password) > repo.PASSWORD_MAX_LEN {
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "You exceeded the maximum allowed input"})
+		ServeDelete(w, r.WithContext(ctx))
+		return
+	}
+
 	if !utils.CheckPassword(password, hash) {
 		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Wrong password"})
 		ServeDelete(w, r.WithContext(ctx))
 		return
 	}
 	auth.LogoutHandler(w, r)
-	err = db.DeleteUser(userId)
 
+	err = db.DeleteUser(userId)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return

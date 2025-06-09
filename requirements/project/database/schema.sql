@@ -1,3 +1,6 @@
+-- to activate foriegn_keys
+PRAGMA foreign_keys = ON;
+
 -- Users Table
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

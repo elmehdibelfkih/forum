@@ -34,8 +34,26 @@ func SubmitRegister(w http.ResponseWriter, r *http.Request) {
 	password := r.FormValue("password")
 	confirm_password := r.FormValue("confirm_password")
 
-	if !utils.ValidUsername(username) || !utils.ValidEmail(email) || !utils.ValidPassword(password) || confirm_password != password { //TODO: it should be a better way
-		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "invalid credentials try again"})
+	if !utils.ValidUsername(username) { //TODO: it should be a better way
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Invalid username"})
+		ServRegister(w, r.WithContext(ctx))
+		return
+	}
+
+	if !utils.ValidEmail(email) {
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Invalid email"})
+		ServRegister(w, r.WithContext(ctx))
+		return
+	}
+
+	if !utils.ValidPassword(password) {
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Invalid password"})
+		ServRegister(w, r.WithContext(ctx))
+		return
+	}
+
+	if confirm_password != password {
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "You failed to confirm your password"})
 		ServRegister(w, r.WithContext(ctx))
 		return
 	}
@@ -58,5 +76,7 @@ func SubmitRegister(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, "/login", http.StatusSeeOther)
+	// sign in from registration
+	SubmitLogin(w, r)
+	// http.Redirect(w, r, "/login", http.StatusSeeOther)
 }
