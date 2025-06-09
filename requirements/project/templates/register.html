@@ -1,42 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/form.css">
+    <link rel="stylesheet" href="/static/css/authentification.css">
     <title>Forum</title>
 </head>
+
 <body>
 
-        <header class="nav">
+    <header class="nav">
         <div id="project_header">
             <h1><a href="/">FORUM</a></h1>
         </div>
     </header>
 
     {{if .Error}}
-        <div class="error-container">
-            {{.Message}}
-        </div>
+    <div class="error-container">
+        {{.Message}}
+    </div>
     {{end}}
     <div class="form-container">
         <h1>Register</h1>
         <form action="/register" method="POST">
-            <div>
-                <input type="text" id="username" name="username"  maxlength="50" placeholder="User Name" required>
-            </div>
-            <div>
-                <input type="email" id="email" name="email"  maxlength="50" placeholder="Email" required>
-            </div>
-            <div>
-                <input type="password" id="password" name="password"  maxlength="50" placeholder="Password"  required>
-            </div>
-            <div>
-                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password"  maxlength="50" required>
-            </div>
+            <!-- <div> -->
+            <input type="text" id="username" name="username" minlength="3" maxlength="32" placeholder="User Name"
+                required>
+            <!-- </div>
+            <div> -->
+            <input type="email" id="email" name="email" minlength="6" maxlength="254" placeholder="Email" required>
+            <!-- </div>
+            <div> -->
+            <input type="password" id="password" name="password" minlength="8" maxlength="72" placeholder="Password"
+                required>
+            <!-- </div>
+            <div> -->
+            <input type="password" id="confirm_password" name="confirm_password" minlength="8" maxlength="72"
+                placeholder="Confirm Password" maxlength="50" required>
+            <!-- </div> -->
             <button type="submit">Register</button>
         </form>
         <p>Already have an account? <a href="/login">Login here</a>.</p>
     </div>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025 FORUM — Built with ❤️ by the Forum Team</p>
+        </div>
+    </footer>
 </body>
+
 </html>

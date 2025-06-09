@@ -17,6 +17,7 @@ body {
     align-items: center;
     min-height: 100vh;
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
 
@@ -36,10 +37,10 @@ header {
     padding: 1.5rem 2rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     width: 100%;
+    height: 8vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: sticky;
     top: 0;
     z-index: 1000;
 }
@@ -257,6 +258,18 @@ button[type="submit"]:active {
 .form-container a:hover {
     color: #f69500;
     text-decoration: underline;
+}
+
+footer {
+    bottom: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    width: 100vw;
+    height: 8vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2vmin;
 }
 
 
