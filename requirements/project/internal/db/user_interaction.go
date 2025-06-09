@@ -5,6 +5,7 @@ import (
 	"errors"
 	repo "forum/internal/repository"
 	"log"
+	"time"
 )
 
 func SelectUserSession(session_id string) (int, bool, error) {
@@ -175,4 +176,18 @@ func GetUserNameById(userId int) (string, error) {
 		return userName, err
 	}
 	return userName, nil
+}
+
+func IsUpdateAllowed(userId int) (bool, error) {
+	now := time.Now().UTC()
+	var created, updated time.Time // uint int *time.Location == nil utc
+	err := repo.DB.QueryRow(repo.SELECT_TIME, userId).Scan(&created, &updated)
+	if err != nil {
+		return false, err
+	}
+	diff := now.Sub(updated)
+	if diff < (time.Hour*72) && created != updated {
+		return false, nil
+	}
+	return true, nil
 }
