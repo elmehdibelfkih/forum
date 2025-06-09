@@ -156,12 +156,26 @@ func SavePassword(w http.ResponseWriter, r *http.Request) {
 	current := r.FormValue("current")
 	new := r.FormValue("new")
 	confirm := r.FormValue("confirm")
-	hash, err := db.GetUserHashById(userId)
 
+	// entering a password over 72 chars
+	if len(current) > repo.PASSWORD_MAX_LEN || len(new) > repo.PASSWORD_MAX_LEN || len(confirm) > repo.PASSWORD_MAX_LEN {
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "You exceeded the maximum allowed input"})
+		UpddateProfile(w, r.WithContext(ctx))
+		return
+	}
+	// short password less than 8 chars
+	if len(current) < repo.PASSWORD_MIN_LEN || len(new) < repo.PASSWORD_MIN_LEN || len(confirm) < repo.PASSWORD_MIN_LEN {
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "The password must surpass 8 characters"})
+		UpddateProfile(w, r.WithContext(ctx))
+		return
+	}
+
+	hash, err := db.GetUserHashById(userId)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return
 	}
+
 	if current == new || !utils.ValidPassword(new) {
 		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "You used an Old password"})
 		UpddateProfile(w, r.WithContext(ctx))
@@ -217,14 +231,21 @@ func DeleteConfirmation(w http.ResponseWriter, r *http.Request) {
 		forumerror.InternalServerError(w, r, err)
 		return
 	}
+
+	if len(password) > repo.PASSWORD_MAX_LEN {
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "You exceeded the maximum allowed input"})
+		ServeDelete(w, r.WithContext(ctx))
+		return
+	}
+
 	if !utils.CheckPassword(password, hash) {
 		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Wrong password"})
 		ServeDelete(w, r.WithContext(ctx))
 		return
 	}
 	auth.LogoutHandler(w, r)
-	err = db.DeleteUser(userId)
 
+	err = db.DeleteUser(userId)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return
