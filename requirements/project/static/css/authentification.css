@@ -282,10 +282,18 @@ footer {
     .profile-icon {
         gap: 1rem;
     }
+
+    .form-container{
+        width: 80%;
+    }
+    footer{
+        font-size: small;
+    }
 }
 
 @media (max-width: 480px) {
     .form-container {
+        width: 96%;
         padding: 2rem 1.5rem;
         margin: 1rem;
     }

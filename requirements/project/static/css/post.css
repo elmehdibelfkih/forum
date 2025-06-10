@@ -14,15 +14,11 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     min-height: 100vh;
-}
-
-body {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
-    color: #f4f1ee;
-    width: 100%;
+    width: 100vw;
     padding: 0 1rem;
 }
 
@@ -48,7 +44,7 @@ header {
 header h1 {
     color: #f5d8a5;
     font-size: clamp(1.2rem, 4vw, 1.5rem);
-    font-weight: 700;
+    font-weight: 900;
     letter-spacing: -0.02em;
     margin: 0;
 }
@@ -57,11 +53,10 @@ header a {
     color: #f5d8a5;
     text-decoration: none;
     font-weight: 500;
-    padding: 0.5rem 1rem;
+    padding: 10px 16px;
     border-radius: 25px;
     transition: all 0.3s ease;
     margin-left: 0.5rem;
-    font-size: clamp(0.8rem, 3vw, 1rem);
 }
 
 header a:hover {
@@ -170,6 +165,10 @@ fieldset {
     padding: 1rem;
     background: rgba(255, 255, 255, 0.02);
     margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
 }
 
 legend {
@@ -290,6 +289,9 @@ footer {
     
     fieldset {
         padding: 0.75rem;
+    }
+    footer{
+        font-size: small;
     }
 }
 

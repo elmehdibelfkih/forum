@@ -14,7 +14,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    align-items:center ;
     width: 100%;
     min-height: 100vh;
     line-height: 1.6;
@@ -64,11 +64,11 @@ header a:hover {
     padding: 2rem;
     width: 90%;
     max-width: 480px;
-    margin: 2rem auto;
     box-shadow:
         0 8px 32px rgba(0, 0, 0, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
+    align-self: center;
 }
 
 /* Profile items */
@@ -81,6 +81,8 @@ header a:hover {
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     font-size: 0.95rem;
 }
+
+
 
 .profile > div:last-of-type {
     border-bottom: none;
@@ -171,7 +173,6 @@ footer {
     justify-content: center;
     align-items: center;
     padding: 1rem;
-    margin-top: auto;
 }
 
 footer .footer-container {

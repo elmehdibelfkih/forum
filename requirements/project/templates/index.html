@@ -14,17 +14,19 @@
         <div id="project_header">
             <h1><a href="/">FORUM</a></h1>
         </div>
-        <h3>Filter by Categories</h3>
-        <select id="category-filter">
-            <option value="">-- Select a category --</option>
-            {{range $key, $value := .Fields}}
-            <option value="/?filter={{$key}}">{{$key}}</option>
-            {{end}}
-            {{if .Authenticated}}
-            <option value="/?filter=Owned">Owned</option>
-            <option value="/?filter=Likes">Likes</option>
-            {{end}}
-        </select>
+        <div id="filter_category">
+            <h3>Filter by Categories:</h3>
+            <select id="category-filter">
+                <option value="">-- Select a category --</option>
+                {{range $key, $value := .Fields}}
+                <option value="/?filter={{$key}}">{{$key}}</option>
+                {{end}}
+                {{if .Authenticated}}
+                <option value="/?filter=Owned">Owned</option>
+                <option value="/?filter=Likes">Likes</option>
+                {{end}}
+            </select>
+        </div>
         <script>
             document.getElementById('category-filter').addEventListener('change', function () {
                 if (this.value) {

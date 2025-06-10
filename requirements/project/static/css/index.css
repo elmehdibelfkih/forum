@@ -65,6 +65,14 @@ header a:hover {
     transform: translateY(-1px);
 }
 
+header #filter_category {
+    display: flex;
+    flex-direction:row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
 form {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -458,6 +466,10 @@ footer .footer-container {
         margin-bottom: 0.5rem;
         font-size: 1.3rem;
     }
+    header #filter_category {
+    flex-direction: column;
+    gap: 5px;
+}
 
     form {
         display: flex;
@@ -578,10 +590,12 @@ footer .footer-container {
     }
 
     .post footer #likes_dislikes {
-        flex-direction: column;
-        gap: 0.5rem;
+        width: 50%;
+        align-self: center;
+        gap: 4px;
         align-items: center;
     }
+
 
     .post footer #form_comment input {
         font-size: 0.9rem;
