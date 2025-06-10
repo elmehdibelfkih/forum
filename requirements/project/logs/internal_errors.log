@@ -159,3 +159,18 @@ Error: stat static/home.js: no such file or directory
 2025/06/07 15:19:24 [2025-06-07T15:19:24+01:00] GET /static/home.js
 Error: stat static/home.js: no such file or directory
 2025/06/07 15:19:24 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
+2025/06/10 16:41:09 [2025-06-10T16:41:09+01:00] GET /static/css/download.svg
+Error: stat static/css/download.svg: no such file or directory
+2025/06/10 16:41:09 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
+2025/06/10 16:41:12 [2025-06-10T16:41:12+01:00] GET /static/css/download.svg
+Error: stat static/css/download.svg: no such file or directory
+2025/06/10 16:41:12 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
+2025/06/10 16:41:13 [2025-06-10T16:41:13+01:00] GET /static/css/download.svg
+Error: stat static/css/download.svg: no such file or directory
+2025/06/10 16:41:13 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
+2025/06/10 16:41:13 [2025-06-10T16:41:13+01:00] GET /static/css/download.svg
+Error: stat static/css/download.svg: no such file or directory
+2025/06/10 16:41:13 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
+2025/06/10 16:41:14 [2025-06-10T16:41:14+01:00] GET /static/css/download.svg
+Error: stat static/css/download.svg: no such file or directory
+2025/06/10 16:41:14 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
