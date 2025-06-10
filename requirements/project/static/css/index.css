@@ -224,6 +224,9 @@ main {
     backdrop-filter: none;
     width: 100%;
 }
+.post footer form button{
+    align-self: center;
+}
 
 .post footer .form_for_disliked {
     display: flex;
@@ -285,6 +288,7 @@ main {
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
+    max-width: 100px;
 }
 
 .post footer button:hover {
@@ -508,6 +512,9 @@ footer .footer-container {
 
     .pagination {
         max-width: 250px;
+    }
+    footer{
+        font-size: small;
     }
 }
 
