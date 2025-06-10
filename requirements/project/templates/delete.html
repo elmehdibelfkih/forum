@@ -21,20 +21,17 @@
             </div>
         </div>
     </header>
-
     {{if .Error}}
     <div class="error-container">
         {{.Message}}
     </div>
     {{end}}
     <div class="form-container">
-        <form method="post"> <!-- TODO blocking enter press-->
+        <form method="post">
             <input type="password" name="password" id="password" placeholder="Enter Your Password" required><br>
-            <!-- <button formaction="/profile">cancel</button> -->
             <button formaction="/profile/delete/confirm">delete</button>
         </form>
     </div>
-
     <footer>
         <div class="footer-container">
             <p>&copy; 2025 FORUM — Built with ❤️ by the Forum Team</p>

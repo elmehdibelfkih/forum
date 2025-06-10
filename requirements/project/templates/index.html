@@ -34,7 +34,6 @@
                 }
             })
         </script>
-
         <div class="profile-icon">
             {{if .Authenticated}}
             <a href="/post" class="btn-primary">New Post</a>
@@ -45,15 +44,12 @@
             <a href="/register">Sign Up</a>
             {{end}}
         </div>
-
     </header>
     <main class="home">
         <div class="container">
             {{block "content" .Posts}}{{end}}
         </div>
     </main>
-    
-
     <div class="pagination">
         {{if .HasPrev}}
         <a href="{{.PrevPage}}">◀</a>
