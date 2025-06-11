@@ -59,7 +59,7 @@ func Pagination(w http.ResponseWriter, r *http.Request, confMap map[string]any) 
 		}
 		page = p
 	}
-
+	
 	confMap["CurrentPage"] = page
 	confMap["PrintCurrentPage"] = page != 1
 	confMap["HasPrev"] = page > 1

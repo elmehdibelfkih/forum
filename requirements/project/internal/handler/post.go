@@ -32,7 +32,7 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w,"bad request")
 		return
 	}
-	// Get post by id - with limit commenter ---> !!!
+	// Get post by id - separate with comment !!!
 	post , err := db.GetPostByID(Id, userID)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
@@ -40,5 +40,44 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	// Her I Add The Data  
 	confMap["Post"] = post
+
+	// her i will handle the pagination 10 by 10 !!
+	// Handle pagination: get page from query param, default to 1
+    page := 1
+    if pageStr := r.URL.Query().Get("page"); pageStr != "" {
+        p, err := strconv.Atoi(pageStr)
+        if err != nil || p < 1 {
+            forumerror.BadRequest(w, r)
+            return
+        }
+        page = p
+    }
+    confMap["CurrentPage"] = page
+    confMap["PrintCurrentPage"] = page != 1
+    confMap["HasPrev"] = page > 1
+
+    if page > 1 {
+        prevQuery := r.URL.Query()
+        prevQuery.Set("page", strconv.Itoa(page-1))
+        confMap["PrevPage"] = r.URL.Path + "?" + prevQuery.Encode()
+    }
+
+    // Fetch paginated comments for the post (10 per page)
+    comments, totalComments, err := db.GetCommentsByPostPaginated(Id, page, 10)
+    if err != nil {
+        forumerror.InternalServerError(w, r, err)
+        return
+    }
+    confMap["Comments"] = comments
+
+    // Determine if there is a next page
+    hasNext := totalComments > page*10
+    confMap["HasNext"] = hasNext
+
+    if hasNext {
+        nextQuery := r.URL.Query()
+        nextQuery.Set("page", strconv.Itoa(page+1))
+        confMap["NextPage"] = r.URL.Path + "?" + nextQuery.Encode()
+    } 
 	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "post.html", confMap)
 }
