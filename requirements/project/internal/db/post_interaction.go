@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	repo "forum/internal/repository"
 	"strings"
+
 )
 
 func AddNewPost(userId int, titel string, content string) (int, error) {
@@ -272,7 +273,7 @@ func GetPostByID(postID, userID int) (repo.Post, error) {
 			&post.Created_at,      
 			&post.Updated_at,     
 	)
-	
+
 	if err != nil {
 		return post, err
 	}
@@ -303,6 +304,5 @@ func GetPostByID(postID, userID int) (repo.Post, error) {
 	if err != nil && err != sql.ErrNoRows {
 		return post, err
 	}
-
 	return post, nil
 }

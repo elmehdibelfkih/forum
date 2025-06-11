@@ -22,9 +22,10 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		confMap["Authenticated"] = true
 		confMap["Username"] = r.Context().Value(repo.USER_NAME).(string)
+
 	}
 
-	// Filter query by id  ---> !!!
+	// Filter Query By Id  ---> !!!
 	Idpost := r.URL.Query().Get("Id")
 	Id , err := strconv.Atoi(Idpost)
 	if err != nil {
@@ -37,9 +38,7 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 		forumerror.InternalServerError(w, r, err)
 		return
 	}
-	// her i add the data  
+	// Her I Add The Data  
 	confMap["Post"] = post
-
 	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "post.html", confMap)
-
 }
