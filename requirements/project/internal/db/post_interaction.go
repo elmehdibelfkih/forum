@@ -31,7 +31,7 @@ func GetAllPostsInfo(page int, userId int) (repo.PageData, error) {
 
 		err := rows.Scan(
 			&post.Id,
-			&post.Publisher,
+			&post.PublisherId,
 			&post.Title,
 			&post.Content,
 			&post.Publisher,
@@ -246,4 +246,58 @@ func IsUserCanPostToday(userId int) (bool, error) {
 	}
 	return postCount < repo.DAY_POST_LIMIT, nil
 
+}
+
+func GetPostByID(postID, userID int) (repo.Post, error) {
+	var post repo.Post
+	var categoriesStr, commentsStr string
+
+	row := repo.DB.QueryRow(repo.SELECT_POST_BY_ID , postID)
+
+	err := row.Scan(
+			&post.Id,             
+			&post.PublisherId,     
+			&post.Title,           
+			&post.Content,         
+			&post.Publisher,       
+			&categoriesStr,        
+			&post.Likes,           
+			&post.Dislikes,        
+			&commentsStr,        
+			&post.Created_at,      
+			&post.Updated_at,     
+	)
+	
+	if err != nil {
+		return post, err
+	}
+
+	if categoriesStr != "" {
+		post.Catigories = strings.Split(categoriesStr, ",")
+	}
+
+	if commentsStr != "" {
+		comments := strings.Split(commentsStr, ",")
+		for _, c := range comments {
+			parts := strings.SplitN(c, ":", 2)
+			if len(parts) == 2 {
+				commentMap := map[string]string{
+					parts[0]: parts[1],
+				}
+				post.Comments = append(post.Comments, commentMap)
+			}
+		}
+	}
+
+	post.IsEdited = post.Created_at != post.Updated_at
+	post.IsLikedByUser, err = IsPostLikedByUser(userID, post.Id)
+	if err != nil && err != sql.ErrNoRows {
+		return post, err
+	}
+	post.IsDislikedByUser, err = IsPostDisikedByUser(userID, post.Id)
+	if err != nil && err != sql.ErrNoRows {
+		return post, err
+	}
+
+	return post, nil
 }
