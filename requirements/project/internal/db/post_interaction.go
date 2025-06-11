@@ -31,7 +31,7 @@ func GetAllPostsInfo(page int, userId int) (repo.PageData, error) {
 
 		err := rows.Scan(
 			&post.Id,
-			&post.Publisher,
+			&post.PublisherId,
 			&post.Title,
 			&post.Content,
 			&post.Publisher,
