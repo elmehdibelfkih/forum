@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	repo "forum/internal/repository"
 	"strings"
-
 )
 
 func AddNewPost(userId int, titel string, content string) (int, error) {
@@ -99,6 +98,16 @@ func IsPostExist(postId int) (bool, error) {
 	return true, nil
 }
 
+func IsUserCanCommentToday(userId int) (bool, error) {
+	var commentCount int
+	err := repo.DB.QueryRow(repo.SELECT_TODAY_COMMENTS, userId).Scan(&commentCount)
+	if err != nil {
+		return false, err
+	}
+	return commentCount < repo.DAY_COMMENTS_LIMIT, nil
+
+}
+
 func AddNewComment(userId int, postId int, comment string) error {
 	_, err := repo.DB.Exec(repo.INSERT_NEW_COMMENT, userId, postId, comment)
 	return err
@@ -156,7 +165,7 @@ func IsPostLikedByUser(userId int, postId int) (bool, error) {
 		return false, err
 	} else if err != nil {
 		return false, err
-	} else if isLike == true {
+	} else if isLike {
 		return true, nil
 	}
 	return false, nil
@@ -170,7 +179,7 @@ func IsPostDisikedByUser(userId int, postId int) (bool, error) {
 		return false, err
 	} else if err != nil {
 		return false, err
-	} else if isDisike == true {
+	} else if isDisike {
 		return true, nil
 	}
 	return false, nil
@@ -258,20 +267,20 @@ func GetPostByID(postID, userID int) (repo.Post, error) {
 	var post repo.Post
 	var categoriesStr, commentsStr string
 
-	row := repo.DB.QueryRow(repo.SELECT_POST_BY_ID , postID)
+	row := repo.DB.QueryRow(repo.SELECT_POST_BY_ID, postID)
 
 	err := row.Scan(
-			&post.Id,             
-			&post.PublisherId,     
-			&post.Title,           
-			&post.Content,         
-			&post.Publisher,       
-			&categoriesStr,        
-			&post.Likes,           
-			&post.Dislikes,        
-			&commentsStr,        
-			&post.Created_at,      
-			&post.Updated_at,     
+		&post.Id,
+		&post.PublisherId,
+		&post.Title,
+		&post.Content,
+		&post.Publisher,
+		&categoriesStr,
+		&post.Likes,
+		&post.Dislikes,
+		&commentsStr,
+		&post.Created_at,
+		&post.Updated_at,
 	)
 
 	if err != nil {
