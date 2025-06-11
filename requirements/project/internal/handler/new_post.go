@@ -16,7 +16,6 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 		PostPostHandler(w, r)
 	} else {
 		forumerror.MethodNotAllowed(w, r)
-
 		return
 	}
 }
