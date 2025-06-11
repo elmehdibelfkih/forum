@@ -76,28 +76,28 @@ Error: ambiguous column name: users.username
 Error: near "ON": syntax error
 2025/05/18 22:39:14 [2025-05-18T22:39:14+01:00] GET /
 Error: near "ON": syntax error
-2025/05/19 15:09:55 [2025-05-19T15:09:55+01:00] POST /post
+2025/05/19 15:09:55 [2025-05-19T15:09:55+01:00] POST /newPost
 Error: sql: no rows in result set
 2025/05/24 02:10:53 [2025-05-24T02:10:53+01:00] GET /static/error.css
 Error: stat static/error.css: no such file or directory
 2025/05/24 02:10:53 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
-2025/05/27 23:03:55 [2025-05-27T23:03:55+01:00] GET /static/css/post.css
-Error: stat static/css/post.css: no such file or directory
+2025/05/27 23:03:55 [2025-05-27T23:03:55+01:00] GET /static/css/newPost.css
+Error: stat static/css/newPost.css: no such file or directory
 2025/05/27 23:03:55 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
-2025/05/27 23:03:55 [2025-05-27T23:03:55+01:00] GET /static/css/post.css
-Error: stat static/css/post.css: no such file or directory
+2025/05/27 23:03:55 [2025-05-27T23:03:55+01:00] GET /static/css/newPost.css
+Error: stat static/css/newPost.css: no such file or directory
 2025/05/27 23:03:55 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
-2025/05/27 23:03:55 [2025-05-27T23:03:55+01:00] GET /static/css/post.css
-Error: stat static/css/post.css: no such file or directory
+2025/05/27 23:03:55 [2025-05-27T23:03:55+01:00] GET /static/css/newPost.css
+Error: stat static/css/newPost.css: no such file or directory
 2025/05/27 23:03:55 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
-2025/05/27 23:04:10 [2025-05-27T23:04:10+01:00] GET /static/css/post.css
-Error: stat static/css/post.css: no such file or directory
+2025/05/27 23:04:10 [2025-05-27T23:04:10+01:00] GET /static/css/newPost.css
+Error: stat static/css/newPost.css: no such file or directory
 2025/05/27 23:04:10 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
-2025/05/27 23:04:10 [2025-05-27T23:04:10+01:00] GET /static/css/post.css
-Error: stat static/css/post.css: no such file or directory
+2025/05/27 23:04:10 [2025-05-27T23:04:10+01:00] GET /static/css/newPost.css
+Error: stat static/css/newPost.css: no such file or directory
 2025/05/27 23:04:10 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
-2025/05/27 23:04:10 [2025-05-27T23:04:10+01:00] GET /static/css/post.css
-Error: stat static/css/post.css: no such file or directory
+2025/05/27 23:04:10 [2025-05-27T23:04:10+01:00] GET /static/css/newPost.css
+Error: stat static/css/newPost.css: no such file or directory
 2025/05/27 23:04:10 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
 2025/05/30 04:47:08 [2025-05-30T04:47:08+01:00] GET /
 Error: datatype mismatch
@@ -174,3 +174,6 @@ Error: stat static/css/download.svg: no such file or directory
 2025/06/10 16:41:14 [2025-06-10T16:41:14+01:00] GET /static/css/download.svg
 Error: stat static/css/download.svg: no such file or directory
 2025/06/10 16:41:14 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
+2025/06/10 23:18:08 [2025-06-10T23:18:08+01:00] GET /static/css/newPost.css
+Error: stat static/css/newPost.css: no such file or directory
+2025/06/10 23:18:08 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)

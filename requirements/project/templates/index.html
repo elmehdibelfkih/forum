@@ -7,13 +7,13 @@
     <title>Forum</title>
     <link rel="stylesheet" href="/static/css/index.css">
     <link rel="icon" href="/static/svg/favicon.svg" type="image/svg">
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <header>
         <div id="project_header">
-            <h1><a href="/">FORUM</a></h1>
+            <h1><a href="/"><img src="/static/svg/favicon.svg" alt="user profile"></a></h1>
         </div>
         <div id="filter_category">
             <h3>Filter by Categories:</h3>
@@ -37,19 +37,18 @@
         </script>
         <div class="profile-icon">
             {{if .Authenticated}}
-            <a href="/post" class="btn-primary">New Post</a>
-            <a href="/profile">{{.Username}}</a>
-            <a href="/logout">Logout</a>
+            <a href="/newPost" class="btn-primary"><img src="/static/svg/pencil-line.svg" alt="new post"></a>
+            <a href="/logout"><img src="/static/svg/log-out.svg" alt="logout"></a>
+            <a href="/profile"><img src="/static/svg/circle-user-round.svg" alt="user profile"></a>
             {{else}}
-            <a href="/login">Login</a>
             <a href="/register">Sign Up</a>
+            <a href="/login">Login</a>
             {{end}}
         </div>
     </header>
     <main class="home">
-        <div class="container">
-            {{block "content" .Posts}}{{end}}
-        </div>
+        <h1>{{.Filter}}</h1>
+        {{block "content" .Posts}}{{end}}
     </main>
     <div class="pagination">
         {{if .HasPrev}}

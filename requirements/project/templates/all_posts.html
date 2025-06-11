@@ -1,7 +1,6 @@
 {{define "title"}}Posts Index{{end}}
 
 {{define "content"}}
-<h1>All Posts</h1>
 {{range .Posts}}
 {{template "post_component" .}}
 {{else}}

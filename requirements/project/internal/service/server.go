@@ -39,7 +39,7 @@ func forumMux() *http.ServeMux {
 	forumux.HandleFunc("POST /profile/delete/confirm", middleware.AuthMidleware(handler.DeleteConfirmation))
 
 	// post mux
-	forumux.HandleFunc("/post", middleware.AuthMidleware(handler.NewPostHandler))
+	forumux.HandleFunc("/newPost", middleware.AuthMidleware(handler.NewPostHandler))
 
 	// like mux
 	forumux.HandleFunc("/like", middleware.AuthMidleware(handler.LikeHandler))

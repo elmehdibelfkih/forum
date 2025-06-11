@@ -1,66 +1,70 @@
 {{define "post_component"}}
-<div class="post">
+<div class="container">
+  <a href="/newPost/{{.Id}}">
+    <div class="post">
+      <div class="post_head" id="{{.Id}}">
+        <h2>{{.Title}}</h2>
+        <div>Published by <strong>{{.Publisher}}</strong> in <em>{{range .Catigories}}{{.}}, {{end}}</em></div>
+      </div>
 
-  <div class="post_head" id="{{.Id}}">
-    <h2>{{.Title}}</h2>
-    <div>Published by <strong>{{.Publisher}}</strong> in <em>{{range .Catigories}}{{.}}, {{end}}</em></div>
-  </div>
+      <section>
+        <p>{{.Content}}</p>
+      </section>
 
-  <section>
-    <p>{{.Content}}</p>
-  </section>
-
-  <footer>
-    <div id="likes_dislikes">
-      {{if .IsLikedByUser}}
-      <form action="/like" method="POST" class="form_for_liked">
-        <input type="hidden" name="post_id" value="{{.Id}}">
-        <button type="submit">👍{{.Likes}}</button>
-      </form>
-      {{else}}
-      <form action="/like" method="POST">
-        <input type="hidden" name="post_id" value="{{.Id}}">
-        <button type="submit">👍{{.Likes}}</button>
-      </form>
-      {{end}}
-      {{if .IsDislikedByUser}}
-      <form action="/dislike" method="POST" class="form_for_disliked">
-        <input type="hidden" name="post_id" value="{{.Id}}">
-        <button type="submit">👎{{.Dislikes}}</button>
-      </form>
+      <footer>
+        <div id="likes_dislikes">
+          {{if .IsLikedByUser}}
+          <form action="/like" method="POST" >
+            <input type="hidden" name="post_id" value="{{.Id}}">
+            <button type="submit"><img src="/static/svg/green_like.svg" alt="comment">{{.Likes}}</button>
+          </form>
+          {{else}}
+          <form action="/like" method="POST">
+            <input type="hidden" name="post_id" value="{{.Id}}">
+            <button type="submit"><img src="/static/svg/like.svg" alt="comment">{{.Likes}}</button>
+          </form>
+          {{end}}
+          {{if .IsDislikedByUser}}
+          <form action="/dislike" method="POST" >
+            <input type="hidden" name="post_id" value="{{.Id}}">
+            <button type="submit"><img src="/static/svg/red_dislike.svg" alt="comment">{{.Dislikes}}</button>
+          </form>
+        </div>
+        {{else}}
+        <form action="/dislike" method="POST">
+          <input type="hidden" name="post_id" value="{{.Id}}">
+          <button type="submit"><img src="/static/svg/dislike.svg" alt="comment">{{.Dislikes}}</button>
+        </form>
     </div>
-    {{else}}
-    <form action="/dislike" method="POST">
+    {{end}}
+    <form id="form_comment" action="/comment" method="POST">
       <input type="hidden" name="post_id" value="{{.Id}}">
-      <button type="submit">👎{{.Dislikes}}</button>
+      <textarea id="comment" name="comment" placeholder="comment..." minlength="1" maxlength="10000"
+        required></textarea>
+      <button type="submit"><img src="/static/svg/send.svg" alt="comment"></button>
     </form>
-</div>
-{{end}}
-<form id="form_comment" action="/comment" method="POST">
-  <input type="hidden" name="post_id" value="{{.Id}}">
-  <textarea id="comment" name="comment" placeholder="comment..." minlength="1" maxlength="10000" required></textarea>
-  <button type="submit">comment</button>
-</form>
 
-{{if .Comments}}
-<ul>
-  {{range .Comments}}
-  {{range $author, $comment := .}}
-  <li><strong>{{$author}}:</strong> {{$comment}}</li>
-  {{end}}
-  {{end}}
-</ul>
-{{else}}
-<p>No comments yet.</p>
-{{end}}
-{{if not .IsEdited}}
-<p><time datetime="{{.Created_at}}">Created: {{.Created_at}}</time></p>
-{{else}}
-<p>
-  <time datetime="{{.Created_at}}">Created: {{.Created_at}}</time> |
-  <time datetime="{{.Updated_at}}">Updated: {{.Updated_at}}</time>
-</p>
-{{end}}
-</footer>
+    {{if .Comments}}
+    <ul>
+      {{range .Comments}}
+      {{range $author, $comment := .}}
+      <li><strong>{{$author}}:</strong> {{$comment}}</li>
+      {{end}}
+      {{end}}
+    </ul>
+    {{else}}
+    <p>No comments yet.</p>
+    {{end}}
+    {{if not .IsEdited}}
+    <p><time datetime="{{.Created_at}}">Created: {{.Created_at}}</time></p>
+    {{else}}
+    <p>
+      <time datetime="{{.Created_at}}">Created: {{.Created_at}}</time> |
+      <time datetime="{{.Updated_at}}">Updated: {{.Updated_at}}</time>
+    </p>
+    {{end}}
+    </footer>
 </div>
 {{end}}
+</a>
+</div>
