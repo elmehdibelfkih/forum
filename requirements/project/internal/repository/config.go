@@ -75,6 +75,7 @@ const (
 
 	PAGE_POSTS_QUANTITY = 10
 	DAY_POST_LIMIT      = 20
+	DAY_COMMENTS_LIMIT  = 50
 )
 
 // IT major fields
