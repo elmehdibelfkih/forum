@@ -22,18 +22,23 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 	var confMap = make(map[string]any)
 
 	confMap["Fields"] = repo.IT_MAJOR_FIELDS
+
 	if r.Context().Value(repo.USER_ID_KEY).(int) == -1 {
 		confMap["Authenticated"] = false
 	} else {
 		confMap["Authenticated"] = true
 		confMap["Username"] = r.Context().Value(repo.USER_NAME).(string)
 	}
+	
+	if r.URL.Query().Get("filter") == "All categories" {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
 
 	page, err := Pagination(w, r, confMap)
 	if err != nil {
 		return
 	}
-
 	err = GetPostsByFilter(w, r, confMap, page)
 	if err != nil {
 		return

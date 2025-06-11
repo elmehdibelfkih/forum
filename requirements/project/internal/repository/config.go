@@ -79,6 +79,7 @@ const (
 
 // IT major fields
 var IT_MAJOR_FIELDS = map[string]bool{
+	"All categories":                               true,
 	"Software Engineering":                         true,
 	"Artificial Intelligence and Machine Learning": true,
 	"Data Science and Big Data":                    true,

@@ -56,6 +56,13 @@ func PostPostHandler(w http.ResponseWriter, r *http.Request) {
 		forumerror.BadRequest(w, r)
 		return
 	}
+	categories := r.Form["Categories"]
+	for _, c := range categories {
+		if !repo.IT_MAJOR_FIELDS[c] {
+			forumerror.BadRequest(w, r)
+			return
+		}
+	}
 	postId, err := db.AddNewPost(userId, escapedTitle, escapedContent)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
@@ -66,14 +73,6 @@ func PostPostHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return
-	}
-	categories := r.Form["Categories"]
-
-	for _, c := range categories {
-		if !repo.IT_MAJOR_FIELDS[c] {
-			forumerror.BadRequest(w, r)
-			return
-		}
 	}
 
 	err = db.MapPostWithCategories(postId, categories)
