@@ -37,6 +37,8 @@ type Post struct {
 	IsEdited         bool
 	IsLikedByUser    bool
 	IsDislikedByUser bool
+	HasCategories    bool
+	Owned            bool
 }
 
 type PageData struct {

@@ -11,12 +11,12 @@
 
 <body>
     <header>
-        <h1><a href="/">FORUM</a></h1>
-        <div class="container">
-            <div class="profile-icon">
-                <a href="/profile">{{.Username}}</a>
-                <a href="/logout">Logout</a>
-            </div>
+        <div id="project_header">
+            <h1><a href="/"><img src="/static/svg/favicon.svg" alt="user profile"></a></h1>
+        </div>
+        <div class="profile-icon">
+            <a href="/logout"><img src="/static/svg/log-out.svg" alt="logout"></a>
+            <a href="/profile"><img src="/static/svg/circle-user-round.svg" alt="user profile"></a>
         </div>
     </header>
     {{if .Error}}
@@ -28,12 +28,13 @@
         <h4>post</h4>
         <form action="/newPost" method="POST">
             <div>
-                <input type="text" id="title" name="title" placeholder="title..." minlength="1" maxlength="100" required>
+                <input type="text" id="title" name="title" placeholder="title..." minlength="1" maxlength="100"
+                    required>
             </div>
 
             <div>
-                <textarea id="content" name="content" minlength="1" maxlength="10000" placeholder="insert content here..."
-                    required></textarea>
+                <textarea id="content" name="content" minlength="1" maxlength="10000"
+                    placeholder="insert content here..." required></textarea>
             </div>
 
             <div>
