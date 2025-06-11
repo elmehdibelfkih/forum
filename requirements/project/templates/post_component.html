@@ -4,7 +4,7 @@
     <div class="post">
       <div class="post_head" id="{{.Id}}">
         <h2>{{.Title}}</h2>
-        <div>Published by <strong>{{.Publisher}}</strong> in <em>{{range .Catigories}}{{.}}, {{end}}</em></div>
+        <div>Published by <strong>{{.Publisher}}</strong> {{if .HasCategories}}in{{end}} <em>{{range .Catigories}}{{.}}, {{end}}</em></div>
       </div>
 
       <section>
@@ -16,24 +16,24 @@
           {{if .IsLikedByUser}}
           <form action="/like" method="POST" >
             <input type="hidden" name="post_id" value="{{.Id}}">
-            <button type="submit"><img src="/static/svg/green_like.svg" alt="comment">{{.Likes}}</button>
+            <button type="submit"><img src="/static/svg/green_like.svg" alt="comment"> {{.Likes}}</button>
           </form>
           {{else}}
           <form action="/like" method="POST">
             <input type="hidden" name="post_id" value="{{.Id}}">
-            <button type="submit"><img src="/static/svg/like.svg" alt="comment">{{.Likes}}</button>
+            <button type="submit"><img src="/static/svg/like.svg" alt="comment"> {{.Likes}}</button>
           </form>
           {{end}}
           {{if .IsDislikedByUser}}
           <form action="/dislike" method="POST" >
             <input type="hidden" name="post_id" value="{{.Id}}">
-            <button type="submit"><img src="/static/svg/red_dislike.svg" alt="comment">{{.Dislikes}}</button>
+            <button type="submit"><img src="/static/svg/red_dislike.svg" alt="comment"> {{.Dislikes}}</button>
           </form>
         </div>
         {{else}}
         <form action="/dislike" method="POST">
           <input type="hidden" name="post_id" value="{{.Id}}">
-          <button type="submit"><img src="/static/svg/dislike.svg" alt="comment">{{.Dislikes}}</button>
+          <button type="submit"><img src="/static/svg/dislike.svg" alt="comment"> {{.Dislikes}}</button>
         </form>
     </div>
     {{end}}

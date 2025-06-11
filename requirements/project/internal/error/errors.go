@@ -114,3 +114,19 @@ func Unauthorized(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Failed to execute error template: %v", tmplErr)
 	}
 }
+
+func TooManyRequests(w http.ResponseWriter, r *http.Request) {
+	postLimitError := Error{
+		StatusCode:       http.StatusTooManyRequests,
+		StatusText:       "Too Many Requests",
+		ErrorMessage:     "You have reached the maximum number of posts allowed per day.",
+		ErrorTitle:       "Post Limit Reached",
+		ErrorDescription: "You’ve hit your daily post limit. Try again tomorrow or contact support if this seems incorrect.",
+	}
+
+	w.WriteHeader(postLimitError.StatusCode)
+	tmplErr := repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "error.html", postLimitError)
+	if tmplErr != nil {
+		log.Printf("Failed to execute error template: %v", tmplErr)
+	}
+}

@@ -70,7 +70,12 @@ func GetAllPostsInfo(page int, userId int) (repo.PageData, error) {
 		if err != nil && err != sql.ErrNoRows {
 			return data, err
 		}
-
+		if len(post.Catigories) != 0 {
+			post.HasCategories = true
+		}
+		if userId == post.PublisherId {
+			post.Owned = true
+		}
 		data.Posts = append(data.Posts, post)
 	}
 

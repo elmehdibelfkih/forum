@@ -42,7 +42,7 @@ func PostPostHandler(w http.ResponseWriter, r *http.Request) {
 
 	IsUserCanPostToday, err := db.IsUserCanPostToday(userId)
 	if !IsUserCanPostToday {
-		forumerror.BadRequest(w, r) // todo: replace bad request by valid response
+		forumerror.TooManyRequests(w, r)
 		return
 	}
 	if err != nil {

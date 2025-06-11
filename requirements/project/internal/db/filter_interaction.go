@@ -114,6 +114,12 @@ func Getpostbyowner(userId int, page int) (repo.PageData, error) {
 		if err != nil && err != sql.ErrNoRows {
 			return data, err
 		}
+		if len(post.Catigories) != 0 {
+			post.HasCategories = true
+		}
+		if userId == post.PublisherId {
+			post.Owned = true
+		}
 		data.Posts = append(data.Posts, post)
 	}
 	if err := rows.Err(); err != nil {
@@ -174,6 +180,9 @@ func GePostbycategory(category string, page int, userId int) (repo.PageData, err
 		post.IsDislikedByUser, err = IsPostDisikedByUser(userId, post.Id)
 		if err != nil && err != sql.ErrNoRows {
 			return data, err
+		}
+		if userId == post.PublisherId {
+			post.Owned = true
 		}
 		data.Posts = append(data.Posts, post)
 	}
