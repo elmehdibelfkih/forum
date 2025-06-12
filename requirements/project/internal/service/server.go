@@ -49,9 +49,8 @@ func forumMux() *http.ServeMux {
 
 	// comment mux
 	forumux.HandleFunc("/comment", middleware.AuthMidleware(handler.CommentHandler))
-
-	forumux.HandleFunc("/post", middleware.InjectUser(handler.PostHandler))
 	
+	forumux.HandleFunc("/post", middleware.InjectUser(handler.PostHandler))
 
 	// static mux
 	forumux.HandleFunc("/static/", handler.StaticHandler)

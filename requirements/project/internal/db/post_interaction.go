@@ -256,7 +256,7 @@ func IsUserCanPostToday(userId int) (bool, error) {
 
 func GetPostByID(postID, userID int) (repo.Post, error) {
 	var post repo.Post
-	var categoriesStr, commentsStr string
+	var categoriesStr string
 
 	row := repo.DB.QueryRow(repo.SELECT_POST_BY_ID , postID)
 
@@ -269,7 +269,6 @@ func GetPostByID(postID, userID int) (repo.Post, error) {
 			&categoriesStr,        
 			&post.Likes,           
 			&post.Dislikes,        
-			&commentsStr,        
 			&post.Created_at,      
 			&post.Updated_at,     
 	)
@@ -281,7 +280,7 @@ func GetPostByID(postID, userID int) (repo.Post, error) {
 	if categoriesStr != "" {
 		post.Catigories = strings.Split(categoriesStr, ",")
 	}
-
+	/*
 	if commentsStr != "" {
 		comments := strings.Split(commentsStr, ",")
 		for _, c := range comments {
@@ -294,6 +293,7 @@ func GetPostByID(postID, userID int) (repo.Post, error) {
 			}
 		}
 	}
+	*/
 
 	post.IsEdited = post.Created_at != post.Updated_at
 	post.IsLikedByUser, err = IsPostLikedByUser(userID, post.Id)
@@ -305,4 +305,36 @@ func GetPostByID(postID, userID int) (repo.Post, error) {
 		return post, err
 	}
 	return post, nil
+}
+
+// Comment represents a comment structure
+type Comment struct {
+    Username string
+    Content  string
+}
+
+func GetCommentsByPostPaginated(postID, page, limit int) ([]Comment, int, error) {
+    offset := (page - 1) * limit
+
+    rows, err := repo.DB.Query(repo.SELECT_COMMENT_BY_10, postID, limit, offset)
+    if err != nil {
+        return nil, 0, err
+    }
+    defer rows.Close()
+
+    var comments []Comment
+    for rows.Next() {
+        var c Comment
+        if err := rows.Scan(&c.Username, &c.Content); err != nil {
+            return nil, 0, err
+        }
+        comments = append(comments, c)
+    }
+    // Get total number of comments !!!
+    var total int
+    err = repo.DB.QueryRow("SELECT COUNT(*) FROM comments WHERE post_id = ?", postID).Scan(&total)
+    if err != nil {
+        return nil, 0, err
+    }
+    return comments, total, nil
 }

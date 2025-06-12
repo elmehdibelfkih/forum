@@ -184,3 +184,9 @@ Error: no such column: p.likes
 Error: no such column: p.likes
 2025/06/11 04:10:09 [2025-06-11T04:10:09+01:00] GET /post
 Error: sql: expected 11 destination arguments in Scan, not 10
+2025/06/11 22:38:33 [2025-06-11T22:38:33+01:00] GET /post
+Error: sql: expected 10 destination arguments in Scan, not 11
+2025/06/11 22:38:44 [2025-06-11T22:38:44+01:00] GET /post
+Error: sql: expected 10 destination arguments in Scan, not 11
+2025/06/11 22:38:56 [2025-06-11T22:38:56+01:00] GET /post
+Error: sql: expected 10 destination arguments in Scan, not 11

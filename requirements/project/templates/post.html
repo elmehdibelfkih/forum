@@ -30,74 +30,82 @@
     <main class="smiha chi haja">
         <!-- the post content -->
         <div class="container">
-            
-                <div class="post">
-                    <div class="post_head" id="{{.Post.Id}}">
-                        <h2>{{.Post.Title}}</h2>
-                        <div>Published by <strong>{{.Post.Publisher}}</strong> in <em>{{range .Post.Catigories}}{{.}},
-                                {{end}}</em></div>
-                    </div>
 
-                    <section>
-                        <p>{{.Post.Content}}</p>
-                    </section>
+            <div class="post">
+                <div class="post_head" id="{{.Post.Id}}">
+                    <h2>{{.Post.Title}}</h2>
+                    <div>Published by <strong>{{.Post.Publisher}}</strong> in <em>{{range .Post.Catigories}}{{.}},
+                            {{end}}</em></div>
+                </div>
 
-                    <footer>
-                        <div id="likes_dislikes">
-                            {{if .Post.IsLikedByUser}}
-                            <form action="/like" method="POST">
-                                <input type="hidden" name="post_id" value="{{.Post.Id}}">
-                                <button type="submit"><img src="/static/svg/green_like.svg"
-                                        alt="comment">{{.Post.Likes}}</button>
-                            </form>
-                            {{else}}
-                            <form action="/like" method="POST">
-                                <input type="hidden" name="post_id" value="{{.Post.Id}}">
-                                <button type="submit"><img src="/static/svg/like.svg" alt="comment">{{.Post.Likes}}</button>
-                            </form>
-                            {{end}}
-                            {{if .IsDislikedByUser}}
-                            <form action="/dislike" method="POST">
-                                <input type="hidden" name="post_id" value="{{.Post.Id}}">
-                                <button type="submit"><img src="/static/svg/red_dislike.svg"
-                                        alt="comment">{{.Post.Dislikes}}</button>
-                            </form>
-                        </div>
+                <section>
+                    <p>{{.Post.Content}}</p>
+                </section>
+
+                <footer>
+                    <div id="likes_dislikes">
+                        {{if .Post.IsLikedByUser}}
+                        <form action="/like" method="POST">
+                            <input type="hidden" name="post_id" value="{{.Post.Id}}">
+                            <button type="submit"><img src="/static/svg/green_like.svg"
+                                    alt="comment">{{.Post.Likes}}</button>
+                        </form>
                         {{else}}
+                        <form action="/like" method="POST">
+                            <input type="hidden" name="post_id" value="{{.Post.Id}}">
+                            <button type="submit"><img src="/static/svg/like.svg" alt="comment">{{.Post.Likes}}</button>
+                        </form>
+                        {{end}}
+                        {{if .IsDislikedByUser}}
                         <form action="/dislike" method="POST">
                             <input type="hidden" name="post_id" value="{{.Post.Id}}">
-                            <button type="submit"><img src="/static/svg/dislike.svg"
+                            <button type="submit"><img src="/static/svg/red_dislike.svg"
                                     alt="comment">{{.Post.Dislikes}}</button>
                         </form>
-                </div>
-                {{end}}
-                <form id="form_comment" action="/comment" method="POST">
-                    <input type="hidden" name="post_id" value="{{.Post.Id}}">
-                    <textarea id="comment" name="comment" placeholder="comment..." minlength="1" maxlength="10000"
-                        required></textarea>
-                    <button type="submit"><img src="/static/svg/send.svg" alt="comment"></button>
-                </form>
+                    </div>
+                    {{else}}
+                    <form action="/dislike" method="POST">
+                        <input type="hidden" name="post_id" value="{{.Post.Id}}">
+                        <button type="submit"><img src="/static/svg/dislike.svg"
+                                alt="comment">{{.Post.Dislikes}}</button>
+                    </form>
+            </div>
+            {{end}}
+            <form id="form_comment" action="/comment" method="POST">
+                <input type="hidden" name="post_id" value="{{.Post.Id}}">
+                <textarea id="comment" name="comment" placeholder="comment..." minlength="1" maxlength="10000"
+                    required></textarea>
+                <button type="submit"><img src="/static/svg/send.svg" alt="comment"></button>
+            </form>
 
-                {{if .Post.Comments}}
-                <ul>
-                    {{range .Post.Comments}}
-                    {{range $author, $comment := .}}
-                    <li><strong>{{$author}}:</strong> {{$comment}}</li>
-                    {{end}}
-                    {{end}}
-                </ul>
-                {{else}}
-                <p>No comments yet.</p>
+            {{if .Comments}}
+            <ul>
+                {{range .Comments}}
+                <li><strong>{{.Username}}:</strong> {{.Content}}</li>
                 {{end}}
-                {{if not .IsEdited}}
-                <p><time datetime="{{.Created_at}}">Created: {{.Post.Created_at}}</time></p>
-                {{else}}
-                <p>
-                    <time datetime="{{.Created_at}}">Created: {{.Post.Created_at}}</time> |
-                    <time datetime="{{.Updated_at}}">Updated: {{.Post.Updated_at}}</time>
-                </p>
+            </ul>
+             
+            <div class="pagination">
+                {{if .HasPrev}}
+                <a href="{{.PrevPage}}">Previous</a>
                 {{end}}
-                </footer>
+                <span>Page {{.CurrentPage}}</span>
+                {{if .HasNext}}
+                <a href="{{.NextPage}}">Next</a>
+                {{end}}
+            </div>
+            {{else}}
+            <p>No comments yet.</p>
+            {{end}}
+            {{if not .IsEdited}}
+            <p><time datetime="{{.Created_at}}">Created: {{.Post.Created_at}}</time></p>
+            {{else}}
+            <p>
+                <time datetime="{{.Created_at}}">Created: {{.Post.Created_at}}</time> |
+                <time datetime="{{.Updated_at}}">Updated: {{.Post.Updated_at}}</time>
+            </p>
+            {{end}}
+            </footer>
         </div>
         </div>
     </main>

@@ -204,29 +204,28 @@ SELECT
   LIMIT ? OFFSET ?;
   `
   SELECT_POST_BY_ID =  `
-SELECT 
-	p.id,
-	p.user_id,
-	p.title,
-	p.content,
-	u.username AS publisher,
-	IFNULL(GROUP_CONCAT(DISTINCT c.name), '') AS categories,
-	COUNT(DISTINCT CASE WHEN ld.is_like = 1 THEN ld.user_id END) AS likes,
-	COUNT(DISTINCT CASE WHEN ld.is_dislike = 1 THEN ld.user_id END) AS dislikes,
-	IFNULL(GROUP_CONCAT(DISTINCT commenter.username || ':' || cm.comment ORDER BY datetime(cm.created_at) DESC), '') AS comments,
-	p.created_at,
-	p.updated_at
-FROM posts p
-JOIN users u ON u.id = p.user_id
-LEFT JOIN post_categories pc ON pc.post_id = p.id
-LEFT JOIN categories c ON c.id = pc.category_id
-LEFT JOIN likes_dislikes ld ON ld.post_id = p.id
-LEFT JOIN comments cm ON cm.post_id = p.id
-LEFT JOIN users commenter ON commenter.id = cm.user_id
-WHERE p.id = ?
-GROUP BY p.id
-LIMIT 1;
-`
-
+  -- Get post data without comments !!!
+  SELECT 
+  p.id, p.user_id, p.title, p.content, u.username AS publisher,
+  IFNULL(GROUP_CONCAT(DISTINCT c.name), '') AS categories,
+  COUNT(DISTINCT CASE WHEN ld.is_like = 1 THEN ld.user_id END) AS likes,
+  COUNT(DISTINCT CASE WHEN ld.is_dislike = 1 THEN ld.user_id END) AS dislikes,
+  p.created_at, p.updated_at
+  FROM posts p
+  JOIN users u ON u.id = p.user_id
+  LEFT JOIN post_categories pc ON pc.post_id = p.id
+  LEFT JOIN categories c ON c.id = pc.category_id
+  LEFT JOIN likes_dislikes ld ON ld.post_id = p.id
+  WHERE p.id = ?
+  GROUP BY p.id;
+  `
+  SELECT_COMMENT_BY_10 = `
+  -- Get comments with limit and offset to get 10 by 10 !!
+  SELECT u.username, cm.comment
+        FROM comments cm
+        JOIN users u ON u.id = cm.user_id
+        WHERE cm.post_id = ?
+        ORDER BY cm.created_at DESC
+        LIMIT ? OFFSET ?`
 )
 
