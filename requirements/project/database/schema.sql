@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS sessions (
 --     UNIQUE (provider_name, provider_id)
 -- );
 
--- Posts Table
+-- Posts Table 
 CREATE TABLE IF NOT EXISTS posts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,

@@ -4,66 +4,52 @@
     <div class="post">
       <div class="post_head" id="{{.Id}}">
         <h2>{{.Title}}</h2>
-        <div>Published by <strong>{{.Publisher}}</strong> {{if .HasCategories}}in{{end}} <em>{{range .Catigories}}{{.}}, {{end}}</em></div>
+        <div>Published by <strong>{{.Publisher}}</strong> {{if .HasCategories}}in{{end}} <em>{{range .Catigories}}{{.}},
+            {{end}}</em></div>
       </div>
 
       <section>
         <p>{{.Content}}</p>
       </section>
-    </a>
-      <footer>
-        <div id="likes_dislikes">
-          {{if .IsLikedByUser}}
-          <form action="/like" method="POST" >
-            <input type="hidden" name="post_id" value="{{.Id}}">
-            <button type="submit"><img src="/static/svg/green_like.svg" alt="comment"> {{.Likes}}</button>
-          </form>
-          {{else}}
-          <form action="/like" method="POST">
-            <input type="hidden" name="post_id" value="{{.Id}}">
-            <button type="submit"><img src="/static/svg/like.svg" alt="comment"> {{.Likes}}</button>
-          </form>
-          {{end}}
-          {{if .IsDislikedByUser}}
-          <form action="/dislike" method="POST" >
-            <input type="hidden" name="post_id" value="{{.Id}}">
-            <button type="submit"><img src="/static/svg/red_dislike.svg" alt="comment"> {{.Dislikes}}</button>
-          </form>
-        </div>
-        {{else}}
-        <form action="/dislike" method="POST">
-          <input type="hidden" name="post_id" value="{{.Id}}">
-          <button type="submit"><img src="/static/svg/dislike.svg" alt="comment"> {{.Dislikes}}</button>
-        </form>
+  </a>
+  <footer>
+    <div id="likes_dislikes_comment">
+      {{if .IsLikedByUser}}
+      <form action="/like" method="POST">
+        <input type="hidden" name="post_id" value="{{.Id}}">
+        <button type="submit"><img src="/static/svg/green_like.svg" alt="comment"> {{.Likes}}</button>
+      </form>
+      {{else}}
+      <form action="/like" method="POST">
+        <input type="hidden" name="post_id" value="{{.Id}}">
+        <button type="submit"><img src="/static/svg/like.svg" alt="comment"> {{.Likes}}</button>
+      </form>
+      {{end}}
+      {{if .IsDislikedByUser}}
+      <form action="/dislike" method="POST">
+        <input type="hidden" name="post_id" value="{{.Id}}">
+        <button type="submit"><img src="/static/svg/red_dislike.svg" alt="comment"> {{.Dislikes}}</button>
+      </form>
     </div>
-    {{end}}
-    <form id="form_comment" action="/comment" method="POST">
+    {{else}}
+    <form action="/dislike" method="POST">
       <input type="hidden" name="post_id" value="{{.Id}}">
-      <textarea id="comment" name="comment" placeholder="comment..." minlength="1" maxlength="10000"
-        required></textarea>
-      <button type="submit"><img src="/static/svg/send.svg" alt="comment"></button>
+      <button type="submit"><img src="/static/svg/dislike.svg" alt="comment"> {{.Dislikes}}</button>
     </form>
+    <!-- todo: fix the comment after dislike -->
+  </div>
+  <a href="/post?Id={{.Id}}"><img src="/static/svg/comment.svg" alt="comment"> {{.CommentsCount}}</a>
+{{end}}
 
-    {{if .Comments}}
-    <ul>
-      {{range .Comments}}
-      {{range $author, $comment := .}}
-      <li><strong>{{$author}}:</strong> {{$comment}}</li>
-      {{end}}
-      {{end}}
-    </ul>
-    {{else}}
-    <p>No comments yet.</p>
-    {{end}}
-    {{if not .IsEdited}}
-    <p><time datetime="{{.Created_at}}">Created: {{.Created_at}}</time></p>
-    {{else}}
-    <p>
-      <time datetime="{{.Created_at}}">Created: {{.Created_at}}</time> |
-      <time datetime="{{.Updated_at}}">Updated: {{.Updated_at}}</time>
-    </p>
-    {{end}}
-    </footer>
+{{if not .IsEdited}}
+<p><time datetime="{{.Created_at}}">Created: {{.Created_at}}</time></p>
+{{else}}
+<p>
+  <time datetime="{{.Created_at}}">Created: {{.Created_at}}</time> |
+  <time datetime="{{.Updated_at}}">Updated: {{.Updated_at}}</time>
+</p>
+{{end}}
+</footer>
 </div>
 {{end}}
 </div>

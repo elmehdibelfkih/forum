@@ -17,7 +17,7 @@ func Getposbytlikes(userId int, page int) (repo.PageData, error) {
 
 	for rows.Next() {
 		var post repo.Post
-		var categoriesStr, commentsStr string
+		var categoriesStr string
 
 		err := rows.Scan(
 			&post.Id,
@@ -28,7 +28,6 @@ func Getposbytlikes(userId int, page int) (repo.PageData, error) {
 			&categoriesStr,
 			&post.Likes,
 			&post.Dislikes,
-			&commentsStr,
 			&post.Created_at,
 			&post.Updated_at,
 		)
@@ -38,18 +37,7 @@ func Getposbytlikes(userId int, page int) (repo.PageData, error) {
 		if categoriesStr != "" {
 			post.Catigories = strings.Split(categoriesStr, ",")
 		}
-		if commentsStr != "" {
-			comments := strings.SplitSeq(commentsStr, ",")
-			for c := range comments {
-				parts := strings.SplitN(c, ":", 2)
-				if len(parts) == 2 {
-					commentMap := map[string]string{
-						parts[0]: parts[1],
-					}
-					post.Comments = append(post.Comments, commentMap)
-				}
-			}
-		}
+
 		post.IsEdited = post.Created_at != post.Updated_at
 		post.IsLikedByUser = true
 		data.Posts = append(data.Posts, post)
@@ -72,7 +60,7 @@ func Getpostbyowner(userId int, page int) (repo.PageData, error) {
 
 	for rows.Next() {
 		var post repo.Post
-		var categoriesStr, commentsStr string
+		var categoriesStr string
 
 		err := rows.Scan(
 			&post.Id,
@@ -83,7 +71,6 @@ func Getpostbyowner(userId int, page int) (repo.PageData, error) {
 			&categoriesStr,
 			&post.Likes,
 			&post.Dislikes,
-			&commentsStr,
 			&post.Created_at,
 			&post.Updated_at,
 		)
@@ -92,18 +79,6 @@ func Getpostbyowner(userId int, page int) (repo.PageData, error) {
 		}
 		if categoriesStr != "" {
 			post.Catigories = strings.Split(categoriesStr, ",")
-		}
-		if commentsStr != "" {
-			comments := strings.SplitSeq(commentsStr, ",")
-			for c := range comments {
-				parts := strings.SplitN(c, ":", 2)
-				if len(parts) == 2 {
-					commentMap := map[string]string{
-						parts[0]: parts[1],
-					}
-					post.Comments = append(post.Comments, commentMap)
-				}
-			}
 		}
 		post.IsEdited = post.Created_at != post.Updated_at
 		post.IsLikedByUser, err = IsPostLikedByUser(userId, post.Id)
@@ -139,7 +114,7 @@ func GePostbycategory(category string, page int, userId int) (repo.PageData, err
 
 	for rows.Next() {
 		var post repo.Post
-		var categoriesStr, commentsStr string
+		var categoriesStr string
 
 		err := rows.Scan(
 			&post.Id,
@@ -150,7 +125,6 @@ func GePostbycategory(category string, page int, userId int) (repo.PageData, err
 			&categoriesStr,
 			&post.Likes,
 			&post.Dislikes,
-			&commentsStr,
 			&post.Created_at,
 			&post.Updated_at,
 		)
@@ -159,18 +133,6 @@ func GePostbycategory(category string, page int, userId int) (repo.PageData, err
 		}
 		if categoriesStr != "" {
 			post.Catigories = strings.Split(categoriesStr, ",")
-		}
-		if commentsStr != "" {
-			comments := strings.SplitSeq(commentsStr, ",")
-			for c := range comments {
-				parts := strings.SplitN(c, ":", 2)
-				if len(parts) == 2 {
-					commentMap := map[string]string{
-						parts[0]: parts[1],
-					}
-					post.Comments = append(post.Comments, commentMap)
-				}
-			}
 		}
 		post.IsEdited = post.Created_at != post.Updated_at
 		post.IsLikedByUser, err = IsPostLikedByUser(userId, post.Id)

@@ -190,3 +190,27 @@ Error: sql: expected 10 destination arguments in Scan, not 11
 Error: sql: expected 10 destination arguments in Scan, not 11
 2025/06/11 22:38:56 [2025-06-11T22:38:56+01:00] GET /post
 Error: sql: expected 10 destination arguments in Scan, not 11
+2025/06/12 22:15:35 [2025-06-12T22:15:35+01:00] GET /
+Error: sql: expected 10 destination arguments in Scan, not 11
+2025/06/12 22:15:42 [2025-06-12T22:15:42+01:00] GET /
+Error: sql: expected 10 destination arguments in Scan, not 11
+2025/06/12 22:15:44 [2025-06-12T22:15:44+01:00] GET /
+Error: sql: expected 10 destination arguments in Scan, not 11
+2025/06/12 22:26:55 [2025-06-12T22:26:55+01:00] GET /
+Error: sql: expected 11 destination arguments in Scan, not 10
+2025/06/12 22:31:37 [2025-06-12T22:31:37+01:00] GET /
+Error: near "WHERE": syntax error
+2025/06/12 22:32:32 [2025-06-12T22:32:32+01:00] GET /
+Error: not enough args to execute query: want 4 got 3
+2025/06/12 22:38:28 [2025-06-12T22:38:28+01:00] GET /
+Error: no such column: c.is_dislike
+2025/06/12 22:44:05 [2025-06-12T22:44:05+01:00] GET /
+Error: near "AND": syntax error
+2025/06/12 22:49:42 [2025-06-12T22:49:42+01:00] GET /
+Error: near "WHERE": syntax error
+2025/06/12 22:50:42 [2025-06-12T22:50:42+01:00] GET /
+Error: near "WHERE": syntax error
+2025/06/12 22:57:42 [2025-06-12T22:57:42+01:00] GET /
+Error: near "WHERE": syntax error
+2025/06/12 23:01:26 [2025-06-12T23:01:26+01:00] GET /
+Error: not enough args to execute query: want 5 got 3
