@@ -30,6 +30,7 @@ const (
 	GET_POST_COUNT        = `SELECT post_count FROM post_metadata`
 	GET_OWNED_POST_COUNT  = `SELECT COUNT(*) FROM posts WHERE user_id = ?`
 	GET_LIKED_POST_COUNT  = `SELECT COUNT(*) FROM likes_dislikes WHERE user_id = ? AND is_like == 1`
+	GET_COMMENT_POST_COUNT  = `SELECT COUNT(*) FROM comments WHERE post_id == ?`
 
 	// UDDATE queries
 	UPDATE_LIKE    = `UPDATE likes_dislikes SET is_like = ?, is_dislike = 0 WHERE user_id = ? AND post_id = ?`

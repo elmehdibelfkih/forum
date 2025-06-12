@@ -40,6 +40,10 @@ func Getposbytlikes(userId int, page int) (repo.PageData, error) {
 
 		post.IsEdited = post.Created_at != post.Updated_at
 		post.IsLikedByUser = true
+		post.CommentsCount, err = GetCommentCount(post.Id)
+		if err != nil {
+			return data, err
+		}
 		data.Posts = append(data.Posts, post)
 	}
 
@@ -95,6 +99,10 @@ func Getpostbyowner(userId int, page int) (repo.PageData, error) {
 		if userId == post.PublisherId {
 			post.Owned = true
 		}
+		post.CommentsCount, err = GetCommentCount(post.Id)
+		if err != nil {
+			return data, err
+		}
 		data.Posts = append(data.Posts, post)
 	}
 	if err := rows.Err(); err != nil {
@@ -146,6 +154,10 @@ func GePostbycategory(category string, page int, userId int) (repo.PageData, err
 		if userId == post.PublisherId {
 			post.Owned = true
 		}
+		post.CommentsCount, err = GetCommentCount(post.Id)
+		if err != nil {
+			return data, err
+		}
 		data.Posts = append(data.Posts, post)
 	}
 	if err := rows.Err(); err != nil {
@@ -153,4 +165,3 @@ func GePostbycategory(category string, page int, userId int) (repo.PageData, err
 	}
 	return data, nil
 }
-

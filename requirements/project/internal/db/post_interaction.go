@@ -62,6 +62,10 @@ func GetAllPostsInfo(page int, userId int) (repo.PageData, error) {
 		if userId == post.PublisherId {
 			post.Owned = true
 		}
+		post.CommentsCount, err = GetCommentCount(post.Id)
+		if err != nil {
+			return data, err
+		}
 		data.Posts = append(data.Posts, post)
 	}
 
@@ -228,6 +232,20 @@ func GetPostsCount(filter string, userId int) (int, error) {
 
 }
 
+func GetCommentCount(postId int) (int, error) {
+	var count int
+
+	err := repo.DB.QueryRow(repo.GET_COMMENT_POST_COUNT, postId).Scan(&count)
+
+	if err == sql.ErrNoRows {
+		return 0, nil
+	} else if err != nil {
+		return -1, err
+	}
+	return count, nil
+
+}
+
 func IsUserCanPostToday(userId int) (bool, error) {
 	var postCount int
 
@@ -265,20 +283,6 @@ func GetPostByID(postID, userID int) (repo.Post, error) {
 	if categoriesStr != "" {
 		post.Catigories = strings.Split(categoriesStr, ",")
 	}
-	/*
-		if commentsStr != "" {
-			comments := strings.Split(commentsStr, ",")
-			for _, c := range comments {
-				parts := strings.SplitN(c, ":", 2)
-				if len(parts) == 2 {
-					commentMap := map[string]string{
-						parts[0]: parts[1],
-					}
-					post.Comments = append(post.Comments, commentMap)
-				}
-			}
-		}
-	*/
 
 	post.IsEdited = post.Created_at != post.Updated_at
 	post.IsLikedByUser, err = IsPostLikedByUser(userID, post.Id)

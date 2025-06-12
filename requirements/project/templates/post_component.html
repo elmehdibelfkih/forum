@@ -14,6 +14,7 @@
   </a>
   <footer>
     <div id="likes_dislikes_comment">
+
       {{if .IsLikedByUser}}
       <form action="/like" method="POST">
         <input type="hidden" name="post_id" value="{{.Id}}">
@@ -25,31 +26,31 @@
         <button type="submit"><img src="/static/svg/like.svg" alt="comment"> {{.Likes}}</button>
       </form>
       {{end}}
+
       {{if .IsDislikedByUser}}
       <form action="/dislike" method="POST">
         <input type="hidden" name="post_id" value="{{.Id}}">
         <button type="submit"><img src="/static/svg/red_dislike.svg" alt="comment"> {{.Dislikes}}</button>
       </form>
+      <!-- </div> -->
+      {{else}}
+      <form action="/dislike" method="POST">
+        <input type="hidden" name="post_id" value="{{.Id}}">
+        <button type="submit"><img src="/static/svg/dislike.svg" alt="comment"> {{.Dislikes}}</button>
+      </form>
+      <!-- todo: fix the comment after dislike -->
+      {{end}}
+      <a href="/post?Id={{.Id}}"><img src="/static/svg/comment.svg" alt="comment"> {{.CommentsCount}}</a>
     </div>
-    {{else}}
-    <form action="/dislike" method="POST">
-      <input type="hidden" name="post_id" value="{{.Id}}">
-      <button type="submit"><img src="/static/svg/dislike.svg" alt="comment"> {{.Dislikes}}</button>
-    </form>
-    <!-- todo: fix the comment after dislike -->
-  </div>
-  <a href="/post?Id={{.Id}}"><img src="/static/svg/comment.svg" alt="comment"> {{.CommentsCount}}</a>
-{{end}}
 
-{{if not .IsEdited}}
-<p><time datetime="{{.Created_at}}">Created: {{.Created_at}}</time></p>
-{{else}}
-<p>
-  <time datetime="{{.Created_at}}">Created: {{.Created_at}}</time> |
-  <time datetime="{{.Updated_at}}">Updated: {{.Updated_at}}</time>
-</p>
-{{end}}
-</footer>
+    {{if not .IsEdited}}
+    <p><time datetime="{{.Created_at}}">Created: {{.Created_at}}</time></p>
+    {{else}}
+    <p>
+      <time datetime="{{.Created_at}}">Created: {{.Created_at}}</time> |
+      <time datetime="{{.Updated_at}}">Updated: {{.Updated_at}}</time>
+    </p>
+    {{end}}
+  </footer>
 </div>
 {{end}}
-</div>
