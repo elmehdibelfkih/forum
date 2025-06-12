@@ -1,8 +1,6 @@
 package main
 
-import (
-	service "forum/internal/service"
-)
+import "forum/internal/service"
 
 func main() {
 	service.InitDependencies()
