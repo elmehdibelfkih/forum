@@ -13,13 +13,12 @@ func StaticHandler(w http.ResponseWriter, r *http.Request) {
 	url := r.URL.Path[1:]
 	file, err := os.Stat(url)
 	if err != nil {
-		if os.IsNotExist(err) {
-			forumerror.NotFoundError(w, r)
-		}
-		forumerror.InternalServerError(w, r, err)
+		forumerror.NotFoundError(w, r)
+		return
 	}
 	if file.IsDir() {
 		forumerror.NotFoundError(w, r)
+		return
 	}
 	http.ServeFile(w, r, url)
 }
