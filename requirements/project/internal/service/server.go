@@ -6,6 +6,7 @@ import (
 	db "forum/internal/db"
 	handler "forum/internal/handler"
 	middleware "forum/internal/middleware"
+	ratelimiter "forum/internal/ratelimiter"
 	repo "forum/internal/repository"
 	utils "forum/internal/utils"
 	"log"
@@ -54,13 +55,14 @@ func forumMux() *http.ServeMux {
 
 	// static mux
 	forumux.HandleFunc("/static/", handler.StaticHandler)
+
 	return forumux
 }
 
 func StartServer() {
 	server := &http.Server{
 		Addr:    repo.PORT,
-		Handler: forumMux(),
+		Handler: middleware.RateLimiterMiddleware(forumMux(), ratelimiter.Limit(2), 15),
 	}
 
 	fmt.Println(repo.SERVER_RUN_MESSAGE)

@@ -21,21 +21,21 @@ const (
                 UPDATE post_metadata SET post_count = post_count - 1;`
 
 	// SELECT queries
-	GET_POST_COUNT_BY_CAT = `SELECT pcc.post_count FROM categories_count pcc JOIN categories c ON pcc.category_id = c.id WHERE c.name = ?`
-	IS_POST_EXIST         = `SELECT 1 FROM posts WHERE id = ? LIMIT 1`
-	IS_LIKED              = `SELECT is_like FROM likes_dislikes WHERE user_id = ? AND post_id = ?`
-	IS_DISLIKED           = `SELECT is_dislike FROM likes_dislikes WHERE user_id = ? AND post_id = ?`
-	SELECT_TODAY_POSTS    = `SELECT COUNT(*) FROM posts WHERE user_id = ?  AND created_at >= DATE('now')`
-	SELECT_CATEGORY_ID    = `SELECT id FROM categories WHERE name = ?`
-	GET_POST_COUNT        = `SELECT post_count FROM post_metadata`
-	GET_OWNED_POST_COUNT  = `SELECT COUNT(*) FROM posts WHERE user_id = ?`
-	GET_LIKED_POST_COUNT  = `SELECT COUNT(*) FROM likes_dislikes WHERE user_id = ? AND is_like == 1`
-	GET_COMMENT_POST_COUNT  = `SELECT COUNT(*) FROM comments WHERE post_id == ?`
+	GET_POST_COUNT_BY_CAT  = `SELECT pcc.post_count FROM categories_count pcc JOIN categories c ON pcc.category_id = c.id WHERE c.name = ?`
+	IS_POST_EXIST          = `SELECT 1 FROM posts WHERE id = ? LIMIT 1`
+	IS_LIKED               = `SELECT is_like FROM likes_dislikes WHERE user_id = ? AND post_id = ?`
+	IS_DISLIKED            = `SELECT is_dislike FROM likes_dislikes WHERE user_id = ? AND post_id = ?`
+	SELECT_TODAY_POSTS     = `SELECT COUNT(*) FROM posts WHERE user_id = ?  AND created_at >= DATE('now')`
+	SELECT_CATEGORY_ID     = `SELECT id FROM categories WHERE name = ?`
+	GET_POST_COUNT         = `SELECT post_count FROM post_metadata`
+	GET_OWNED_POST_COUNT   = `SELECT COUNT(*) FROM posts WHERE user_id = ?`
+	GET_LIKED_POST_COUNT   = `SELECT COUNT(*) FROM likes_dislikes WHERE user_id = ? AND is_like == 1`
+	GET_COMMENT_POST_COUNT = `SELECT COUNT(*) FROM comments WHERE post_id == ?`
+	SELECT_TODAY_COMMENTS  = `SELECT COUNT(*) FROM comments WHERE user_id = ?  AND created_at >= DATE('now')`
 
 	// UDDATE queries
 	UPDATE_LIKE    = `UPDATE likes_dislikes SET is_like = ?, is_dislike = 0 WHERE user_id = ? AND post_id = ?`
 	UPDATE_DISLIKE = `UPDATE likes_dislikes SET is_like = 0, is_dislike = ? WHERE user_id = ? AND post_id = ?`
-
 
 	GET_POST_BYLIKES = `
   SELECT

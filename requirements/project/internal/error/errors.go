@@ -115,13 +115,13 @@ func Unauthorized(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func TooManyRequests(w http.ResponseWriter, r *http.Request) {
+func TooManyRequests(w http.ResponseWriter, r *http.Request, option string) {
 	postLimitError := Error{
 		StatusCode:       http.StatusTooManyRequests,
 		StatusText:       "Too Many Requests",
-		ErrorMessage:     "You have reached the maximum number of posts allowed per day.",
-		ErrorTitle:       "Post Limit Reached",
-		ErrorDescription: "You’ve hit your daily post limit. Try again tomorrow or contact support if this seems incorrect.",
+		ErrorMessage:     "You have reached the maximum number of " + option + " allowed per day.",
+		ErrorTitle:       option + " Limit Reached",
+		ErrorDescription: "You’ve hit your daily " + option + " limit. Try again tomorrow or contact support if this seems incorrect.",
 	}
 
 	w.WriteHeader(postLimitError.StatusCode)
