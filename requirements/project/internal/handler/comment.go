@@ -16,16 +16,14 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !utils.ValidComment(r.FormValue("comment")) {
-		print("1")
 		forumerror.BadRequest(w, r)
 		return
 	}
-
+	
 	postId, err := strconv.ParseInt(r.FormValue("post_id"), 10, 0)
 	IsPostExist, err2 := db.IsPostExist(int(postId))
 	print(r.FormValue("post_id"))
 	if err != nil || !IsPostExist {
-		print("2")
 		forumerror.BadRequest(w, r)
 		return
 	}
@@ -34,7 +32,6 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !utils.ValidComment(r.FormValue("comment")) {
-		print("3")
 		forumerror.BadRequest(w, r)
 		return
 	}

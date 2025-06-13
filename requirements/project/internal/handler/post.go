@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	forumerror "forum/internal/error"
 	db "forum/internal/db"
 	repo "forum/internal/repository"
@@ -29,7 +28,7 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 	Idpost := r.URL.Query().Get("Id")
 	Id , err := strconv.Atoi(Idpost)
 	if err != nil {
-		fmt.Fprintf(w,"bad request")
+		forumerror.BadRequest(w,r)
 		return
 	}
 	// Get post by id - separate with comment !!!

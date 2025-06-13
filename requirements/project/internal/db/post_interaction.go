@@ -2,9 +2,12 @@ package db
 
 import (
 	"database/sql"
-	repo "forum/internal/repository"
+ 
 	"strings"
+	"html"
+	"html/template"
 
+	repo "forum/internal/repository"
 )
 
 func AddNewPost(userId int, titel string, content string) (int, error) {
@@ -17,7 +20,6 @@ func AddNewPost(userId int, titel string, content string) (int, error) {
 }
 
 func GetAllPostsInfo(page int, userId int) (repo.PageData, error) {
-
 	var data repo.PageData
 	rows, err := repo.DB.Query(repo.SELECT_ALL_POSTS, repo.PAGE_POSTS_QUANTITY, (page-1)*repo.PAGE_POSTS_QUANTITY)
 	if err != nil {
@@ -240,7 +242,6 @@ func GetPostsCount(filter string, userId int) (int, error) {
 		return -1, err
 	}
 	return count, nil
-
 }
 
 func IsUserCanPostToday(userId int) (bool, error) {
@@ -251,28 +252,26 @@ func IsUserCanPostToday(userId int) (bool, error) {
 		return false, err
 	}
 	return postCount < repo.DAY_POST_LIMIT, nil
-
 }
 
 func GetPostByID(postID, userID int) (repo.Post, error) {
 	var post repo.Post
 	var categoriesStr string
 
-	row := repo.DB.QueryRow(repo.SELECT_POST_BY_ID , postID)
+	row := repo.DB.QueryRow(repo.SELECT_POST_BY_ID, postID)
 
 	err := row.Scan(
-			&post.Id,             
-			&post.PublisherId,     
-			&post.Title,           
-			&post.Content,         
-			&post.Publisher,       
-			&categoriesStr,        
-			&post.Likes,           
-			&post.Dislikes,        
-			&post.Created_at,      
-			&post.Updated_at,     
+		&post.Id,
+		&post.PublisherId,
+		&post.Title,
+		&post.Content,
+		&post.Publisher,
+		&categoriesStr,
+		&post.Likes,
+		&post.Dislikes,
+		&post.Created_at,
+		&post.Updated_at,
 	)
-
 	if err != nil {
 		return post, err
 	}
@@ -281,18 +280,18 @@ func GetPostByID(postID, userID int) (repo.Post, error) {
 		post.Catigories = strings.Split(categoriesStr, ",")
 	}
 	/*
-	if commentsStr != "" {
-		comments := strings.Split(commentsStr, ",")
-		for _, c := range comments {
-			parts := strings.SplitN(c, ":", 2)
-			if len(parts) == 2 {
-				commentMap := map[string]string{
-					parts[0]: parts[1],
+		if commentsStr != "" {
+			comments := strings.Split(commentsStr, ",")
+			for _, c := range comments {
+				parts := strings.SplitN(c, ":", 2)
+				if len(parts) == 2 {
+					commentMap := map[string]string{
+						parts[0]: parts[1],
+					}
+					post.Comments = append(post.Comments, commentMap)
 				}
-				post.Comments = append(post.Comments, commentMap)
 			}
 		}
-	}
 	*/
 
 	post.IsEdited = post.Created_at != post.Updated_at
@@ -309,32 +308,45 @@ func GetPostByID(postID, userID int) (repo.Post, error) {
 
 // Comment represents a comment structure
 type Comment struct {
-    Username string
-    Content  string
+	Username string
+	Content  template.HTML
 }
 
 func GetCommentsByPostPaginated(postID, page, limit int) ([]Comment, int, error) {
-    offset := (page - 1) * limit
+	offset := (page - 1) * limit
 
-    rows, err := repo.DB.Query(repo.SELECT_COMMENT_BY_10, postID, limit, offset)
-    if err != nil {
-        return nil, 0, err
-    }
-    defer rows.Close()
+	rows, err := repo.DB.Query(repo.SELECT_COMMENT_BY_10, postID, limit, offset)
+	if err != nil {
+		return nil, 0, err
+	}
+	defer rows.Close()
 
-    var comments []Comment
-    for rows.Next() {
-        var c Comment
-        if err := rows.Scan(&c.Username, &c.Content); err != nil {
-            return nil, 0, err
-        }
-        comments = append(comments, c)
-    }
-    // Get total number of comments !!!
-    var total int
-    err = repo.DB.QueryRow("SELECT COUNT(*) FROM comments WHERE post_id = ?", postID).Scan(&total)
-    if err != nil {
-        return nil, 0, err
-    }
-    return comments, total, nil
+	var comments []Comment
+	for rows.Next() {
+		var username string
+	var rawContent string
+
+	if err := rows.Scan(&username, &rawContent); err != nil {
+		return nil, 0, err
+	}
+
+	// convert newlines to <br> safely
+	safe := html.EscapeString(rawContent)
+	safe = strings.ReplaceAll(safe, "\r\n", "\n")  
+	safe = strings.ReplaceAll(safe, "\n", "<br>")  
+	
+	// create comment with safe html 
+	c := Comment{
+		Username: username,
+		Content:  template.HTML(safe), // mark it safe for template
+	}
+	comments = append(comments, c)
+	}
+	// Get total number of comments !!!
+	var total int
+	err = repo.DB.QueryRow("SELECT COUNT(*) FROM comments WHERE post_id = ?", postID).Scan(&total)
+	if err != nil {
+		return nil, 0, err
+	}
+	return comments, total, nil
 }
