@@ -32,13 +32,11 @@
         <input type="hidden" name="post_id" value="{{.Id}}">
         <button type="submit"><img src="/static/svg/red_dislike.svg" alt="comment"> {{.Dislikes}}</button>
       </form>
-      <!-- </div> -->
       {{else}}
       <form action="/dislike" method="POST">
         <input type="hidden" name="post_id" value="{{.Id}}">
         <button type="submit"><img src="/static/svg/dislike.svg" alt="comment"> {{.Dislikes}}</button>
       </form>
-      <!-- todo: fix the comment after dislike -->
       {{end}}
       <a href="/post?Id={{.Id}}"><img src="/static/svg/comment.svg" alt="comment"> {{.CommentsCount}}</a>
     </div>
