@@ -1,3 +1,7 @@
+local:
+	mkdir -p "./requirements/project/logs"
+		: > "./requirements/project/logs/internal_errors.log"
+	cd "./requirements/project" && go run .
 up:
 	mkdir -p "./requirements/project/logs"
 		: > "./requirements/project/logs/internal_errors.log" 

@@ -10,9 +10,9 @@ import (
 )
 
 func RootHandler(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/" { // FIXME: debagging
-		// forumerror.NotFoundError(w, r)
-		forumerror.InternalServerError(w, r, errors.New("test for runing in container"))
+	if r.URL.Path != "/" {
+		forumerror.NotFoundError(w, r)
+		// forumerror.InternalServerError(w, r, errors.New("test for runing in container"))
 		return
 	}
 	if r.Method != http.MethodGet {
