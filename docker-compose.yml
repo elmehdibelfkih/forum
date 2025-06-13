@@ -1,19 +1,14 @@
 services:
   forum:
-    container_name: forum
+    build:
+      context: ./requirements
+      dockerfile: Dockerfile
     image: forum:latest
-    build: ./requirements
+    container_name: forum
     ports:
       - "8080:8080"
     restart: unless-stopped
     volumes:
-      - forum_db:/project/database
+      - ./requirements/project/database:/project/database
+      - ./requirements/project/logs:/project/logs
 
-volumes:
-  forum_db:
-    name: forum_db
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/ebelfkih/Desktop/zone\ 01\ project/forum/requirements/project/database/
-      o: bind

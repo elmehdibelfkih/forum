@@ -8,16 +8,16 @@ RUN go build -o forum main.go
 FROM debian:stable-slim
 RUN apt-get update && apt-get upgrade -y
 WORKDIR /project
-COPY --from=builder ./app/project/forum .
-COPY ./project/static ./static
-# COPY ./project/database ./database
+
+# bring in the compiled binary & assets
+COPY --from=builder /app/project/forum     .
+COPY ./project/static   ./static
 COPY ./project/templates ./templates
+
+
+# seed DB in the image (optional if you always bind-mount)
+COPY ./project/database ./database
+
 EXPOSE 8080
-LABEL owner="soubaaiss" \
-      owner="mlarbi" \
-      owner="ebelfkih" \
-      project="forum" \
-      version="1.0" \
-      description="This is a simple web application that works like a forum." \
-      environment="zone 01"
+
 CMD ["./forum"]
