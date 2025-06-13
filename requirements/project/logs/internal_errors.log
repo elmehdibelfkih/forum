@@ -298,3 +298,9 @@ Error: stat static/css/ddd: no such file or directory
 2025/06/13 15:13:39 [2025-06-13T15:13:39+01:00] GET /static/css/ddd
 Error: stat static/css/ddd: no such file or directory
 2025/06/13 15:13:39 http: superfluous response.WriteHeader call from forum/internal/error.InternalServerError (errors.go:78)
+2025/06/13 16:24:15 [2025-06-13T16:24:15+01:00] GET /post
+Error: sql: expected 10 destination arguments in Scan, not 20
+2025/06/13 16:24:24 [2025-06-13T16:24:24+01:00] GET /post
+Error: sql: expected 10 destination arguments in Scan, not 20
+2025/06/13 16:24:34 [2025-06-13T16:24:34+01:00] GET /post
+Error: sql: expected 10 destination arguments in Scan, not 20

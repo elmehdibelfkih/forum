@@ -31,7 +31,7 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 		forumerror.BadRequest(w, r)
 		return
 	}
-
+	
 	postId, err := strconv.ParseInt(r.FormValue("post_id"), 10, 0)
 	IsPostExist, err2 := db.IsPostExist(int(postId))
 

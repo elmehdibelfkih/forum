@@ -2,8 +2,12 @@ package db
 
 import (
 	"database/sql"
-	repo "forum/internal/repository"
+
+	"html"
+	"html/template"
 	"strings"
+
+	repo "forum/internal/repository"
 )
 
 func AddNewPost(userId int, titel string, content string) (int, error) {
@@ -16,7 +20,6 @@ func AddNewPost(userId int, titel string, content string) (int, error) {
 }
 
 func GetAllPostsInfo(page int, userId int) (repo.PageData, error) {
-
 	var data repo.PageData
 	rows, err := repo.DB.Query(repo.SELECT_ALL_POSTS, repo.PAGE_POSTS_QUANTITY, (page-1)*repo.PAGE_POSTS_QUANTITY)
 	if err != nil {
@@ -264,14 +267,12 @@ func IsUserCanPostToday(userId int) (bool, error) {
 		return false, err
 	}
 	return postCount < repo.DAY_POST_LIMIT, nil
-
 }
 
 func GetPostByID(postID, userID int) (repo.Post, error) {
 	var post repo.Post
 	var categoriesStr string
 
-	// row := repo.DB.QueryRow(repo.SELECT_POST_BY_ID, postID)
 	row := repo.DB.QueryRow(repo.SELECT_POST_BY_ID, postID)
 
 	err := row.Scan(
@@ -286,7 +287,6 @@ func GetPostByID(postID, userID int) (repo.Post, error) {
 		&post.Created_at,
 		&post.Updated_at,
 	)
-
 	if err != nil {
 		return post, err
 	}
@@ -307,10 +307,9 @@ func GetPostByID(postID, userID int) (repo.Post, error) {
 	return post, nil
 }
 
-// Comment represents a comment structure
 type Comment struct {
 	Username string
-	Content  string
+	Content  template.HTML
 }
 
 func GetCommentsByPostPaginated(postID, page, limit int) ([]Comment, int, error) {
@@ -324,9 +323,22 @@ func GetCommentsByPostPaginated(postID, page, limit int) ([]Comment, int, error)
 
 	var comments []Comment
 	for rows.Next() {
-		var c Comment
-		if err := rows.Scan(&c.Username, &c.Content); err != nil {
+		var username string
+		var rawContent string
+
+		if err := rows.Scan(&username, &rawContent); err != nil {
 			return nil, 0, err
+		}
+
+		// convert newlines to <br> safely
+		safe := html.EscapeString(rawContent)
+		safe = strings.ReplaceAll(safe, "\r\n", "\n")
+		safe = strings.ReplaceAll(safe, "\n", "<br>")
+
+		// create comment with safe html
+		c := Comment{
+			Username: username,
+			Content:  template.HTML(safe), // mark it safe for template
 		}
 		comments = append(comments, c)
 	}
