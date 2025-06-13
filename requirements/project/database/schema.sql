@@ -97,12 +97,3 @@ CREATE TABLE IF NOT EXISTS categories_count (
     FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE CASCADE
 );
 
--- CREATE TABLE IF NOT EXISTS user_metadata (
---     id INTEGER PRIMARY KEY,
---     user_id INTEGER NOT NULL,
---     post_count INTEGER NOT NULL,
---     comment_count INTEGER NOT NULL,
---     like_count INTEGER NOT NULL,
---     dislike_count INTEGER NOT NULL,
---     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
--- );
