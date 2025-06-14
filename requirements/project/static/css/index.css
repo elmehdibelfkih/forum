@@ -2,6 +2,7 @@
   --main-color: #0f172a;
   --border-color: #e4e7ea;
   --icons-color: #748093;
+  --accent-color: #00AEFF;
   --font-heading: "Unbounded", sans-serif;
   --font-body: "Archivo", sans-serif;
 }
@@ -74,14 +75,17 @@ header .header__logo {
   max-width: 80svw;
   background-color: #ffffff;
   border: solid 1px var(--border-color);
-  min-height: 40svh;
+  min-height: 50svh;
   margin: auto;
   gap: 15px;
   border-radius: 12px;
+  margin-bottom: 30px;
+  overflow: hidden;
+  background-image: url("/static/svg/bg-grid.svg");
 }
 .hero__title {
   font-size: 2.5rem;
-  max-width: 60%;
+  max-width: 50%;
   color: var(--main-color);
   text-align: center;
   font-family: var(--font-heading,monospace);
@@ -102,16 +106,16 @@ header .header__logo {
   display: block;
   color: white;
   text-decoration: none;
-  padding: 10px 20px;
-  background-color: var(--main-color);
+  padding: 8px 30px;
+  background-color: var(--accent-color);
   border-radius: 5px;
 }
 .btn-secondary#btn2 {
   display: block;
   text-decoration: none;
-  padding: 10px 20px;
+  padding: 8px 30px;
   color: var(--main-color);
-  border: solid 2px var(--main-color);
+  border: solid 2px var(--accent-color);
   background-color: transparent;
   border-radius: 5px;
   transition: all 0.3s ease-in-out;
@@ -223,4 +227,7 @@ header .header__logo {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+.highlight{
+    color: var(--accent-color);
 }
