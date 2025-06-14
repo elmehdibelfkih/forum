@@ -27,15 +27,15 @@
     {{end}}
     {{if .username}}
     <form class="" action="/profile/update/username/save" method="post">
-        <input type="text" id="username" name="username" placeholder="Please type your New Username" required>
-        <input type="password" id="current" name="current" placeholder="Please type your Password" required>
+        <input type="text" id="username" name="username" placeholder="Please type your New Username" minlength="3" maxlength="32" required>
+        <input type="password" id="current" name="current" placeholder="Please type your Password" minlength="8" maxlength="72" required>
         <button type="submit">Save</button>
     </form>
     {{end}}
     {{if .email}}
     <form action="/profile/update/email/save" method="post">
-        <input type="text" id="email" name="email" placeholder="Please type your New Email " required>
-        <input type="password" id="current" name="current" placeholder="Please type your Password" required>
+        <input type="text" id="email" name="email" placeholder="Please type your New Email" minlength="6" maxlength="254" required>
+        <input type="password" id="current" name="current" placeholder="Please type your Password" minlength="8" maxlength="72" required>
         <button type="submit">Save</button>
     </form>
     </div>
