@@ -6,6 +6,11 @@ import (
 	"regexp"
 )
 
+type Comment struct {
+	Username string
+	Content  template.HTML
+}
+
 var (
 	EmailExp        *regexp.Regexp
 	UsernameExp     *regexp.Regexp
