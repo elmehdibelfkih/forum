@@ -259,7 +259,7 @@ func ServeDelete(w http.ResponseWriter, r *http.Request) {
 	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "delete.html", confMap)
 }
 
-func Delete(w http.ResponseWriter, r *http.Request) {
+func DeleteConfirmation(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		forumerror.BadRequest(w, r)
 		return
@@ -278,5 +278,18 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "You exceeded the maximum allowed input"})
 		ServeDelete(w, r.WithContext(ctx))
 		return
+	}
 
+	if !utils.CheckPassword(password, hash) {
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Wrong password"})
+		ServeDelete(w, r.WithContext(ctx))
+		return
+	}
+	auth.LogoutHandler(w, r)
+
+	err = db.DeleteUser(userId)
+	if err != nil {
+		forumerror.InternalServerError(w, r, err)
+		return
+	}
 }
