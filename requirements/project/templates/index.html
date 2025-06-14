@@ -90,11 +90,15 @@
 
   <nav class="pagination" aria-label="Pagination navigation">
     {{if .HasPrev}}
-    <a href="{{.PrevPage}}" class="pagination__link pagination__link--prev" aria-label="Previous page">◀</a>
-    {{end}} {{if .PrintCurrentPage}}
+    <a href="{{.PrevPage}}" class="pagination__link pagination__link--prev" aria-label="Previous page"><img src="/static/svg/left.svg" alt="previous page"> Previous Page</a>
+    {{else}}
+    <span class="pagination__link pagination__link--prev" aria-label="Previous page" style="opacity: .3;"><img src="/static/svg/left.svg" alt="previous page"></span>
+    {{end}}
     <span class="pagination__current" aria-current="page">Page {{.CurrentPage}}</span>
-    {{end}} {{if .HasNext}}
-    <a href="{{.NextPage}}" class="pagination__link pagination__link--next" aria-label="Next page">▶</a>
+    {{if .HasNext}}
+    <a href="{{.NextPage}}" class="pagination__link pagination__link--next" aria-label="Next page">Next Page <img src="/static/svg/right.svg" alt="next page"></a>
+    {{else}}
+    <span class="pagination__link pagination__link--next" aria-label="Next page" style="opacity: .3;"><img src="/static/svg/right.svg" alt="next page"></span>
     {{end}}
   </nav>
 

@@ -26,5 +26,5 @@ const (
 
 	// delete queries
 	DELETE_USER = `DELETE FROM users WHERE id = ?;
-				UPDATE post_metadata SET post_count = (SELECT COUNT(*) FROM posts WHERE user_id = ?);`
+				UPDATE post_metadata SET post_count = (SELECT COUNT(*) FROM posts);`
 )

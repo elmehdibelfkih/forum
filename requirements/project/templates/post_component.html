@@ -38,44 +38,47 @@
         {{end}}
       </div>
       <span class="divider"></span>
-
-      <div class="likes_dislikes_comment">
-        {{if .IsLikedByUser}}
-        <form action="/like" method="POST">
-          <input type="hidden" name="post_id" value="{{.Id}}" />
-          <button type="submit" class="likebtn">
-            <img src="/static/svg/green_like.svg" alt="comment" /> {{.Likes}}
-          </button>
-        </form>
-        {{else}}
-        <form action="/like" method="POST">
-          <input type="hidden" name="post_id" value="{{.Id}}" />
-          <button type="submit" class="likebtn">
-            <img src="/static/svg/like.svg" alt="comment" /> {{.Likes}}
-          </button>
-        </form>
-        {{end}} {{if .IsDislikedByUser}}
-        <form action="/dislike" method="POST">
-          <input type="hidden" name="post_id" value="{{.Id}}" />
-          <button type="submit" class="dislikebtn">
-            <img src="/static/svg/red_dislike.svg" alt="comment" />
-            {{.Dislikes}}
-          </button>
-        </form>
-        {{else}}
-        <form action="/dislike" method="POST">
-          <input type="hidden" name="post_id" value="{{.Id}}" />
-          <button type="submit" class="dislikebtn">
-            <img src="/static/svg/dislike.svg" alt="comment" /> {{.Dislikes}}
-          </button>
-        </form>
-        {{end}}
-        <a href="/post?Id={{.Id}}#comment"
-          ><img src="/static/svg/comment.svg" alt="comment" />
-          {{.CommentsCount}}</a
-        >
+      <div class="postbot">
+        <div class="likes_dislikes_comment">
+          {{if .IsLikedByUser}}
+          <form action="/like" method="POST">
+            <input type="hidden" name="post_id" value="{{.Id}}" />
+            <button type="submit" class="likebtn">
+              <img src="/static/svg/green_like.svg" alt="comment" /> {{.Likes}}
+            </button>
+          </form>
+          {{else}}
+          <form action="/like" method="POST">
+            <input type="hidden" name="post_id" value="{{.Id}}" />
+            <button type="submit" class="likebtn">
+              <img src="/static/svg/like.svg" alt="comment" /> {{.Likes}}
+            </button>
+          </form>
+          {{end}} {{if .IsDislikedByUser}}
+          <form action="/dislike" method="POST">
+            <input type="hidden" name="post_id" value="{{.Id}}" />
+            <button type="submit" class="dislikebtn">
+              <img src="/static/svg/red_dislike.svg" alt="comment" />
+              {{.Dislikes}}
+            </button>
+          </form>
+          {{else}}
+          <form action="/dislike" method="POST">
+            <input type="hidden" name="post_id" value="{{.Id}}" />
+            <button type="submit" class="dislikebtn">
+              <img src="/static/svg/dislike.svg" alt="comment" /> {{.Dislikes}}
+            </button>
+          </form>
+          {{end}}
+          <a href="/post?Id={{.Id}}#comment"
+            ><img src="/static/svg/comment.svg" alt="comment" />
+            {{.CommentsCount}}</a
+          >
+        </div>
+        <div class="ReadMore">
+          <a href="/post?Id={{.Id}}" class="readmore" id="btn2">Read More</a>
+        </div>
       </div>
-      <div class="ReadMore"></div>
     </div>
     <!--<a href="/post?Id={{.Id}}">-->
 
