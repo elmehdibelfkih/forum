@@ -38,7 +38,7 @@
         <button type="submit"><img src="/static/svg/dislike.svg" alt="comment"> {{.Dislikes}}</button>
       </form>
       {{end}}
-      <a href="/post?Id={{.Id}}"><img src="/static/svg/comment.svg" alt="comment"> {{.CommentsCount}}</a>
+      <a href="/post?Id={{.Id}}#comment"><img src="/static/svg/comment.svg" alt="comment"> {{.CommentsCount}}</a>
     </div>
 
     {{if not .IsEdited}}
