@@ -47,26 +47,27 @@
                         {{if .Post.IsLikedByUser}}
                         <form action="/like" method="POST">
                             <input type="hidden" name="post_id" value="{{.Post.Id}}">
-                            <button type="submit"><img src="/static/svg/green_like.svg"
+                            <button type="submit" onsubmit="(e) => {norefresh(e)}"><img src="/static/svg/green_like.svg"
                                     alt="comment">{{.Post.Likes}}</button>
                         </form>
                         {{else}}
                         <form action="/like" method="POST">
                             <input type="hidden" name="post_id" value="{{.Post.Id}}">
-                            <button type="submit"><img src="/static/svg/like.svg" alt="comment">{{.Post.Likes}}</button>
+                            <button type="submit" onsubmit="(e) => {norefresh(e)}"><img src="/static/svg/like.svg"
+                                    alt="comment">{{.Post.Likes}}</button>
                         </form>
                         {{end}}
                         {{if .IsDislikedByUser}}
                         <form action="/dislike" method="POST">
                             <input type="hidden" name="post_id" value="{{.Post.Id}}">
-                            <button type="submit"><img src="/static/svg/red_dislike.svg"
-                                    alt="comment">{{.Post.Dislikes}}</button>
+                            <button type="submit"><img src="/static/svg/red_dislike.svg" alt="comment"
+                                    onsubmit="(e) => {norefresh(e)}">{{.Post.Dislikes}}</button>
                         </form>
                     </div>
                     {{else}}
                     <form action="/dislike" method="POST">
                         <input type="hidden" name="post_id" value="{{.Post.Id}}">
-                        <button type="submit"><img src="/static/svg/dislike.svg"
+                        <button type="submit" onsubmit="(e) => {norefresh(e)}"><img src="/static/svg/dislike.svg"
                                 alt="comment">{{.Post.Dislikes}}</button>
                     </form>
             </div>
@@ -84,7 +85,7 @@
                 <li><strong>{{.Username}}:</strong> {{.Content}}</li>
                 {{end}}
             </ul>
-             
+
             <div class="pagination">
                 {{if .HasPrev}}
                 <a href="{{.PrevPage}}">◀</a>
@@ -109,11 +110,21 @@
         </div>
         </div>
     </main>
-    <footer  class="page-footer">
+    <footer class="page-footer">
         <div class="footer-container">
             <p>&copy; 2025 FORUM — Built with ❤️ by the Forum Team</p>
         </div>
     </footer>
+    <script type="module">
+        function norefresh(event) {
+            console.log("target ==>", event.target);
+
+            event.target.addEventListener((e) => {
+                e.preventDefault()
+                console.log("no refresh")
+            })
+        }
+    </script>
 </body>
 
 </html>
