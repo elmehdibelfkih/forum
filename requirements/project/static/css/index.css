@@ -2,6 +2,8 @@
   --main-color: #0f172a;
   --border-color: #e4e7ea;
   --icons-color: #748093;
+  --font-heading: "Unbounded", sans-serif;
+  --font-body: "Archivo", sans-serif;
 }
 @import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Unbounded:wght@200..900&display=swap");
 * {
@@ -79,9 +81,10 @@ header .header__logo {
 }
 .hero__title {
   font-size: 2.5rem;
+  max-width: 60%;
   color: var(--main-color);
   text-align: center;
-  font-family: monospace;
+  font-family: var(--font-heading,monospace);
 }
 .hero__description {
   text-align: center;
@@ -131,6 +134,7 @@ header .header__logo {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    gap: 30px;
     justify-content: space-between;
 }
 .main-content__posts .container{
@@ -138,9 +142,8 @@ header .header__logo {
     border: solid 1px var(--border-color);
     border-radius: 12px;
     padding: 20px;
-    margin: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 38svw;
+    width: calc(40svw - 15px);
     display: flex;
 }
 .container .post{
@@ -213,4 +216,11 @@ header .header__logo {
     border-radius: 20px;
     color: var(--main-color);
     font-size: 0.9rem;
+}
+.clamp {
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
