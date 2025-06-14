@@ -152,6 +152,8 @@ header .header__logo {
   width: calc(40svw - 15px);
   display: flex;
 }
+
+/* her i add css to pos from soubaaiss */
 main .containerpost{
   background-color: #ffffff;
   border: solid 1px var(--border-color);
@@ -311,3 +313,8 @@ main .container{
 header .profile-icon img{
     color: black;
 }
+
+/*** From her soubaiss is the one who add all this ***/
+/* test page of registration css soubaais !!*/
+
+/* 
