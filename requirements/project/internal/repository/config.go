@@ -31,7 +31,6 @@ type Post struct {
 	Catigories       []string
 	Likes            int
 	Dislikes         int
-	// todo: add the count
 	CommentsCount    int
 	Created_at       string
 	Updated_at       string

@@ -41,7 +41,7 @@ func SubmitLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if (!utils.ValidUsername(username) && !utils.ValidEmail(username)) || !utils.ValidPassword(password) || !exist { //TODO: it should be a better way
+	if (!utils.ValidUsername(username) && !utils.ValidEmail(username)) || !utils.ValidPassword(password) || !exist {
 		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "invalid credentials try again"})
 		ServLogin(w, r.WithContext(ctx))
 		return
@@ -60,7 +60,7 @@ func SubmitLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	session := GenerateToken(32) // TODO: UUID bonus csrf implementation genrate csrf read it in front end js and match it with server go
+	session := GenerateToken(32)
 
 	http.SetCookie(w, &http.Cookie{
 		Name:     "session_token",

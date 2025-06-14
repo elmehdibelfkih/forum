@@ -25,5 +25,6 @@ const (
 	UPDATE_USER_NAME             = `UPDATE users SET updated_at = DATETIME('now') , username = ? WHERE id = ?`
 
 	// delete queries
-	DELETE_USER = `DELETE FROM users WHERE id = ?`
+	DELETE_USER = `DELETE FROM users WHERE id = ?;
+				UPDATE post_metadata SET post_count = (SELECT COUNT(*) FROM posts WHERE user_id = ?);`
 )

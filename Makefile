@@ -1,10 +1,10 @@
 local:
 	mkdir -p "./requirements/project/logs"
-		: > "./requirements/project/logs/internal_errors.log"
+		: >> "./requirements/project/logs/internal_errors.log"
 	cd "./requirements/project" && go run .
 up:
 	mkdir -p "./requirements/project/logs"
-		: > "./requirements/project/logs/internal_errors.log" 
+		: >> "./requirements/project/logs/internal_errors.log" 
 	docker compose -f ./docker-compose.yml up -d
 
 build:
@@ -15,6 +15,7 @@ down:
 
 status:
 	docker compose -f ./docker-compose.yml ps
+	docker logs forum
 
 clean: down
 	docker image prune -af
