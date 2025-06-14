@@ -1,10 +1,10 @@
 local:
-	mkdir -p "./requirements/project/logs"
-		: >> "./requirements/project/logs/internal_errors.log"
-	cd "./requirements/project" && go run .
+	@mkdir -p "./requirements/project/logs"
+	@	: >> "./requirements/project/logs/internal_errors.log"
+	@cd "./requirements/project" && go run .
 up:
-	mkdir -p "./requirements/project/logs"
-		: >> "./requirements/project/logs/internal_errors.log" 
+	@mkdir -p "./requirements/project/logs"
+	@	: >> "./requirements/project/logs/internal_errors.log" 
 	docker compose -f ./docker-compose.yml up -d
 
 build:
