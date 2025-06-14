@@ -144,13 +144,17 @@ header .header__logo {
   gap: 30px;
   justify-content: space-between;
 }
-.main-content__posts .container {
+.main-content__posts .container, main .container {
   background-color: #ffffff;
   border: solid 1px var(--border-color);
   border-radius: 12px;
   padding: 20px;
   width: calc(40svw - 15px);
   display: flex;
+}
+main .container{
+    width: 80svw;
+    margin: auto;
 }
 .container .post {
   display: flex;
@@ -159,7 +163,7 @@ header .header__logo {
   justify-content: space-between;
   width: 100%;
 }
-.post .initial {
+.initial {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -182,7 +186,7 @@ header .header__logo {
   align-items: center;
   gap: 10px;
 }
-.likes_dislikes_comment {
+.likes_dislikes_comment, #likes_dislikes {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -291,4 +295,7 @@ header .header__logo {
     align-items: center;
     justify-content: center;
     gap: 10px;
+}
+header .profile-icon img{
+    color: black;
 }

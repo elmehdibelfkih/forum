@@ -28,8 +28,8 @@ func forumMux() *http.ServeMux {
 	forumux.HandleFunc("/", middleware.InjectUser(handler.RootHandler))
 
 	// authontication mux
-	forumux.HandleFunc("/login", auth.SwitchLogin)
-	forumux.HandleFunc("/register", auth.SwitchRegister)
+	forumux.HandleFunc("/login", middleware.InjectUser(auth.SwitchLogin))
+	forumux.HandleFunc("/register", middleware.InjectUser(auth.SwitchRegister))
 	forumux.HandleFunc("/logout", auth.LogoutHandler)
 
 	// profile mux

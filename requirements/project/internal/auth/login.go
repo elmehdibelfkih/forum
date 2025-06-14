@@ -23,6 +23,10 @@ func SwitchLogin(w http.ResponseWriter, r *http.Request) {
 
 func ServLogin(w http.ResponseWriter, r *http.Request) {
 	var errMap map[string]any
+	if r.Context().Value(repo.USER_ID_KEY) != nil && r.Context().Value(repo.USER_ID_KEY).(int) != -1 {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
 	if r.Context().Value(repo.ERROR_CASE) != nil {
 		errMap = r.Context().Value(repo.ERROR_CASE).(map[string]any)
 	}
