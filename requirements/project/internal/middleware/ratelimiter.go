@@ -22,10 +22,10 @@ func RateLimiterMiddleware(next http.Handler, limit ratelimiter.Limit, brust int
 		}
 
 		// error if we reached the limit
-		reservation := limiter.Reserve(time.Now(), 2)
+		reservation := limiter.Reserve(time.Now(), 1)
 		if !reservation.Ok {
 			// FIXME: FIX THE COMMENT FLAG
-			forumerror.TooManyRequests(w, r, "comment")
+			forumerror.TooManyRequests(w, r, "Request")
 			return
 		}
 

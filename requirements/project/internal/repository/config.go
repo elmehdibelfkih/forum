@@ -28,6 +28,7 @@ type Post struct {
 	Title            string
 	Content          string
 	Publisher        string
+	Initial          string
 	Catigories       []string
 	Likes            int
 	Dislikes         int

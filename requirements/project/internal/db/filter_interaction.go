@@ -103,6 +103,7 @@ func Getpostbyowner(userId int, page int) (repo.PageData, error) {
 		if err != nil {
 			return data, err
 		}
+		post.Initial = post.Publisher[:1]
 		data.Posts = append(data.Posts, post)
 	}
 	if err := rows.Err(); err != nil {
