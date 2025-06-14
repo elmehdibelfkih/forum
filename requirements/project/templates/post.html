@@ -5,39 +5,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forum</title>
-    <link rel="stylesheet" href="/static/css/post.css">
+    <link rel="stylesheet" href="/static/css/index.css">
     <link rel="icon" href="/static/svg/favicon.svg" type="image/svg">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <header>
-        <div id="project_header">
-            <h1><a href="/"><img src="/static/svg/favicon.svg" alt="user profile"></a></h1>
-        </div>
-        <div class="profile-icon">
-            {{if .Authenticated}}
-            <a href="/newPost" class="btn-primary"><img src="/static/svg/pencil-line.svg" alt="new post"></a>
-            <a href="/logout"><img src="/static/svg/log-out.svg" alt="logout"></a>
-            <a href="/profile"><img src="/static/svg/circle-user-round.svg" alt="user profile"></a>
-            {{else}}
-            <a href="/register">Sign Up</a>
-            <a href="/login">Login</a>
-            {{end}}
-        </div>
+    <header class="header">
+       <div class="header__logo">
+      <a href="/" class="header__logo-link">
+        <img src="/static/svg/logo.svg" alt="Logo" class="header__logo-img" />
+      </a>
+       </div>
+     <nav class="header__profile-nav" aria-label="User actions">
+      {{if .Authenticated}}
+      <a href="/newPost" class="header__profile-link header__profile-link--new-post" aria-label="Create new post">
+        <img src="/static/svg/pencil-line.svg" alt="New post icon" class="header__profile-icon" />
+      </a>
+      <a href="/logout" class="header__profile-link header__profile-link--logout" aria-label="Logout">
+        <img src="/static/svg/log-out.svg" alt="Logout icon" class="header__profile-icon" />
+      </a>
+      <a href="/profile" class="header__profile-link header__profile-link--profile" aria-label="User profile">
+        <img src="/static/svg/circle-user-round.svg" alt="User profile icon" class="header__profile-icon" />
+      </a>
+      {{else}}
+      <a href="/register" class="header__auth-link">Sign Up</a>
+      <a href="/login" class="header__auth-link">Login</a>
+      {{end}}
+    </nav>
     </header>
 
     <main>
         <!-- the post content -->
-        <div class="container">
-
+        <div class="containerpost">
             <div class="post">
+            <div class="top">
                 <div class="post_head" id="{{.Post.Id}}">
-                    <h2>{{.Post.Title}}</h2>
-                    <div>Published by <strong>{{.Post.Publisher}}</strong> in <em>{{range .Post.Catigories}}{{.}},
-                            {{end}}</em></div>
-                </div>
-
+                    <div class="user_container">
+                    <div class="initial">
+                        <span>{{.Post.Initial}}</span>
+                    </div>
+                    <div class="info">
+                    <div class="publisher" >
+                    <strong>{{.Post.Publisher}}</strong>
+                    </div>
+                    <div class="date">
+                        <span>{{.Post.Created_at}}</span>
+                    </div>
+                    </div>
+                    </div>
+                   <span class="divider"></span>
+                <h2>{{.Post.Title}}</h2>
+            </div>
+            </div>
                 <section>
                     <p>{{.Post.Content}}</p>
                 </section>
@@ -47,84 +67,85 @@
                         {{if .Post.IsLikedByUser}}
                         <form action="/like" method="POST">
                             <input type="hidden" name="post_id" value="{{.Post.Id}}">
-                            <button type="submit" onsubmit="(e) => {norefresh(e)}"><img src="/static/svg/green_like.svg"
+                            <button type="submit" class="likebtn"><img src="/static/svg/green_like.svg"
                                     alt="comment">{{.Post.Likes}}</button>
                         </form>
                         {{else}}
                         <form action="/like" method="POST">
                             <input type="hidden" name="post_id" value="{{.Post.Id}}">
-                            <button type="submit" onsubmit="(e) => {norefresh(e)}"><img src="/static/svg/like.svg"
+                            <button type="submit" class="likebtn"><img src="/static/svg/like.svg"
                                     alt="comment">{{.Post.Likes}}</button>
                         </form>
                         {{end}}
                         {{if .IsDislikedByUser}}
                         <form action="/dislike" method="POST">
                             <input type="hidden" name="post_id" value="{{.Post.Id}}">
-                            <button type="submit"><img src="/static/svg/red_dislike.svg" alt="comment"
-                                    onsubmit="(e) => {norefresh(e)}">{{.Post.Dislikes}}</button>
+                            <button type="submit" class="dislikebtn"><img src="/static/svg/red_dislike.svg"
+                                    alt="comment">{{.Post.Dislikes}}</button>
                         </form>
                     </div>
                     {{else}}
                     <form action="/dislike" method="POST">
                         <input type="hidden" name="post_id" value="{{.Post.Id}}">
-                        <button type="submit" onsubmit="(e) => {norefresh(e)}"><img src="/static/svg/dislike.svg"
+                        <button type="submit" class="dislikebtn"><img src="/static/svg/dislike.svg"
                                 alt="comment">{{.Post.Dislikes}}</button>
                     </form>
             </div>
             {{end}}
+        </div>
+        </div>
+        <div class="containerpost">
             <form id="form_comment" action="/comment" method="POST">
                 <input type="hidden" name="post_id" value="{{.Post.Id}}">
-                <textarea id="comment" name="comment" placeholder="comment..." minlength="1" maxlength="10000"
+                <textarea id="comment" name="comment" placeholder="comment..." minlength="1" maxlength="1000"
                     required></textarea>
                 <button type="submit"><img src="/static/svg/send.svg" alt="comment"></button>
             </form>
+        </div>
+        {{if .Comments}}
+        {{range .Comments}}
+        <div class="containerpost">
+            <div class="initial">
+                <span>{{.Initial}}</span>
+               
+            </div> <p>{{.DateCreated}}</p>
+            <strong>{{.Username}}:</strong> {{.Content}}
+        </div>
 
-            {{if .Comments}}
-            <ul>
-                {{range .Comments}}
-                <li><strong>{{.Username}}:</strong> {{.Content}}</li>
-                {{end}}
-            </ul>
+        {{end}}
 
-            <div class="pagination">
-                {{if .HasPrev}}
-                <a href="{{.PrevPage}}">◀</a>
-                {{end}}
-                <span>Page {{.CurrentPage}}</span>
-                {{if .HasNext}}
-                <a href="{{.NextPage}}">▶</a>
-                {{end}}
-            </div>
-            {{else}}
+        <div class="pagination">
+            {{if .HasPrev}}
+            <a href="{{.PrevPage}}">◀</a>
+            {{end}}
+            <span>Page {{.CurrentPage}}</span>
+            {{if .HasNext}}
+            <a href="{{.NextPage}}">▶</a>
+            {{end}}
+        </div>
+        {{else}}
+        <div class="containerpost" style="align-items: center; justify-content: center;">
             <p>No comments yet.</p>
-            {{end}}
-            {{if not .IsEdited}}
-            <p><time datetime="{{.Created_at}}">Created: {{.Post.Created_at}}</time></p>
-            {{else}}
-            <p>
-                <time datetime="{{.Created_at}}">Created: {{.Post.Created_at}}</time> |
-                <time datetime="{{.Updated_at}}">Updated: {{.Post.Updated_at}}</time>
-            </p>
-            {{end}}
-            </footer>
+        </div>
+
+        {{end}}
+        {{if not .IsEdited}}
+        <p><time datetime="{{.Created_at}}">Created: {{.Post.Created_at}}</time></p>
+        {{else}}
+        <p>
+            <time datetime="{{.Created_at}}">Created: {{.Post.Created_at}}</time> |
+            <time datetime="{{.Updated_at}}">Updated: {{.Post.Updated_at}}</time>
+        </p>
+        {{end}}
+        </footer>
         </div>
         </div>
     </main>
-    <footer class="page-footer">
+    <footer class="footer">
         <div class="footer-container">
             <p>&copy; 2025 FORUM — Built with ❤️ by the Forum Team</p>
         </div>
     </footer>
-    <script type="module">
-        function norefresh(event) {
-            console.log("target ==>", event.target);
-
-            event.target.addEventListener((e) => {
-                e.preventDefault()
-                console.log("no refresh")
-            })
-        }
-    </script>
 </body>
 
 </html>

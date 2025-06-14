@@ -28,6 +28,7 @@ type Post struct {
 	Title            string
 	Content          string
 	Publisher        string
+	Initial          string
 	Catigories       []string
 	Likes            int
 	Dislikes         int
@@ -107,11 +108,11 @@ const (
 
 	// Password limitations
 	PASSWORD_MIN_LEN = 8  // Minimum for secure password
-	PASSWORD_MAX_LEN = 72 // Bcrypt max input length
+	PASSWORD_MAX_LEN = 72  // Bcrypt max input length
 
 	// Post Title limitations
-	TITLE_MIN_LEN = 1
-	TITLE_MAX_LEN = 100 // Enough for concise titles; avoids clutter
+	TITLE_MIN_LEN = 10
+	TITLE_MAX_LEN = 70 // Enough for concise titles; avoids clutter
 
 	// Post Content limitations
 	POST_MIN_LEN = 1

@@ -6,7 +6,7 @@ const (
 	INSERT_NEW_USER                = `INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)`
 	INSERT_USERNAME_EMAIL_PASSHASH = `INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)`
 
-	// // select queries
+	// select queries
 	SELECT_USER_BY_ID                        = `SELECT * FROM users WHERE id = ?`
 	SELECT_USER_BY_SESSION_TOKEN             = `SELECT user_id FROM sessions WHERE session_token = ?`
 	SELECT_USER_COUNT_BY_USERNAME_EMAIL      = `SELECT COUNT(*) FROM users WHERE username = ? OR email = ?`
@@ -26,5 +26,5 @@ const (
 
 	// delete queries
 	DELETE_USER = `DELETE FROM users WHERE id = ?;
-				UPDATE post_metadata SET post_count = (SELECT COUNT(*) FROM posts WHERE user_id = ?);`
+				UPDATE post_metadata SET post_count = (SELECT COUNT(*) FROM posts);`
 )

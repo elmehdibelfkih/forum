@@ -98,7 +98,6 @@ func GetPostsByFilter(w http.ResponseWriter, r *http.Request, confMap map[string
 
 	filter := query.Get("filter")
 	if filter == "" {
-		confMap["Filter"] = "All Posts"
 		data, err := db.GetAllPostsInfo(page, userId)
 		if err != nil {
 			forumerror.InternalServerError(w, r, err)

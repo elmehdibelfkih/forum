@@ -69,6 +69,9 @@ func GetAllPostsInfo(page int, userId int) (repo.PageData, error) {
 		if err != nil {
 			return data, err
 		}
+		if post.Publisher != "" {
+			post.Initial = post.Publisher[:1]
+		}
 		data.Posts = append(data.Posts, post)
 	}
 
@@ -304,11 +307,17 @@ func GetPostByID(postID, userID int) (repo.Post, error) {
 	if err != nil && err != sql.ErrNoRows {
 		return post, err
 	}
+	if post.Publisher != "" {
+		post.Initial = post.Publisher[:1]
+	}
 	return post, nil
 }
 
 type Comment struct {
 	Username string
+	Initial  string
+	//TODO; ADD TIME OF CREATION
+	DateCreated string // Placeholder, should be set to actual creation date
 	Content  template.HTML
 }
 
@@ -340,6 +349,13 @@ func GetCommentsByPostPaginated(postID, page, limit int) ([]Comment, int, error)
 			Username: username,
 			Content:  template.HTML(safe), // mark it safe for template
 		}
+		if c.Username != "" {
+			c.Initial = c.Username[:1] // get the first letter of the username
+		} else {
+			//TODO:TFAKARHA
+			c.Initial = "?" // fallback if username is empty
+		}
+		c.DateCreated = "2023-10-01"
 		comments = append(comments, c)
 	}
 	// Get total number of comments !!!

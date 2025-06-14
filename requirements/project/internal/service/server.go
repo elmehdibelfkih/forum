@@ -28,8 +28,8 @@ func forumMux() *http.ServeMux {
 	forumux.HandleFunc("/", middleware.InjectUser(handler.RootHandler))
 
 	// authontication mux
-	forumux.HandleFunc("/login", auth.SwitchLogin)
-	forumux.HandleFunc("/register", auth.SwitchRegister)
+	forumux.HandleFunc("/login", middleware.InjectUser(auth.SwitchLogin))
+	forumux.HandleFunc("/register", middleware.InjectUser(auth.SwitchRegister))
 	forumux.HandleFunc("/logout", auth.LogoutHandler)
 
 	// profile mux
@@ -62,7 +62,7 @@ func forumMux() *http.ServeMux {
 func StartServer() {
 	server := &http.Server{
 		Addr:    repo.PORT,
-		Handler: middleware.RateLimiterMiddleware(forumMux(), ratelimiter.Limit(2), 15),
+		Handler: middleware.RateLimiterMiddleware(forumMux(), ratelimiter.Limit(30), 90),
 	}
 
 	fmt.Println(repo.SERVER_RUN_MESSAGE)

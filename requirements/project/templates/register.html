@@ -10,10 +10,11 @@
 </head>
 
 <body>
-
-    <header class="nav">
-        <div id="project_header">
-            <h1><a href="/">FORUM</a></h1>
+    <header class="header">
+        <div class="header__logo">
+          <a href="/" class="header__logo-link">
+            <img src="/static/svg/logo.svg" alt="Logo" class="header__logo-img" />
+          </a>
         </div>
     </header>
 
@@ -22,7 +23,7 @@
         {{.Message}}
     </div>
     {{end}}
-    <div class="form-container">
+    <div class="form-cont">
         <h1>Register</h1>
         <form action="/register" method="POST">
             <input type="text" id="username" name="username" minlength="3" maxlength="32" placeholder="User Name"
@@ -31,17 +32,19 @@
             <input type="password" id="password" name="password" minlength="8" maxlength="72" placeholder="Password"
                 required>
             <input type="password" id="confirm_password" name="confirm_password" minlength="8" maxlength="72"
-                placeholder="Confirm Password" maxlength="50" required>
+                placeholder="Confirm Password" required>
             <button type="submit">Register</button>
         </form>
         <p>Already have an account? <a href="/login">Login here</a>.</p>
     </div>
 
-    <footer>
-        <div class="footer-container">
-            <p>&copy; 2025 FORUM — Built with ❤️ by the Forum Team</p>
+    <footer class="footer">
+        <div class="footer__container">
+          <p class="footer__text">
+            &copy; 2025 FORUM — Built with ❤️ by the Forum Team
+          </p>
         </div>
-    </footer>
+      </footer>
 </body>
 
 </html>
