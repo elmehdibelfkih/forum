@@ -10,9 +10,9 @@ import (
 
 type Limiter struct {
 	mu     sync.Mutex
-	limit  Limit
-	burst  int
-	tokens float64
+	limit  Limit // how much token can generate per s
+	burst  int // full tokens > max request at once > limit
+	Tokens float64
 	// last is the last time the limiter's tokens field was updated
 	last time.Time
 	// lastEvent is the latest time of a rate-limited event (past or future)
@@ -23,7 +23,7 @@ func NewLimiter(r Limit, b int) *Limiter {
 	return &Limiter{
 		limit:  r,
 		burst:  b,
-		tokens: float64(b),
+		Tokens: float64(b),
 	}
 }
 

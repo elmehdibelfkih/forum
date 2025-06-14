@@ -52,7 +52,7 @@ func (limter *Limiter) Reserve(t time.Time, n int) Reservation {
 
 		// Update state
 		limter.last = t
-		limter.tokens = tokens
+		limter.Tokens = tokens
 		limter.lastEvent = r.timeToAct
 	}
 
@@ -68,7 +68,7 @@ func (limiter *Limiter) advance(t time.Time) float64 {
 
 	passed := t.Sub(last)
 	newtokens := limiter.limit.TokensFromDuration(passed)
-	newtokens += limiter.tokens
+	newtokens += limiter.Tokens
 	burst := float64(limiter.burst)
 
 	if newtokens > burst {

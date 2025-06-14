@@ -25,7 +25,14 @@ func GetPostHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Context().Value(repo.ERROR_CASE) != nil {
 		confMap = r.Context().Value(repo.ERROR_CASE).(map[string]any)
 	}
-	confMap["Fields"] = repo.IT_MAJOR_FIELDS
+
+	var tmp = make(map[string]any)
+	for k, v := range repo.IT_MAJOR_FIELDS {
+		if k != "All categories" {
+			tmp[k] = v
+		}
+	}
+	confMap["Fields"] = tmp
 	userId := r.Context().Value(repo.USER_ID_KEY).(int)
 	user, err := db.GetUserInfo(userId)
 	if err != nil {
