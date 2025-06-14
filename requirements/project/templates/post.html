@@ -39,17 +39,25 @@
         <!-- the post content -->
         <div class="containerpost">
             <div class="post">
+            <div class="top">
                 <div class="post_head" id="{{.Post.Id}}">
+                    <div class="user_container">
                     <div class="initial">
                         <span>{{.Post.Initial}}</span>
                     </div>
-                    <h2>{{.Post.Title}}</h2>
-                    <div>
-                        Published by <strong>{{.Post.Publisher}}</strong> in <em>{{range .Post.Catigories}}{{.}},
-                            {{end}}</em>
+                    <div class="info">
+                    <div class="publisher" >
+                    <strong>{{.Post.Publisher}}</strong>
                     </div>
-                </div>
-
+                    <div class="date">
+                        <span>{{.Post.Created_at}}</span>
+                    </div>
+                    </div>
+                    </div>
+                   <span class="divider"></span>
+                <h2>{{.Post.Title}}</h2>
+            </div>
+            </div>
                 <section>
                     <p>{{.Post.Content}}</p>
                 </section>
@@ -116,7 +124,7 @@
             {{end}}
         </div>
         {{else}}
-        <div class="container" style="align-items: center; justify-content: center;">
+        <div class="containerpost" style="align-items: center; justify-content: center;">
             <p>No comments yet.</p>
         </div>
 
