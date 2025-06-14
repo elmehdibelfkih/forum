@@ -141,6 +141,13 @@ header .header__logo {
     margin: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 38svw;
+    display: flex;
+}
+.container .post{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: space-between;
 }
 .post .initial{
     display: flex;
@@ -167,6 +174,7 @@ header .header__logo {
     display: flex;
     flex-direction: row;
     align-items: center;
+    padding-top: 20px;
     gap: 10px;
 }
 .likebtn, .dislikebtn{
@@ -181,10 +189,27 @@ header .header__logo {
     scale: 1.1;
     transition: all 0.3s ease-in-out;
 }
+.divider{
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: var(--main-color);
+    margin-block: 10px;
+    opacity: 0.2;
+}
+.categories{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    column-gap: 10px;
+    margin-top: 10px;
+}
 .category{
     display: inline-block;
     background-color: #F2F5F9;
     padding: 5px 10px;
+    margin-top: 6px;
     border-radius: 20px;
     color: var(--main-color);
     font-size: 0.9rem;
