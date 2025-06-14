@@ -69,6 +69,9 @@ func GetAllPostsInfo(page int, userId int) (repo.PageData, error) {
 		if err != nil {
 			return data, err
 		}
+		if post.Initial != "" {
+			post.Initial = post.Publisher[:1]
+		}
 		data.Posts = append(data.Posts, post)
 	}
 
