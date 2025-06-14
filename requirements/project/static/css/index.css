@@ -1,6 +1,6 @@
 :root {
   --main-color: #0f172a;
-  --border-color: #e4e7ea;
+  --border-color: #dddddd;
   --icons-color: #748093;
   --accent-color: #00aeff;
   --font-heading: "Unbounded", sans-serif;
@@ -152,9 +152,21 @@ header .header__logo {
   width: calc(40svw - 15px);
   display: flex;
 }
+main .containerpost{
+  background-color: #ffffff;
+  border: solid 1px var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  width: calc(40svw - 15px);
+  display: flex;
+  width: 80svw;
+  margin: auto;
+  margin-bottom: 15px;
+
+}
 main .container{
     width: 80svw;
-    margin: auto;
+    /*margin: auto;*/
 }
 .container .post {
   display: flex;

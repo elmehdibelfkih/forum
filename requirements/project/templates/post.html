@@ -11,25 +11,33 @@
 </head>
 
 <body>
-    <header>
-        <div id="project_header">
-            <h1><a href="/"><img src="/static/svg/logo.svg" alt="user profile"></a></h1>
-        </div>
-        <div class="profile-icon">
-            {{if .Authenticated}}
-            <a href="/newPost" class="btn-primary"><img src="/static/svg/pencil-line.svg" alt="new post"></a>
-            <a href="/logout"><img src="/static/svg/log-out.svg" alt="logout"></a>
-            <a href="/profile"><img src="/static/svg/circle-user-round.svg" alt="user profile"></a>
-            {{else}}
-            <a href="/register">Sign Up</a>
-            <a href="/login">Login</a>
-            {{end}}
-        </div>
+    <header class="header">
+       <div class="header__logo">
+      <a href="/" class="header__logo-link">
+        <img src="/static/svg/logo.svg" alt="Logo" class="header__logo-img" />
+      </a>
+       </div>
+     <nav class="header__profile-nav" aria-label="User actions">
+      {{if .Authenticated}}
+      <a href="/newPost" class="header__profile-link header__profile-link--new-post" aria-label="Create new post">
+        <img src="/static/svg/pencil-line.svg" alt="New post icon" class="header__profile-icon" />
+      </a>
+      <a href="/logout" class="header__profile-link header__profile-link--logout" aria-label="Logout">
+        <img src="/static/svg/log-out.svg" alt="Logout icon" class="header__profile-icon" />
+      </a>
+      <a href="/profile" class="header__profile-link header__profile-link--profile" aria-label="User profile">
+        <img src="/static/svg/circle-user-round.svg" alt="User profile icon" class="header__profile-icon" />
+      </a>
+      {{else}}
+      <a href="/register" class="header__auth-link">Sign Up</a>
+      <a href="/login" class="header__auth-link">Login</a>
+      {{end}}
+    </nav>
     </header>
 
     <main>
         <!-- the post content -->
-        <div class="container">
+        <div class="containerpost">
             <div class="post">
                 <div class="post_head" id="{{.Post.Id}}">
                     <div class="initial">
@@ -78,7 +86,7 @@
             {{end}}
         </div>
         </div>
-        <div class="container">
+        <div class="containerpost">
             <form id="form_comment" action="/comment" method="POST">
                 <input type="hidden" name="post_id" value="{{.Post.Id}}">
                 <textarea id="comment" name="comment" placeholder="comment..." minlength="1" maxlength="1000"
@@ -88,7 +96,7 @@
         </div>
         {{if .Comments}}
         {{range .Comments}}
-        <div class="container">
+        <div class="containerpost">
             <div class="initial">
                 <span>{{.Initial}}</span>
                
