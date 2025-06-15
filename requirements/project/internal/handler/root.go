@@ -84,8 +84,8 @@ func Pagination(w http.ResponseWriter, r *http.Request, confMap map[string]any) 
 		forumerror.InternalServerError(w, r, err)
 		return -1, err
 	}
-	println("posts by count", count)
-	println("posts by calcul", (page - 1) * repo.PAGE_POSTS_QUANTITY)
+	// println("posts by count", count)
+	// println("posts by calcul", (page - 1) * repo.PAGE_POSTS_QUANTITY)
 	if (count <= (page - 1) * repo.PAGE_POSTS_QUANTITY) && page != 1 {
 		// forumerror.InternalServerError(w, r, errors.New("invalid page"))
 		forumerror.BadRequest(w, r)

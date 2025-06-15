@@ -42,8 +42,55 @@
           }
         });
     </script>
+    <div class="user_actions--header">
+      {{if .Authenticated}}
+      <div class="profile_section--header">
 
-    <nav class="header__profile-nav" aria-label="User actions">
+      </div>
+      <div class="nes_post--header">
+        <a href="/newPost" class="readmore" aria-label="Create new post"  id="btn2">
+          <img src="/static/svg/pencil-line.svg" alt="New post icon"/>
+          Create Post
+        </a>
+      </div>
+
+      <nav class="profile-nav">
+        <ul>
+          <li class="profile-dropdown">
+            <div class="header__profile">
+              <div class="initial">{{.Initial}}</div>
+              <div class="username">{{.Username}}</div>
+            </div>
+            <ul>
+              <li>
+                <a href="/profile" class="header__profile-link">
+                  <img src="/static/svg/circle-user-round.svg" class="header__profile-icon" />
+                  Account Settings
+                </a>
+              </li>
+              <li>
+                <a href="/logout" class="header__profile-link">
+                  <img src="/static/svg/log-out.svg" class="header__profile-icon" />
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      {{else}}
+      <div class="header__auth-links">
+        <a href="/register" class="header__auth-link">Sign Up</a>
+        <a href="/login" class="header__auth-link">Login</a>
+      </div>
+      {{end}}
+    </div>
+
+
+
+
+
+    <!-- <nav class="header__profile-nav" aria-label="User actions">
       {{if .Authenticated}}
       <a href="/newPost" class="header__profile-link header__profile-link--new-post" aria-label="Create new post">
         <img src="/static/svg/pencil-line.svg" alt="New post icon" class="header__profile-icon" />
@@ -58,7 +105,7 @@
       <a href="/register" class="header__auth-link">Sign Up</a>
       <a href="/login" class="header__auth-link">Login</a>
       {{end}}
-    </nav>
+    </nav> -->
   </header>
   {{if not .Authenticated}}
   <section class="hero">
@@ -90,15 +137,19 @@
 
   <nav class="pagination" aria-label="Pagination navigation">
     {{if .HasPrev}}
-    <a href="{{.PrevPage}}" class="pagination__link pagination__link--prev" aria-label="Previous page"><img src="/static/svg/left.svg" alt="previous page"> Previous Page</a>
+    <a href="{{.PrevPage}}" class="pagination__link pagination__link--prev" aria-label="Previous page"><img
+        src="/static/svg/left.svg" alt="previous page"> Previous Page</a>
     {{else}}
-    <span class="pagination__link pagination__link--prev" aria-label="Previous page" style="opacity: .3;"><img src="/static/svg/left.svg" alt="previous page"></span>
+    <span class="pagination__link pagination__link--prev" aria-label="Previous page" style="opacity: .3;"><img
+        src="/static/svg/left.svg" alt="previous page"></span>
     {{end}}
     <span class="pagination__current" aria-current="page">Page {{.CurrentPage}}</span>
     {{if .HasNext}}
-    <a href="{{.NextPage}}" class="pagination__link pagination__link--next" aria-label="Next page">Next Page <img src="/static/svg/right.svg" alt="next page"></a>
+    <a href="{{.NextPage}}" class="pagination__link pagination__link--next" aria-label="Next page">Next Page <img
+        src="/static/svg/right.svg" alt="next page"></a>
     {{else}}
-    <span class="pagination__link pagination__link--next" aria-label="Next page" style="opacity: .3;"><img src="/static/svg/right.svg" alt="next page"></span>
+    <span class="pagination__link pagination__link--next" aria-label="Next page" style="opacity: .3;"><img
+        src="/static/svg/right.svg" alt="next page"></span>
     {{end}}
   </nav>
 

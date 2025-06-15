@@ -13,13 +13,18 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-decoration: none;
 }
 
 a {
   text-decoration: none;
   color: inherit;
 }
-
+img {
+  vertical-align: middle;
+}
 body {
   font-family: "Inter", sans-serif;
   line-height: 1.5;
@@ -138,6 +143,71 @@ header .header__logo {
   border-radius: 5px;
   transition: all 0.3s ease-in-out;
 }
+.header__profile {
+  display: flex;
+  flex-direction: row;
+  padding: 6px 20px;
+  border: solid 1px var(--border-color);
+  border-radius: 5px;
+  align-items: center;
+  gap: 10px;
+}
+.header__profile .initial{
+  padding: 10px;
+  height: 30px;
+  width: 30px;
+}
+.header__profile,
+.user_actions--header{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.profile-nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.profile-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: flex-end;
+}
+.profile-nav li {
+  position: relative;
+  padding: 10px 15px;
+}
+.profile-nav li ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #ffffff;
+  min-width: 160px;
+  padding: 0;
+}
+.profile-nav li ul li {
+  padding: 10px 15px;
+}
+.profile-nav li:hover > ul {
+  display: block;
+}
+.profile-nav a {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.profile-nav li ul li:hover {
+  background: #555;
+}
 
 /*Main Section CSS*/
 .main-content {
@@ -228,7 +298,6 @@ main .container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-top: 20px;
   gap: 10px;
 }
 
@@ -292,6 +361,7 @@ main .container {
   align-items: center;
   display: flex;
   flex-direction: row;
+  margin-top: 20px;
   justify-content: space-between;
 }
 
@@ -348,11 +418,51 @@ main .container {
   gap: 10px;
 }
 
-header .profile-icon img {
-  color: black;
-}
-
 /*** From her soubaiss is the one who add all this ***/
 /* test page of registration css soubaais !!*/
 
 /* 
+/* Responsive CSS */
+@media (max-width: 768px) {
+  .hero__cta {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  .hero__title {
+    font-size: 1.8rem;
+    max-width: 90%;
+  }
+  .hero__description {
+    font-size: 1rem;
+    max-width: 90%;
+  }
+  .main-content__posts {
+    flex-direction: column;
+    align-items: center;
+  }
+  .container {
+    width: 100% !important;
+  }
+}
+@media (max-width: 480px) {
+  .hero__title {
+    font-size: 1.8rem;
+    max-width: 90%;
+  }
+  .hero__description {
+    font-size: 1rem;
+    max-width: 90%;
+  }
+  .main-content__posts {
+    flex-direction: column;
+    align-items: center;
+  }
+  .container {
+    width: 100% !important;
+  }
+  .readmore#btn2 {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+  }
+}

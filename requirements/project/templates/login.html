@@ -1,42 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/authentification.css">
-    <link rel="icon" href="/static/svg/favicon.svg" type="image/svg">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/css/forms.css" />
+    <link rel="icon" href="/static/svg/favicon.svg" type="image/svg" />
     <title>Login</title>
-</head>
+  </head>
 
-<body>
-    <header class="nav">
-        <div id="project_header">
-            <h1><a href="/">FORUM</a></h1>
+  <body>
+    <header class="header">
+      <div class="header__logo">
+        <a href="/" class="header__logo-link">
+          <img src="/static/svg/logo.svg" alt="Logo" class="header__logo-img" />
+        </a>
+      </div>
+
+      <div class="header__filter">
+        <label
+          for="category-filter"
+          class="header__filter-label visually-hidden"
+          >Filter by Categories:</label
+        >
+        <select
+          id="category-filter"
+          name="category-filter"
+          class="header__filter-select"
+        >
+          <option value="">-- Select a category --</option>
+          {{range $key, $value := .Fields}}
+          <option value="/?filter={{$key}}">{{$key}}</option>
+          {{end}} {{if .Authenticated}}
+          <option value="/?filter=Owned">Owned</option>
+          <option value="/?filter=Likes">Likes</option>
+          {{end}}
+        </select>
+      </div>
+
+      <script>
+        document
+          .getElementById("category-filter")
+          .addEventListener("change", function () {
+            if (this.value) {
+              window.location.href = this.value;
+            }
+          });
+      </script>
+      <div class="user_actions--header">
+        {{if .Authenticated}}
+        <div class="profile_section--header"></div>
+        <div class="nes_post--header">
+          <a
+            href="/newPost"
+            class="readmore"
+            aria-label="Create new post"
+            id="btn2"
+          >
+            <img src="/static/svg/pencil-line.svg" alt="New post icon" />
+            Create Post
+          </a>
         </div>
+
+        <nav class="profile-nav">
+          <ul>
+            <li class="profile-dropdown">
+              <div class="header__profile">
+                <div class="initial">{{.Initial}}</div>
+                <div class="username">{{.Username}}</div>
+              </div>
+              <ul>
+                <li>
+                  <a href="/profile" class="header__profile-link">
+                    <img
+                      src="/static/svg/circle-user-round.svg"
+                      class="header__profile-icon"
+                    />
+                    Account Settings
+                  </a>
+                </li>
+                <li>
+                  <a href="/logout" class="header__profile-link">
+                    <img
+                      src="/static/svg/log-out.svg"
+                      class="header__profile-icon"
+                    />
+                    Logout
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        {{else}}
+        <div class="header__auth-links">
+          <a href="/register" class="header__auth-link">Sign Up</a>
+          <a href="/login" class="header__auth-link">Login</a>
+        </div>
+        {{end}}
+      </div>
+
+      <!-- <nav class="header__profile-nav" aria-label="User actions">
+      {{if .Authenticated}}
+      <a href="/newPost" class="header__profile-link header__profile-link--new-post" aria-label="Create new post">
+        <img src="/static/svg/pencil-line.svg" alt="New post icon" class="header__profile-icon" />
+      </a>
+      <a href="/logout" class="header__profile-link header__profile-link--logout" aria-label="Logout">
+        <img src="/static/svg/log-out.svg" alt="Logout icon" class="header__profile-icon" />
+      </a>
+      <a href="/profile" class="header__profile-link header__profile-link--profile" aria-label="User profile">
+        <img src="/static/svg/circle-user-round.svg" alt="User profile icon" class="header__profile-icon" />
+      </a>
+      {{else}}
+      <a href="/register" class="header__auth-link">Sign Up</a>
+      <a href="/login" class="header__auth-link">Login</a>
+      {{end}}
+    </nav> -->
     </header>
 
-    {{if .Error}}
-    <div class="error-container">
-        {{.Message}}
-    </div>
-    {{end}}
-    <div class="form-container">
-        <h1>Login</h1>
-        <form action="/login" method="POST">
-            <input type="text" id="username" name="username" minlength="3" maxlength="32"
-                placeholder="Username or Email" required>
-            <input type="password" id="password" name="password" minlength="8" maxlength="72" placeholder="Password"
-                required>
-            <button type="submit">Login</button>
-        </form>
-        <p>Don't have an account? <a href="/register">Register here</a>.</p>
-    </div>
-    <footer>
-        <div class="footer-container">
-            <p>&copy; 2025 FORUM — Built with ❤️ by the Forum Team</p>
-        </div>
-    </footer>
-</body>
+    <div class="container">
+      <form action="/login" method="POST">
+        <img src="/static/svg/loginleft.svg" alt="" />
+        <h2>Please enter your details</h2>
+        <h1>Welcome back!</h1>
 
+        <div class="formfield">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            minlength="3"
+            maxlength="32"
+            placeholder="Username or Email"
+            required
+          />
+        </div>
+
+        <div class="formfield">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            minlength="8"
+            maxlength="72"
+            placeholder="Password"
+            required
+          />
+        </div>
+        {{if .Error}}
+        <div class="error-container">{{.Message}}</div>
+        {{end}}
+        <input type="submit" value="Login" />
+
+        <p>Don't have an account? <a href="/register">Register here</a></p>
+      </form>
+    </div>
+
+    <footer>
+      <div class="footer-container">
+        <p>&copy; 2025 FORUM — Built with ❤️ by the Forum Team</p>
+      </div>
+    </footer>
+  </body>
 </html>
