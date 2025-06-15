@@ -114,8 +114,8 @@
                 <div class="initial">
                     {{.Initial}}
                 </div>
-    
-                 <div class="info">
+
+                <div class="info">
                     <div class="publisher">
                         <strong>{{.Username}}</strong>
                     </div>
@@ -124,8 +124,44 @@
                     </div>
                 </div>
 
+                <div class="comment_likes_dislikes">
+                    {{if .IsCommentLikedByUser}}
+                    <form action="/commentLike" method="POST">
+                        <input type="hidden" name="post_id" value="{{.Id}}" />
+                        <button type="submit" class="likebtn">
+                            <img src="/static/svg/green_like.svg" alt="comment" /> {{.CommentLikes}}
+                        </button>
+                    </form>
+                    {{else}}
+                    <form action="/commentLike" method="POST">
+                        <input type="hidden" name="post_id" value="{{.Id}}" />
+                        <button type="submit" class="likebtn">
+                            <img src="/static/svg/like.svg" alt="comment" /> {{.CommentLikes}}
+                        </button>
+                    </form>
+                    {{end}} {{if .IsCommentDislikedByUser}}
+                    <form action="/commentDislike" method="POST">
+                        <input type="hidden" name="post_id" value="{{.Id}}" />
+                        <button type="submit" class="dislikebtn">
+                            <img src="/static/svg/red_dislike.svg" alt="comment" /> {{.CommentDislikes}}
+                        </button>
+                    </form>
+                    {{else}}
+                    <form action="/commentDislike" method="POST">
+                        <input type="hidden" name="post_id" value="{{.Id}}" />
+                        <button type="submit" class="dislikebtn">
+                            <img src="/static/svg/dislike.svg" alt="comment" /> {{.CommentDislikes}}
+                        </button>
+                    </form>
+                    {{end}}
+                </div>
+
             </div>
         </div>
+
+
+
+
         {{end}}
         {{else}}
         <div class="container">

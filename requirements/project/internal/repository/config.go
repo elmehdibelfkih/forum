@@ -52,6 +52,7 @@ type Comment struct {
 	//TODO; ADD TIME OF CREATION
 	DateCreated string // Placeholder, should be set to actual creation date
 	Content     template.HTML
+	MetaData    map[string]any
 }
 
 type contextKey string
@@ -116,7 +117,7 @@ const (
 
 	// Password limitations
 	PASSWORD_MIN_LEN = 8  // Minimum for secure password
-	PASSWORD_MAX_LEN = 72  // Bcrypt max input length
+	PASSWORD_MAX_LEN = 72 // Bcrypt max input length
 
 	// Post Title limitations
 	TITLE_MIN_LEN = 10

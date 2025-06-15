@@ -344,8 +344,13 @@ func GetCommentsByPostPaginated(postID, page, limit int) ([]repo.Comment, int, e
 			Username: username,
 			Content:  template.HTML(safe),
 		}
+		c.MetaData = make(map[string]any)
 		if c.Username != "" {
 			c.Initial = c.Username[:1]
+		}
+		err = MakeCommentMetadata(c.MetaData)
+		if err != nil {
+			return nil, 0, err
 		}
 		comments = append(comments, c)
 	}
@@ -356,4 +361,14 @@ func GetCommentsByPostPaginated(postID, page, limit int) ([]repo.Comment, int, e
 		return nil, 0, err
 	}
 	return comments, total, nil
+}
+
+func MakeCommentMetadata(confMap map[string]any) error {
+
+	confMap["IsCommentLikedByUser"] = true     // FIXME:
+	confMap["IsCommentDislikedByUser"] = false // FIXME:
+	confMap["CommentLikes"] = 10               // FIXME:
+	confMap["CommentDislikes"] = 10            // FIXME:
+
+	return nil
 }
