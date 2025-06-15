@@ -20,7 +20,7 @@
             <a href="/profile"><img src="/static/svg/circle-user-round.svg" alt="user profile"></a>
         </div>
     </header>
-    
+    <div class="container">
     <div class="error-container">
         <h1 class="error-title">{{.ErrorTitle}}</h1>
         <p class="error-message">{{.ErrorMessage}}</p>
@@ -30,6 +30,7 @@
             <p><strong>Status Text:</strong> {{.StatusText}}</p>
         </div>
         <a href="/" class="home-button">Go Home</a>
+    </div>
     </div>
     <div class="error-code">{{.StatusCode}}</div>
     <footer>
