@@ -4,6 +4,7 @@ import (
 	"fmt"
 	repo "forum/internal/repository"
 	"regexp"
+	"time"
 )
 
 func InitRegex() {
@@ -54,4 +55,11 @@ func ValidPostTitle(title string) bool {
 func Contain(query string) bool {
 	_, exists := repo.IT_MAJOR_FIELDS[query]
 	return exists
+}
+
+func SqlDateFormater(date string) string {
+	today := time.Now().Format("2006-01-02")
+	println(today)
+	return today
+
 }
