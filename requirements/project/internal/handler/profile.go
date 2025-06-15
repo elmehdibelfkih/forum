@@ -170,7 +170,7 @@ func SaveEmail(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if dupp {
-		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Please a new email"})
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Please enter a new email"})
 		UpddateProfile(w, r.WithContext(ctx))
 		return
 	}
