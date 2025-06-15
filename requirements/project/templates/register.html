@@ -17,35 +17,8 @@
       </div>
 
       <div class="header__filter">
-        <label
-          for="category-filter"
-          class="header__filter-label visually-hidden"
-          >Filter by Categories:</label
-        >
-        <select
-          id="category-filter"
-          name="category-filter"
-          class="header__filter-select"
-        >
-          <option value="">-- Select a category --</option>
-          {{range $key, $value := .Fields}}
-          <option value="/?filter={{$key}}">{{$key}}</option>
-          {{end}} {{if .Authenticated}}
-          <option value="/?filter=Owned">Owned</option>
-          <option value="/?filter=Likes">Likes</option>
-          {{end}}
-        </select>
+        <h2>Create a new account</h2>
       </div>
-
-      <script>
-        document
-          .getElementById("category-filter")
-          .addEventListener("change", function () {
-            if (this.value) {
-              window.location.href = this.value;
-            }
-          });
-      </script>
       <div class="user_actions--header">
         {{if .Authenticated}}
         <div class="profile_section--header"></div>
@@ -93,7 +66,6 @@
         </nav>
         {{else}}
         <div class="header__auth-links">
-          <a href="/register" class="header__auth-link">Sign Up</a>
           <a href="/login" class="header__auth-link">Login</a>
         </div>
         {{end}}
@@ -169,7 +141,7 @@
     <footer class="footer">
       <div class="footer__container">
         <p class="footer__text">
-          &copy; 2025 FORUM — Built with ❤️ by the Forum Team
+          &copy; 2025 FORUM — Built with 💙 by the Forum Team
         </p>
       </div>
     </footer>

@@ -17,35 +17,8 @@
       </div>
 
       <div class="header__filter">
-        <label
-          for="category-filter"
-          class="header__filter-label visually-hidden"
-          >Filter by Categories:</label
-        >
-        <select
-          id="category-filter"
-          name="category-filter"
-          class="header__filter-select"
-        >
-          <option value="">-- Select a category --</option>
-          {{range $key, $value := .Fields}}
-          <option value="/?filter={{$key}}">{{$key}}</option>
-          {{end}} {{if .Authenticated}}
-          <option value="/?filter=Owned">Owned</option>
-          <option value="/?filter=Likes">Likes</option>
-          {{end}}
-        </select>
+        <h2>Login to your account</h2>
       </div>
-
-      <script>
-        document
-          .getElementById("category-filter")
-          .addEventListener("change", function () {
-            if (this.value) {
-              window.location.href = this.value;
-            }
-          });
-      </script>
       <div class="user_actions--header">
         {{if .Authenticated}}
         <div class="profile_section--header"></div>
@@ -94,27 +67,9 @@
         {{else}}
         <div class="header__auth-links">
           <a href="/register" class="header__auth-link">Sign Up</a>
-          <a href="/login" class="header__auth-link">Login</a>
         </div>
         {{end}}
       </div>
-
-      <!-- <nav class="header__profile-nav" aria-label="User actions">
-      {{if .Authenticated}}
-      <a href="/newPost" class="header__profile-link header__profile-link--new-post" aria-label="Create new post">
-        <img src="/static/svg/pencil-line.svg" alt="New post icon" class="header__profile-icon" />
-      </a>
-      <a href="/logout" class="header__profile-link header__profile-link--logout" aria-label="Logout">
-        <img src="/static/svg/log-out.svg" alt="Logout icon" class="header__profile-icon" />
-      </a>
-      <a href="/profile" class="header__profile-link header__profile-link--profile" aria-label="User profile">
-        <img src="/static/svg/circle-user-round.svg" alt="User profile icon" class="header__profile-icon" />
-      </a>
-      {{else}}
-      <a href="/register" class="header__auth-link">Sign Up</a>
-      <a href="/login" class="header__auth-link">Login</a>
-      {{end}}
-    </nav> -->
     </header>
 
     <div class="container">
@@ -159,7 +114,7 @@
 
     <footer>
       <div class="footer-container">
-        <p>&copy; 2025 FORUM — Built with ❤️ by the Forum Team</p>
+        <p>&copy; 2025 FORUM — Built with 💙 by the Forum Team</p>
       </div>
     </footer>
   </body>
