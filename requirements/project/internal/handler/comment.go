@@ -54,5 +54,5 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 		forumerror.InternalServerError(w, r, err)
 		return
 	}
-	http.Redirect(w, r, fmt.Sprintf("%s", r.Header.Get("Referer")), http.StatusSeeOther)
+	http.Redirect(w, r, fmt.Sprintf("%s#comment", r.Header.Get("Referer")), http.StatusSeeOther)
 }

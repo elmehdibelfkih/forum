@@ -16,7 +16,7 @@ COPY ./project/templates ./templates
 
 
 # seed DB in the image (optional if you always bind-mount)
-COPY ./project/database ./database
+# COPY ./project/database ./database
 
 EXPOSE 8080
 

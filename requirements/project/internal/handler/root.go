@@ -29,6 +29,9 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		confMap["Authenticated"] = true
 		confMap["Username"] = r.Context().Value(repo.USER_NAME).(string)
+		if confMap["Username"] != "" {
+			confMap["Initial"] = confMap["Username"].(string)[:1]
+		}
 	}
 	
 	if r.URL.Query().Get("filter") == "All categories" {
@@ -80,6 +83,10 @@ func Pagination(w http.ResponseWriter, r *http.Request, confMap map[string]any) 
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return -1, err
+	}
+	if count * repo.PAGE_POSTS_QUANTITY < page {
+		forumerror.InternalServerError(w, r, errors.New("invalid page"))
+		return -1, errors.New("invalid page")
 	}
 	hasNext := count > page*repo.PAGE_POSTS_QUANTITY
 	confMap["HasNext"] = hasNext
