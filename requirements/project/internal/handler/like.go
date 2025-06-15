@@ -32,6 +32,8 @@ func LikeHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, link, http.StatusSeeOther)
 }
 
+
+
 func CommentLikeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		forumerror.MethodNotAllowed(w, r)
@@ -39,7 +41,14 @@ func CommentLikeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	postId, err := strconv.ParseInt(r.FormValue("post_id"), 10, 0)
 	IsPostExist, err2 := db.IsPostExist(int(postId))
-	if err != nil || !IsPostExist {
+		if err != nil || !IsPostExist {
+		forumerror.BadRequest(w, r)
+		return
+	}
+	
+	commentId, err := strconv.ParseInt(r.FormValue("comment_id"), 10, 0)
+	IsCommentExist, err2 := db.IsCommentExist(int(postId), int(commentId))
+	if err != nil || !IsCommentExist {
 		forumerror.BadRequest(w, r)
 		return
 	}
@@ -47,10 +56,10 @@ func CommentLikeHandler(w http.ResponseWriter, r *http.Request) {
 		forumerror.InternalServerError(w, r, err)
 		return
 	}
-	err = db.AddRemovePostLike(r.Context().Value(repo.USER_ID_KEY).(int), int(postId))
+	err = db.AddRemoveCommentLike(r.Context().Value(repo.USER_ID_KEY).(int), int(postId), int(commentId))
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 	}
-	link := fmt.Sprintf("%s#%d", r.Header.Get("Referer"), postId)
+	link := fmt.Sprintf("%s#%d", r.Header.Get("Referer"), commentId)
 	http.Redirect(w, r, link, http.StatusSeeOther)
 }

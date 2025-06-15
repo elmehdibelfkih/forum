@@ -49,10 +49,16 @@ type PageData struct {
 type Comment struct {
 	Username string
 	Initial  string
+	Content     template.HTML
+	
 	//TODO; ADD TIME OF CREATION
 	DateCreated string // Placeholder, should be set to actual creation date
-	Content     template.HTML
-	MetaData    map[string]any
+	PostId                      int
+	CommentId                   int
+	IsCommentLikedByUser        bool
+	IsCommentDislikedByUser     bool
+	CommentLikes                int
+	CommentDislikes int
 }
 
 type contextKey string
@@ -84,6 +90,7 @@ const (
 	USER_NAME   contextKey = "userName"
 
 	PAGE_POSTS_QUANTITY = 10
+	PAGE_COMMENT_QUANTITY = 10
 	DAY_POST_LIMIT      = 20
 	DAY_COMMENTS_LIMIT  = 50
 )

@@ -39,7 +39,6 @@ func CommentDislikeHandler(w http.ResponseWriter, r *http.Request) {
 		forumerror.MethodNotAllowed(w, r)
 		return
 	}
-
 	postId, err := strconv.ParseInt(r.FormValue("post_id"), 10, 0)
 	IsPostExist, err2 := db.IsPostExist(int(postId))
 	if err != nil || !IsPostExist {
@@ -50,11 +49,21 @@ func CommentDislikeHandler(w http.ResponseWriter, r *http.Request) {
 		forumerror.InternalServerError(w, r, err)
 		return
 	}
-	err = db.AddRemovePostDeslike(r.Context().Value(repo.USER_ID_KEY).(int), int(postId))
-	if err != nil {
+
+	commentId, err := strconv.ParseInt(r.FormValue("comment_id"), 10, 0)
+	IsCommentExist, err2 := db.IsCommentExist(int(postId), int(commentId))
+	if err != nil || !IsCommentExist {
+		forumerror.BadRequest(w, r)
+		return
+	}
+	if err2 != nil {
 		forumerror.InternalServerError(w, r, err)
 		return
 	}
-	link := fmt.Sprintf("%s#%d", r.Header.Get("Referer"), postId)
+	err = db.AddRemoveCommentDislike(r.Context().Value(repo.USER_ID_KEY).(int), int(postId), int(commentId))
+	if err != nil {
+		forumerror.InternalServerError(w, r, err)
+	}
+	link := fmt.Sprintf("%s#%d", r.Header.Get("Referer"), commentId)
 	http.Redirect(w, r, link, http.StatusSeeOther)
 }
