@@ -110,11 +110,21 @@
         {{if .Comments}}
         {{range .Comments}}
         <div class="container">
-            <div class="initial">
-                <span>{{.Initial}}</span>
+            <div class="commentcontainer">
+                <div class="initial">
+                    <span>{{.Initial}}</span>
+                </div>
+    
+                 <div class="info">
+                    <div class="publisher">
+                        <strong>{{.Username}}</strong>
+                    </div>
+                    <div class="content">
+                        <span>{{.Content}}</span>
+                    </div>
+                </div>
+
             </div>
-            <strong>{{.Username}}:</strong> {{.Content}}
-            <p>{{.DateCreated}}</p>
         </div>
         {{end}}
         {{else}}

@@ -207,10 +207,10 @@ main .container {
   font-weight: 600;
   color: var(--accent-color);
   font-family: var(--font-heading, monospace);
-  border: solid 1px var(--accent-color);
+  /* border: solid 1px var(--accent-color); */
   padding: 10px;
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   font-size: 1.3rem;
   text-transform: uppercase;

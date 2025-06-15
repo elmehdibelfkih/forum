@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	repo "forum/internal/repository"
+	"forum/internal/utils"
 )
 
 func AddNewPost(userId int, titel string, content string) (int, error) {
@@ -72,6 +73,8 @@ func GetAllPostsInfo(page int, userId int) (repo.PageData, error) {
 		if post.Publisher != "" {
 			post.Initial = post.Publisher[:1]
 		}
+		post.Created_at = utils.SqlDateFormater(post.Created_at)
+		post.Updated_at = utils.SqlDateFormater(post.Updated_at)
 		data.Posts = append(data.Posts, post)
 	}
 
@@ -310,6 +313,8 @@ func GetPostByID(postID, userID int) (repo.Post, error) {
 	if post.Publisher != "" {
 		post.Initial = post.Publisher[:1]
 	}
+	post.Created_at = utils.SqlDateFormater(post.Created_at)
+	post.Updated_at = utils.SqlDateFormater(post.Updated_at)
 	return post, nil
 }
 
@@ -318,7 +323,7 @@ type Comment struct {
 	Initial  string
 	//TODO; ADD TIME OF CREATION
 	DateCreated string // Placeholder, should be set to actual creation date
-	Content  template.HTML
+	Content     template.HTML
 }
 
 func GetCommentsByPostPaginated(postID, page, limit int) ([]Comment, int, error) {
@@ -350,12 +355,8 @@ func GetCommentsByPostPaginated(postID, page, limit int) ([]Comment, int, error)
 			Content:  template.HTML(safe), // mark it safe for template
 		}
 		if c.Username != "" {
-			c.Initial = c.Username[:1] // get the first letter of the username
-		} else {
-			//TODO:TFAKARHA
-			c.Initial = "?" // fallback if username is empty
+			c.Initial = c.Username[:1]
 		}
-		c.DateCreated = "2023-10-01"
 		comments = append(comments, c)
 	}
 	// Get total number of comments !!!

@@ -3,6 +3,7 @@ package db
 import (
 	"database/sql"
 	repo "forum/internal/repository"
+	"forum/internal/utils"
 	"strings"
 )
 
@@ -47,6 +48,8 @@ func Getposbytlikes(userId int, page int) (repo.PageData, error) {
 		if post.Publisher != "" {
 			post.Initial = post.Publisher[:1]
 		}
+		post.Created_at = utils.SqlDateFormater(post.Created_at)
+		post.Updated_at = utils.SqlDateFormater(post.Updated_at)
 		data.Posts = append(data.Posts, post)
 	}
 
@@ -109,6 +112,8 @@ func Getpostbyowner(userId int, page int) (repo.PageData, error) {
 		if post.Publisher != "" {
 			post.Initial = post.Publisher[:1]
 		}
+		post.Created_at = utils.SqlDateFormater(post.Created_at)
+		post.Updated_at = utils.SqlDateFormater(post.Updated_at)
 		data.Posts = append(data.Posts, post)
 	}
 	if err := rows.Err(); err != nil {
@@ -167,6 +172,8 @@ func GePostbycategory(category string, page int, userId int) (repo.PageData, err
 		if post.Publisher != "" {
 			post.Initial = post.Publisher[:1]
 		}
+		post.Created_at = utils.SqlDateFormater(post.Created_at)
+		post.Updated_at = utils.SqlDateFormater(post.Updated_at)
 		data.Posts = append(data.Posts, post)
 	}
 	if err := rows.Err(); err != nil {

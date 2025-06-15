@@ -59,7 +59,13 @@ func Contain(query string) bool {
 
 func SqlDateFormater(date string) string {
 	today := time.Now().Format("2006-01-02")
-	println(today)
-	return today
-
+	if len(date) != 20 {
+		return "date error"
+	}
+	tmp := date[:10]
+	if tmp == today {
+		tmp = "today"
+		tmp = date[11:16]
+	}
+	return tmp
 }
