@@ -318,15 +318,7 @@ func GetPostByID(postID, userID int) (repo.Post, error) {
 	return post, nil
 }
 
-type Comment struct {
-	Username string
-	Initial  string
-	//TODO; ADD TIME OF CREATION
-	DateCreated string // Placeholder, should be set to actual creation date
-	Content     template.HTML
-}
-
-func GetCommentsByPostPaginated(postID, page, limit int) ([]Comment, int, error) {
+func GetCommentsByPostPaginated(postID, page, limit int) ([]repo.Comment, int, error) {
 	offset := (page - 1) * limit
 
 	rows, err := repo.DB.Query(repo.SELECT_COMMENT_BY_10, postID, limit, offset)
@@ -335,7 +327,7 @@ func GetCommentsByPostPaginated(postID, page, limit int) ([]Comment, int, error)
 	}
 	defer rows.Close()
 
-	var comments []Comment
+	var comments []repo.Comment
 	for rows.Next() {
 		var username string
 		var rawContent string
@@ -350,7 +342,7 @@ func GetCommentsByPostPaginated(postID, page, limit int) ([]Comment, int, error)
 		safe = strings.ReplaceAll(safe, "\n", "<br>")
 
 		// create comment with safe html
-		c := Comment{
+		c := repo.Comment{
 			Username: username,
 			Content:  template.HTML(safe), // mark it safe for template
 		}
@@ -361,7 +353,8 @@ func GetCommentsByPostPaginated(postID, page, limit int) ([]Comment, int, error)
 	}
 	// Get total number of comments !!!
 	var total int
-	err = repo.DB.QueryRow("SELECT COUNT(*) FROM comments WHERE post_id = ?", postID).Scan(&total)
+
+	err = repo.DB.QueryRow(repo.GET_COMMENT_POST_COUNT, postID).Scan(&total)
 	if err != nil {
 		return nil, 0, err
 	}

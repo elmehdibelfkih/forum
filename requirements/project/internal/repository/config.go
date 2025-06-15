@@ -46,6 +46,14 @@ type PageData struct {
 	Posts []Post
 }
 
+type Comment struct {
+	Username string
+	Initial  string
+	//TODO; ADD TIME OF CREATION
+	DateCreated string // Placeholder, should be set to actual creation date
+	Content     template.HTML
+}
+
 type contextKey string
 
 const (
