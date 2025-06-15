@@ -1,118 +1,106 @@
+:root {
+    --main-color: #0f172a;
+    --border-color: #dddddd;
+    --icons-color: #748093;
+    --accent-color: #00aeff;
+    --font-heading: "Unbounded", sans-serif;
+    --font-body: "Archivo", sans-serif;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Unbounded:wght@200..900&display=swap");
+
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-decoration: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    vertical-align: middle;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-    color: #eaeaea;
-    display: flex;
-    flex-direction: column;
-    gap: 10vh;
-    align-items: center;
-    min-height: 100vh;
-    line-height: 1.6;
-    overflow-x: hidden;
+    font-family: "Inter", sans-serif;
+    line-height: 1.5;
+    background-color: #f9f9f9;
+    width: 100svw;
 }
+
 
 
 header {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(10px);
-    padding: 1.5rem 2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    width: 100%;
-    height: 8vh;
     display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
-    z-index: 1000;
+    padding: 40px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: solid 1px var(--border-color);
+    max-width: 80svw;
+    margin: auto;
+    height: 8svh;
+    margin-block: 20px;
 }
 
-header h1 {
-    color: #f5d8a5;
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+header .header__logo {
+    max-height: 10svh;
+    max-width: 10svw;
+    width: 50px;
 }
 
-header a {
-    color: #f5d8a5;
-    text-decoration: none;
-    font-weight: 500;
-    padding: 10px 16px;
-    border-radius: 25px;
-    transition: all 0.3s ease;
-    margin-left: 0.5rem;
+.header__filter-select {
+    background-color: #ffffff;
+    color: var(--main-color);
+    border: solid 1px var(--border-color);
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
 }
 
-header a:hover {
-    background: rgba(255, 255, 255, 0.08);
-    transform: translateY(-1px);
-}
-
-
-.container {
+.header__profile-nav {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
-.profile-icon {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
+.header__profile-nav img {
+    width: 30px;
+    height: 30px;
 }
 
-.profile-icon a {
-    color: #f5d8a5;
+.header__profile-nav a {
+    color: white;
     text-decoration: none;
-    font-weight: 500;
-    padding: 10px 16px;
-    border-radius: 25px;
-    transition: all 0.3s ease;
-    font-size: 0.95rem;
-}
-
-.profile-icon a:hover {
-    background: rgba(255, 255, 255, 0.08);
-    transform: translateY(-1px);
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #e07b00 0%, #f69500 100%) !important;
-    color: white !important;
-    border: none;
-}
-
-.btn-primary:hover {
-    background: linear-gradient(135deg, #c96a00 0%, #e07b00 100%) !important;
-    transform: translateY(-1px) !important;
-    box-shadow: 0 4px 12px rgba(224, 123, 0, 0.3) !important;
+    padding: 10px 20px;
+    background-color: var(--main-color);
+    border-radius: 5px;
 }
 
 .error-container {
-    max-width: 600px;
+    max-width: 80svw;
     margin: 4rem auto;
-    background: rgba(255, 255, 255, 0.035);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
+    background-color: #ffffff;
     backdrop-filter: blur(10px);
     border-radius: 16px;
     padding: 3rem;
     text-align: center;
-    box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.2),
-        0 0 0 1px rgba(255, 255, 255, 0.05);
     position: relative;
     z-index: 10;
 }
 
 .error-title {
     font-size: 2.5rem;
-    color: #fdd395;
+    color: var(--accent-color);
     margin-bottom: 1rem;
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -120,49 +108,36 @@ header a:hover {
 
 .error-message {
     font-size: 1.2rem;
-    color: #f69500;
+    color: var(--main-color);
     margin-bottom: 1rem;
     font-weight: 600;
 }
 
 .error-description {
     font-size: 1rem;
-    color: #d9c8ae;
+    color: #969797;
     margin-bottom: 2rem;
     line-height: 1.7;
 }
 
 .error-details {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 1.5rem;
     margin-bottom: 2rem;
-    border-left: 4px solid #e07b00;
 }
 
 .error-details p {
     margin-bottom: 0.5rem;
-    color: #f4f1ee;
-    font-size: 0.9rem;
-}
-
-.error-details p:last-child {
-    margin-bottom: 0;
-}
-
-.error-details strong {
-    color: #f5d8a5;
-    font-weight: 600;
+    color: var(--accent-color);
+    font-size: 40px;
+    font-weight: bolder;
 }
 
 .home-button {
     display: inline-block;
-    background: linear-gradient(135deg, #e07b00 0%, #f69500 100%);
+    background: var(--accent-color);
     color: white;
     text-decoration: none;
     padding: 12px 20px;
-    border-radius: 25px;
+    border-radius: 5px;
     font-weight: 600;
     font-size: 0.95rem;
     transition: all 0.3s ease;
@@ -170,7 +145,7 @@ header a:hover {
 }
 
 .home-button:hover {
-    background: linear-gradient(135deg, #c96a00 0%, #e07b00 100%);
+    background: linear-gradient(135deg, #0280bba4 0%, #00aeff 100%);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(224, 123, 0, 0.3);
 }
@@ -189,76 +164,56 @@ header a:hover {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-footer {
-    bottom: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    width: 100vw;
-    height: 8vh;
+.footer {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
-    margin-top: 2vmin;
+    justify-content: center;
+    padding: 40px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: solid 1px var(--border-color);
+    max-width: 80svw;
+    margin:     auto;
+    height: 8svh;
+    margin-block: 20px;
 }
 
 
 
 @media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        align-items: center;
-        padding: 1.5rem;
-        gap: 1rem;
-    }
-
-    #project_header h1 {
-        margin-bottom: 0.5rem;
-    }
-
-    .profile-icon {
-        gap: 0.5rem;
-    }
-
-    .profile-icon a {
-        padding: 8px 12px;
-        font-size: 0.9rem;
-    }
-
     .error-container {
-        margin: 2rem 1rem;
-        padding: 2rem 1.5rem;
-    }
-
-    .error-title {
-        font-size: 2rem;
-    }
-
-    .error-message {
-        font-size: 1.1rem;
-    }
-
-    .error-code {
-        font-size: 12rem;
-        right: -20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .nav {
-        padding: 1rem;
-    }
-
-    .error-container {
-        padding: 1.5rem;
-        margin: 1rem 0.5rem;
+        width: 100% !important;
     }
 
     .error-title {
         font-size: 1.8rem;
     }
 
-    .error-details {
-        padding: 1rem;
+    .error-description {
+        font-size: 1rem;
+    }
+
+    .error-message {
+        font-size: 1rem;
+    }
+
+    .error-details p {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .error-container {
+        width: 100% !important;
+    }
+
+    .error-title {
+        font-size: 1.3rem;
+    }
+
+    .error-details p {
+        font-size: 1.2rem;
     }
 
     .home-button {
@@ -271,8 +226,31 @@ footer {
     }
 }
 
-.nav::after {
-    content: "";
-    display: table;
-    clear: both;
+@media (max-width: 375px) {
+    .error-title {
+        font-size: 1.2rem;
+    }
+
+    .error-message {
+        font-size: .8rem;
+    }
+
+    .error-description{
+        font-size: .8rem;
+    }
+
+    .error-details p {
+        font-size: 1rem;
+    }
+
+    .home-button {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+
+    .error-code {
+        font-size: 6rem;
+        right: -10px;
+    }
+    
 }
