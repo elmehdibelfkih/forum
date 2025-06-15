@@ -86,12 +86,17 @@ func GetCommentsByPostPaginated(postID, page, userID int) ([]repo.Comment, int, 
 func MakeCommentMetadata(comment *repo.Comment, userId int) error {
 	var err error
 
+	comment.IsCommentLikedByUser, err = IsCommentLikedByUser(userId, comment.CommentId)
+	if err == sql.ErrNoRows {
+		err = nil
+	}
+	comment.IsCommentDislikedByUser, err = IsCommentDisikedByUser(userId, comment.CommentId)
+	if err == sql.ErrNoRows {
+		err = nil
+	}
 
-	comment.IsCommentLikedByUser, err = IsCommentLikedByUser(userId, comment.PostId, comment.CommentId)
-	comment.IsCommentDislikedByUser, err = IsCommentDisikedByUser(userId, comment.PostId, comment.CommentId)
-
-	println(comment.PostId)
-	println(comment.CommentId)
+	// println(comment.PostId)
+	// println(comment.CommentId)
 
 	comment.CommentLikes = 10
 	comment.CommentDislikes = 10
@@ -115,21 +120,21 @@ func IsCommentExist(postId, commentId int) (bool, error) {
 }
 
 // TODO:
-func AddRemoveCommentLike(userId, postId, commentId int) error {
-	isLiked, err := IsCommentLikedByUser(userId, postId, commentId)
+func AddRemoveCommentLike(userId, commentId int) error {
+	isLiked, err := IsCommentLikedByUser(userId, commentId)
 	if err == sql.ErrNoRows {
-		_, err = repo.DB.Exec(repo.INSERT_COMMENT_LIKE_DISLIKE, userId, postId, commentId, 1, 0)
+		_, err = repo.DB.Exec(repo.INSERT_COMMENT_LIKE_DISLIKE, userId, commentId, 1, 0)
 		return err
 	}
 	if isLiked {
-		res, err := repo.DB.Exec(repo.UPDATE_COMMENT_LIKE, 0, userId, postId, commentId)
+		res, err := repo.DB.Exec(repo.UPDATE_COMMENT_LIKE, 0, userId, commentId)
 		if err != nil {
 			return err
 		}
 		_, err = res.RowsAffected()
 		return err
 	}
-	res, err := repo.DB.Exec(repo.UPDATE_COMMENT_LIKE, 1, userId, postId, commentId)
+	res, err := repo.DB.Exec(repo.UPDATE_COMMENT_LIKE, 1, userId, commentId)
 	if err != nil {
 		return err
 	}
@@ -138,21 +143,21 @@ func AddRemoveCommentLike(userId, postId, commentId int) error {
 }
 
 // TODO:
-func AddRemoveCommentDislike(userId, postId, commentId int) error {
-	isDisike, err := IsCommentDisikedByUser(userId, postId, commentId)
+func AddRemoveCommentDislike(userId, commentId int) error {
+	isDisike, err := IsCommentDisikedByUser(userId, commentId)
 	if err == sql.ErrNoRows {
-		_, err = repo.DB.Exec(repo.INSERT_COMMENT_LIKE_DISLIKE, userId, postId, commentId, 0, 1)
+		_, err = repo.DB.Exec(repo.INSERT_COMMENT_LIKE_DISLIKE, userId, commentId, 0, 1)
 		return err
 	}
 	if isDisike {
-		res, err := repo.DB.Exec(repo.UPDATE_COMMENT_DISLIKE, 0, userId, postId, commentId)
+		res, err := repo.DB.Exec(repo.UPDATE_COMMENT_DISLIKE, 0, userId, commentId)
 		if err != nil {
 			return err
 		}
 		_, err = res.RowsAffected()
 		return err
 	}
-	res, err := repo.DB.Exec(repo.UPDATE_COMMENT_DISLIKE, 1, userId, postId, commentId)
+	res, err := repo.DB.Exec(repo.UPDATE_COMMENT_DISLIKE, 1, userId, commentId)
 	if err != nil {
 		return err
 	}
@@ -161,10 +166,10 @@ func AddRemoveCommentDislike(userId, postId, commentId int) error {
 }
 
 // TODO:
-func IsCommentLikedByUser(userId, postId, commentId int) (bool, error) {
+func IsCommentLikedByUser(userId, commentId int) (bool, error) {
 	var isLike bool
 
-	err := repo.DB.QueryRow(repo.IS_COMMENT_LIKED, userId, postId, commentId).Scan(&isLike)
+	err := repo.DB.QueryRow(repo.IS_COMMENT_LIKED, userId, commentId).Scan(&isLike)
 	if err == sql.ErrNoRows {
 		return false, err
 	} else if err != nil {
@@ -176,10 +181,10 @@ func IsCommentLikedByUser(userId, postId, commentId int) (bool, error) {
 }
 
 // TODO:
-func IsCommentDisikedByUser(userId, postId, commentId int) (bool, error) {
+func IsCommentDisikedByUser(userId, commentId int) (bool, error) {
 	var isDisike bool
 
-	err := repo.DB.QueryRow(repo.IS_COMMENT_DISLIKED, userId, postId, commentId).Scan(&isDisike)
+	err := repo.DB.QueryRow(repo.IS_COMMENT_DISLIKED, userId, commentId).Scan(&isDisike)
 	if err == sql.ErrNoRows {
 		return false, err
 	} else if err != nil {

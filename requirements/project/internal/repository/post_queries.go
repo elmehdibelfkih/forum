@@ -150,29 +150,24 @@ const (
     FROM comments
     JOIN users ON comments.user_id = users.id
     WHERE comments.post_id = ?
-    ORDER BY comments.created_at ASC
+    ORDER BY comments.created_at DESC
     LIMIT ? OFFSET ?;
   `
 	IS_COMMENT_EXIST = `SELECT 1 FROM comments WHERE post_id = ? AND id = ?`
 
 
-	IS_COMMENT_LIKED = `
-  SELECT is_like
-    FROM comment_likes_dislikes
-   WHERE user_id    = ?
-     AND comment_id = ?;`
+	IS_COMMENT_LIKED = `SELECT is_like FROM comment_likes_dislikes WHERE user_id = ? AND comment_id = ?;`
+	IS_COMMENT_DISLIKED = `SELECT is_dislike FROM comment_likes_dislikes WHERE user_id = ? AND comment_id = ?;`
 
-	IS_COMMENT_DISLIKED = `
-  SELECT is_dislike
-    FROM comment_likes_dislikes
-   WHERE user_id    = ?
-     AND comment_id = ?;`
+
+
 
 	INSERT_COMMENT_LIKE_DISLIKE = `
   INSERT INTO comment_likes_dislikes
       (user_id, comment_id, is_like, is_dislike, created_at)
-  VALUES
-      (?,       ?,          ?,       ?,          CURRENT_TIMESTAMP);`
+  VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP);`
+
+
 
 	UPDATE_COMMENT_LIKE = `
   UPDATE comment_likes_dislikes

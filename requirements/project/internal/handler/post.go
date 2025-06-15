@@ -54,6 +54,7 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 		prevQuery.Set("page", strconv.Itoa(page-1))
 		confMap["PrevPage"] = r.URL.Path + "?" + prevQuery.Encode()
 	}
+
 	comments, totalComments, err := db.GetCommentsByPostPaginated(Id, page, userID)
 
 	if err != nil {

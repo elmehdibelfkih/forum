@@ -56,7 +56,7 @@ func CommentLikeHandler(w http.ResponseWriter, r *http.Request) {
 		forumerror.InternalServerError(w, r, err)
 		return
 	}
-	err = db.AddRemoveCommentLike(r.Context().Value(repo.USER_ID_KEY).(int), int(postId), int(commentId))
+	err = db.AddRemoveCommentLike(r.Context().Value(repo.USER_ID_KEY).(int), int(commentId))
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 	}

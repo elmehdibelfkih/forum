@@ -71,6 +71,9 @@ func GetAllPostsInfo(page int, userId int) (repo.PageData, error) {
 		if post.Publisher != "" {
 			post.Initial = post.Publisher[:1]
 		}
+		if len(post.Catigories) != 0 {
+			post.HasCategories = true
+		}
 		post.Created_at = utils.SqlDateFormater(post.Created_at)
 		post.Updated_at = utils.SqlDateFormater(post.Updated_at)
 		data.Posts = append(data.Posts, post)
@@ -234,7 +237,6 @@ func GetPostsCount(filter string, userId int) (int, error) {
 
 }
 
-
 func IsUserCanPostToday(userId int) (bool, error) {
 	var postCount int
 
@@ -282,6 +284,9 @@ func GetPostByID(postID, userID int) (repo.Post, error) {
 	}
 	if post.Publisher != "" {
 		post.Initial = post.Publisher[:1]
+	}
+	if len(post.Catigories) != 0 {
+		post.HasCategories = true
 	}
 	post.Created_at = utils.SqlDateFormater(post.Created_at)
 	post.Updated_at = utils.SqlDateFormater(post.Updated_at)
