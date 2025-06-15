@@ -31,7 +31,7 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 		forumerror.BadRequest(w, r)
 		return
 	}
-	
+
 	postId, err := strconv.ParseInt(r.FormValue("post_id"), 10, 0)
 	IsPostExist, err2 := db.IsPostExist(int(postId))
 
@@ -55,6 +55,5 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	link := fmt.Sprintf(fmt.Sprintf("%s#comment", r.Header.Get("Referer")))
-		http.Redirect(w, r, link, http.StatusSeeOther)
-
+	http.Redirect(w, r, link, http.StatusSeeOther)
 }
