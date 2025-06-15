@@ -15,6 +15,7 @@ down:
 
 status:
 	docker compose -f ./docker-compose.yml ps
+	
 	docker logs forum
 
 clean: down

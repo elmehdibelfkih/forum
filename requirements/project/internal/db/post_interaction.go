@@ -336,22 +336,19 @@ func GetCommentsByPostPaginated(postID, page, limit int) ([]repo.Comment, int, e
 			return nil, 0, err
 		}
 
-		// convert newlines to <br> safely
 		safe := html.EscapeString(rawContent)
 		safe = strings.ReplaceAll(safe, "\r\n", "\n")
 		safe = strings.ReplaceAll(safe, "\n", "<br>")
 
-		// create comment with safe html
 		c := repo.Comment{
 			Username: username,
-			Content:  template.HTML(safe), // mark it safe for template
+			Content:  template.HTML(safe),
 		}
 		if c.Username != "" {
 			c.Initial = c.Username[:1]
 		}
 		comments = append(comments, c)
 	}
-	// Get total number of comments !!!
 	var total int
 
 	err = repo.DB.QueryRow(repo.GET_COMMENT_POST_COUNT, postID).Scan(&total)

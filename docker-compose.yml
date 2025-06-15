@@ -11,4 +11,6 @@ services:
     volumes:
       - ./requirements/project/database:/project/database
       - ./requirements/project/logs:/project/logs
+      - ./requirements/project/static:/project/static
+      - ./requirements/project/templates:/project/templates
 
