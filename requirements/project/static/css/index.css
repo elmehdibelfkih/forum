@@ -317,4 +317,86 @@ header .profile-icon img{
 /*** From her soubaiss is the one who add all this ***/
 /* test page of registration css soubaais !!*/
 
-/* 
+
+@media screen and (max-width: 768px) {
+  header {
+    max-width: 95svw;
+    padding: 20px;
+    flex-wrap: wrap;
+    height: auto;
+    gap: 15px;
+  }
+  
+  .header__filter {
+    order: 3;
+    width: 100%;
+  }
+  
+  .header__filter-select {
+    width: 100%;
+    padding: 12px 15px;
+  }
+  
+  .hero {
+    max-width: 95svw;
+    min-height: 35svh;
+    padding: 20px;
+  }
+  
+  .hero__title {
+    font-size: 1.8rem;
+    max-width: 90%;
+  }
+  
+  .hero__description {
+    font-size: 1rem;
+    max-width: 90%;
+  }
+  
+  .hero__cta {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+  }
+  
+  .btn-secondary#btn1,
+  .btn-secondary#btn2 {
+    width: 200px;
+    text-align: center;
+  }
+  
+  .main-content {
+    max-width: 95svw;
+  }
+  
+  .main-content__posts {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .main-content__posts .container,
+  main .container {
+    width: 100%;
+  }
+  
+  main .containerpost {
+    width: 95svw;
+  }
+  
+  .pagination,
+  .footer {
+    max-width: 95svw;
+    padding: 20px;
+  }
+  
+  .pagination {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .pagination__link {
+    justify-content: center;
+  }
+} 
