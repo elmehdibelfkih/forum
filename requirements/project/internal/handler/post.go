@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"database/sql"
 	db "forum/internal/db"
 	forumerror "forum/internal/error"
 	repo "forum/internal/repository"
@@ -30,6 +31,9 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	post, err := db.GetPostByID(Id, userID)
+	if err == sql.ErrNoRows {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+	}
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return
