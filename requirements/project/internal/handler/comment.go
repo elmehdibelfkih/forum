@@ -8,6 +8,7 @@ import (
 	"forum/internal/utils"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 func CommentHandler(w http.ResponseWriter, r *http.Request) {
@@ -27,7 +28,6 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !utils.ValidComment(r.FormValue("comment")) {
-
 		forumerror.BadRequest(w, r)
 		return
 	}
@@ -44,9 +44,11 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 		forumerror.InternalServerError(w, r, err)
 		return
 	}
-	if !utils.ValidComment(r.FormValue("comment")) {
 
-		forumerror.BadRequest(w, r)
+	comment := strings.TrimSpace(r.FormValue("comment"))
+	if comment == "" {
+		link := fmt.Sprintf(fmt.Sprintf("%s#comment", r.Header.Get("Referer")))
+		http.Redirect(w, r, link, http.StatusSeeOther)
 		return
 	}
 	err = db.AddNewComment(r.Context().Value(repo.USER_ID_KEY).(int), int(postId), r.FormValue("comment"))
