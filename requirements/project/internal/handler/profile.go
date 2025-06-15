@@ -207,7 +207,13 @@ func SavePassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if current == new || !utils.ValidPassword(new) {
+	if !utils.ValidPassword(new) {
+		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "Invalid password"})
+		UpddateProfile(w, r.WithContext(ctx))
+		return
+	}
+
+	if current == new {
 		ctx := context.WithValue(r.Context(), repo.ERROR_CASE, map[string]any{"Error": true, "Message": "You used an Old password"})
 		UpddateProfile(w, r.WithContext(ctx))
 		return
@@ -238,10 +244,11 @@ func SavePassword(w http.ResponseWriter, r *http.Request) {
 }
 
 func ServeDelete(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
+	if r.Method != http.MethodGet && r.Method != http.MethodPost {
 		forumerror.BadRequest(w, r)
 		return
 	}
+
 	var confMap = make(map[string]any)
 
 	if r.Context().Value(repo.ERROR_CASE) != nil {
