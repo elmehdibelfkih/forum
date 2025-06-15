@@ -9,11 +9,13 @@ import (
 )
 
 type TokenBucketLimiter struct {
-	mu       sync.Mutex
-	tokens   uint64
-	fillRate float64
-	capacity uint64
-	lastTime time.Time
+	mu                sync.Mutex
+	tokens            uint64
+	fillRate          float64
+	capacity          uint64
+	lastTime          time.Time
+	staticTokens      uint64
+	lastStaticRequest time.Time // need implemention
 }
 
 func GetIP(r *http.Request) string {

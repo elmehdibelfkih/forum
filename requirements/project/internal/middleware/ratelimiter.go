@@ -1,16 +1,19 @@
 package middleware
 
 import (
-	forumerror "forum/internal/error"
-	"forum/internal/ratelimiter"
+	"fmt"
 	"net/http"
 	"sync"
+
+	forumerror "forum/internal/error"
+	"forum/internal/ratelimiter"
 )
 
 func RateLimiterMiddleware(next http.Handler, fillRate float64, burst uint64) http.Handler {
 	ipLimiterMap := make(map[string]*ratelimiter.TokenBucketLimiter)
 	var mu sync.Mutex
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println(r.URL.Path)
 		// get the ip of the request
 		ip := ratelimiter.GetIP(r)
 

@@ -72,7 +72,7 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
     // Determine if there is a next page
     hasNext := totalComments > page*10
     confMap["HasNext"] = hasNext
-
+	
     if hasNext {
         nextQuery := r.URL.Query()
         nextQuery.Set("page", strconv.Itoa(page+1))
