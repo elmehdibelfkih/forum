@@ -188,9 +188,10 @@ header .header__logo {
   position: absolute;
   top: 100%;
   right: 0;
+  min-width: 200px;
   background: #ffffff;
-  min-width: 160px;
   padding: 0;
+  border: solid 1px var(--border-color);
 }
 .profile-nav li ul li {
   padding: 10px 15px;
@@ -205,8 +206,16 @@ header .header__logo {
   align-items: center;
   gap: 8px;
 }
+.profile-nav li ul li{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
 .profile-nav li ul li:hover {
-  background: #555;
+  background: #00aeff5c;
+  
 }
 
 /*Main Section CSS*/
