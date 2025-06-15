@@ -15,8 +15,10 @@ down:
 
 status:
 	docker compose -f ./docker-compose.yml ps
-	
 	docker logs forum
+
+enter:
+	docker exec -it forum bash
 
 clean: down
 	docker image prune -af
