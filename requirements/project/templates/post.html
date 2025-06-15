@@ -11,32 +11,71 @@
 </head>
 
 <body>
-    <header class="header">
-        <div class="header__logo">
-            <a href="/" class="header__logo-link">
-                <img src="/static/svg/logo.svg" alt="Logo" class="header__logo-img" />
-            </a>
-        </div>
-        <nav class="header__profile-nav" aria-label="User actions">
-            {{if .Authenticated}}
-            <a href="/newPost" class="header__profile-link header__profile-link--new-post" aria-label="Create new post">
-                <img src="/static/svg/pencil-line.svg" alt="New post icon" class="header__profile-icon" />
-            </a>
-            <a href="/logout" class="header__profile-link header__profile-link--logout" aria-label="Logout">
-                <img src="/static/svg/log-out.svg" alt="Logout icon" class="header__profile-icon" />
-            </a>
-            <a href="/profile" class="header__profile-link header__profile-link--profile" aria-label="User profile">
-                <img src="/static/svg/circle-user-round.svg" alt="User profile icon" class="header__profile-icon" />
-            </a>
-            {{else}}
-            <a href="/register" class="header__auth-link">Sign Up</a>
-            <a href="/login" class="header__auth-link">Login</a>
-            {{end}}
-        </nav>
-    </header>
+   <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Forum</title>
+  <link rel="stylesheet" href="/static/css/index.css" />
+  <link rel="icon" href="/static/svg/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header class="header">
+    <div class="header__logo">
+      <a href="/" class="header__logo-link">
+        <img src="/static/svg/logo.svg" alt="Logo" class="header__logo-img" />
+      </a>
+    </div>
+
+    <div class="user_actions--header">
+      {{if .Authenticated}}
+      <div class="profile_section--header">
+
+      </div>
+      <div class="nes_post--header">
+        <a href="/newPost" class="readmore" aria-label="Create new post"  id="btn2">
+          <img src="/static/svg/pencil-line.svg" alt="New post icon"/>
+          Create Post
+        </a>
+      </div>
+
+      <nav class="profile-nav">
+        <ul>
+          <li class="profile-dropdown">
+            <div class="header__profile">
+              <div class="initial">{{.Initial}}</div>
+              <div class="username">{{.Username}}</div>
+            </div>
+            <ul>
+              <li>
+                <a href="/profile" class="header__profile-link">
+                  <img src="/static/svg/bolt.svg" class="header__profile-icon" />
+                  Account Settings
+                </a>
+              </li>
+              <li>
+                <a href="/logout" class="header__profile-link">
+                  <img src="/static/svg/log-out.svg" class="header__profile-icon" />
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      {{else}}
+      <div class="header__auth-links">
+        <a href="/register" class="header__auth-link">Sign Up</a>
+        <a href="/login" class="header__auth-link">Login</a>
+      </div>
+      {{end}}
+    </div>
+  </header>
 
     <main>
-        <!-- the post content -->
         <div class="container">
             <div class="post">
                 <div class="top">
