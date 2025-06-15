@@ -2,7 +2,6 @@ package handler
 
 import (
 	"context"
-	"fmt"
 	auth "forum/internal/auth"
 	db "forum/internal/db"
 	forumerror "forum/internal/error"
@@ -14,7 +13,6 @@ import (
 func ProfilHandler(w http.ResponseWriter, r *http.Request) {
 	userId := r.Context().Value(repo.USER_ID_KEY).(int)
 	user, err := db.GetUserInfo(userId)
-	fmt.Println(user)
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
 		return
