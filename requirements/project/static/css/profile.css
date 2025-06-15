@@ -1,78 +1,74 @@
+:root {
+    --main-color: #0f172a;
+    --border-color: #dddddd;
+    --icons-color: #748093;
+    --accent-color: #00aeff;
+    --font-heading: "Unbounded", sans-serif;
+    --font-body: "Archivo", sans-serif;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Unbounded:wght@200..900&display=swap");
+
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
-}
-
-html,
-body {
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-    color: #eaeaea;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items:center ;
-    width: 100%;
-    min-height: 100vh;
-    line-height: 1.6;
-    gap: 2rem;
-    overflow-x: hidden;
-}
-
-header {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(10px);
-    padding: 1.5rem 2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    width: 100%;
-    min-height: 8vh;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 1000;
-}
-
-header h1 {
-    color: #f5d8a5;
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-}
-
-header a {
-    color: #f5d8a5;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     text-decoration: none;
-    font-weight: 500;
-    padding: 10px 16px;
-    border-radius: 25px;
-    transition: all 0.3s ease;
-    margin-left: 0.5rem;
 }
 
-header a:hover {
-    background: rgba(255, 255, 255, 0.08);
-    transform: translateY(-1px);
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    vertical-align: middle;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    line-height: 1.5;
+    background-color: #f9f9f9;
+    width: 100svw;
+}
+
+/*Header Section CSS*/
+header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: solid 1px var(--border-color);
+    max-width: 80svw;
+    margin: auto;
+    height: 8svh;
+    margin-block: 20px;
+}
+
+header .header__logo {
+    max-height: 10svh;
+    max-width: 10svw;
+    width: 50px;
 }
 
 .profile {
-    background: rgba(255, 255, 255, 0.025);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 2rem;
-    width: 90%;
-    max-width: 480px;
-    box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    align-self: center;
+    margin: auto;
+    max-width: 80svw;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: solid 1px var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
 }
 
 /* Profile items */
-.profile > div {
+.profile>div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -84,18 +80,18 @@ header a:hover {
 
 
 
-.profile > div:last-of-type {
+.profile>div:last-of-type {
     border-bottom: none;
 }
 
-.profile > div:first-child {
+.profile>div:first-child {
     padding-top: 0;
 }
 
 /* Profile labels */
-.profile > div > span:first-child,
-.profile > div:not(:has(span)) {
-    color: #f0e6d2;
+.profile>div>span:first-child,
+.profile>div:not(:has(span)) {
+    color: #000000;
     font-weight: 500;
     min-width: 80px;
     flex-shrink: 0;
@@ -108,7 +104,7 @@ header a:hover {
     justify-content: flex-end;
     align-items: center;
     gap: 0.75rem;
-    color: #eaeaea;
+    color: #000000;
     font-weight: 400;
     flex: 1;
     text-align: right;
@@ -122,15 +118,16 @@ header a:hover {
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: rgba(253, 211, 149, 0.1);
+    background: var(--accent-color);
     transition: all 0.3s ease;
-    font-size: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: bold;
     text-decoration: none;
     flex-shrink: 0;
+    color: white;
 }
 
 .update-icon:hover {
-    background: rgba(253, 211, 149, 0.2);
     transform: rotate(180deg);
 }
 
@@ -142,46 +139,43 @@ header a:hover {
 
 /* Delete account button */
 .delete {
-    display: block;
-    background: rgba(255, 60, 60, 0.1);
-    border: 1px solid rgba(255, 77, 77, 0.3);
-    color: #ff9999;
+    display: inline-block;
+    color: red;
+    background-color: rgb(255, 160, 160);
     text-decoration: none;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    text-align: center;
-    margin-top: 1.5rem;
-    font-weight: 500;
-    font-size: 0.9rem;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 0.95rem;
     transition: all 0.3s ease;
+    letter-spacing: 0.01em;
+    text-align: center;
+    margin: auto;
 }
 
 .delete:hover {
-    background: rgba(255, 60, 60, 0.15);
-    border-color: rgba(255, 77, 77, 0.5);
-    color: #ffcccc;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(255, 60, 60, 0.2);
+    background: red;
+    color: white;
 }
 
-footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    width: 100%;
-    min-height: 8vh;
+.footer {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
-    padding: 1rem;
-}
-
-footer .footer-container {
-    width: fit-content;
-    height: fit-content;
+    justify-content: center;
+    padding: 40px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: solid 1px var(--border-color);
+    max-width: 80svw;
+    margin: auto;
+    height: 8svh;
+    margin-block: 20px;
 }
 
 /* Tablet styles */
 @media (max-width: 768px) {
+
     html,
     body {
         gap: 1.5rem;
@@ -202,8 +196,8 @@ footer .footer-container {
         padding: 1.75rem;
     }
 
-    .profile > div > span:first-child,
-    .profile > div:not(:has(span)) {
+    .profile>div>span:first-child,
+    .profile>div:not(:has(span)) {
         min-width: 70px;
     }
 
@@ -216,6 +210,7 @@ footer .footer-container {
 
 /* Mobile landscape and small tablets */
 @media (max-width: 600px) {
+
     html,
     body {
         gap: 1rem;
@@ -228,15 +223,15 @@ footer .footer-container {
         margin: 1rem 0.5rem;
     }
 
-    .profile > div {
+    .profile>div {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem;
         padding: 0.75rem 0;
     }
 
-    .profile > div > span:first-child,
-    .profile > div:not(:has(span)) {
+    .profile>div>span:first-child,
+    .profile>div:not(:has(span)) {
         min-width: auto;
         width: 100%;
         margin-bottom: 0.25rem;
@@ -257,6 +252,7 @@ footer .footer-container {
 
 /* Mobile portrait */
 @media (max-width: 480px) {
+
     html,
     body {
         gap: 0.5rem;
@@ -285,7 +281,7 @@ footer .footer-container {
         margin: 0.5rem;
     }
 
-    .profile > div {
+    .profile>div {
         font-size: 0.9rem;
         padding: 0.6rem 0;
     }
@@ -334,7 +330,7 @@ footer .footer-container {
         margin: 0.25rem;
     }
 
-    .profile > div {
+    .profile>div {
         font-size: 0.85rem;
         padding: 0.5rem 0;
     }
@@ -368,7 +364,7 @@ footer .footer-container {
         margin: 0.125rem;
     }
 
-    .profile > div {
+    .profile>div {
         font-size: 0.8rem;
         padding: 0.4rem 0;
     }
