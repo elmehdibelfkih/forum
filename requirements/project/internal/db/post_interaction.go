@@ -3,8 +3,6 @@ package db
 import (
 	"database/sql"
 
-	"html"
-	"html/template"
 	"strings"
 
 	repo "forum/internal/repository"
@@ -73,6 +71,9 @@ func GetAllPostsInfo(page int, userId int) (repo.PageData, error) {
 		if post.Publisher != "" {
 			post.Initial = post.Publisher[:1]
 		}
+		if len(post.Catigories) != 0 {
+			post.HasCategories = true
+		}
 		post.Created_at = utils.SqlDateFormater(post.Created_at)
 		post.Updated_at = utils.SqlDateFormater(post.Updated_at)
 		data.Posts = append(data.Posts, post)
@@ -95,21 +96,6 @@ func IsPostExist(postId int) (bool, error) {
 		return false, err
 	}
 	return true, nil
-}
-
-func IsUserCanCommentToday(userId int) (bool, error) {
-	var commentCount int
-	err := repo.DB.QueryRow(repo.SELECT_TODAY_COMMENTS, userId).Scan(&commentCount)
-	if err != nil {
-		return false, err
-	}
-	return commentCount < repo.DAY_COMMENTS_LIMIT, nil
-
-}
-
-func AddNewComment(userId int, postId int, comment string) error {
-	_, err := repo.DB.Exec(repo.INSERT_NEW_COMMENT, userId, postId, comment)
-	return err
 }
 
 func AddRemovePostLike(userId int, postId int) error {
@@ -251,20 +237,6 @@ func GetPostsCount(filter string, userId int) (int, error) {
 
 }
 
-func GetCommentCount(postId int) (int, error) {
-	var count int
-
-	err := repo.DB.QueryRow(repo.GET_COMMENT_POST_COUNT, postId).Scan(&count)
-
-	if err == sql.ErrNoRows {
-		return 0, nil
-	} else if err != nil {
-		return -1, err
-	}
-	return count, nil
-
-}
-
 func IsUserCanPostToday(userId int) (bool, error) {
 	var postCount int
 
@@ -313,47 +285,10 @@ func GetPostByID(postID, userID int) (repo.Post, error) {
 	if post.Publisher != "" {
 		post.Initial = post.Publisher[:1]
 	}
+	if len(post.Catigories) != 0 {
+		post.HasCategories = true
+	}
 	post.Created_at = utils.SqlDateFormater(post.Created_at)
 	post.Updated_at = utils.SqlDateFormater(post.Updated_at)
 	return post, nil
-}
-
-func GetCommentsByPostPaginated(postID, page, limit int) ([]repo.Comment, int, error) {
-	offset := (page - 1) * limit
-
-	rows, err := repo.DB.Query(repo.SELECT_COMMENT_BY_10, postID, limit, offset)
-	if err != nil {
-		return nil, 0, err
-	}
-	defer rows.Close()
-
-	var comments []repo.Comment
-	for rows.Next() {
-		var username string
-		var rawContent string
-
-		if err := rows.Scan(&username, &rawContent); err != nil {
-			return nil, 0, err
-		}
-
-		safe := html.EscapeString(rawContent)
-		safe = strings.ReplaceAll(safe, "\r\n", "\n")
-		safe = strings.ReplaceAll(safe, "\n", "<br>")
-
-		c := repo.Comment{
-			Username: username,
-			Content:  template.HTML(safe),
-		}
-		if c.Username != "" {
-			c.Initial = c.Username[:1]
-		}
-		comments = append(comments, c)
-	}
-	var total int
-
-	err = repo.DB.QueryRow(repo.GET_COMMENT_POST_COUNT, postID).Scan(&total)
-	if err != nil {
-		return nil, 0, err
-	}
-	return comments, total, nil
 }

@@ -45,6 +45,23 @@ CREATE TABLE IF NOT EXISTS likes_dislikes (
     UNIQUE(user_id, post_id)
 );
 
+
+
+
+
+-- Comment Likes/Dislikes Table
+CREATE TABLE IF NOT EXISTS comment_likes_dislikes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    comment_id INTEGER NOT NULL,
+    is_like BOOLEAN NOT NULL CHECK (is_like IN (0, 1)),
+    is_dislike BOOLEAN NOT NULL CHECK (is_like IN (0, 1)),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY(comment_id) REFERENCES comments(id) ON DELETE CASCADE,
+    UNIQUE(user_id, comment_id)
+);
+
 -- Comments Table
 CREATE TABLE IF NOT EXISTS comments (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

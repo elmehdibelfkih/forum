@@ -48,6 +48,9 @@ func Getposbytlikes(userId int, page int) (repo.PageData, error) {
 		if post.Publisher != "" {
 			post.Initial = post.Publisher[:1]
 		}
+		if len(post.Catigories) != 0 {
+			post.HasCategories = true
+		}
 		post.Created_at = utils.SqlDateFormater(post.Created_at)
 		post.Updated_at = utils.SqlDateFormater(post.Updated_at)
 		data.Posts = append(data.Posts, post)
@@ -171,6 +174,9 @@ func GePostbycategory(category string, page int, userId int) (repo.PageData, err
 		}
 		if post.Publisher != "" {
 			post.Initial = post.Publisher[:1]
+		}
+		if len(post.Catigories) != 0 {
+			post.HasCategories = true
 		}
 		post.Created_at = utils.SqlDateFormater(post.Created_at)
 		post.Updated_at = utils.SqlDateFormater(post.Updated_at)

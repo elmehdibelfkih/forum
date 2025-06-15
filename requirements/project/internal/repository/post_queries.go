@@ -146,10 +146,40 @@ const (
     GROUP BY p.id;
   `
 	SELECT_COMMENT_BY_10 = `
-  SELECT u.username, cm.comment
-    FROM comments cm
-    JOIN users u ON u.id = cm.user_id
-    WHERE cm.post_id = ?
-    ORDER BY cm.created_at DESC
-    LIMIT ? OFFSET ?`
+  SELECT users.username, comments.comment, comments.id
+    FROM comments
+    JOIN users ON comments.user_id = users.id
+    WHERE comments.post_id = ?
+    ORDER BY comments.created_at DESC
+    LIMIT ? OFFSET ?;
+  `
+	IS_COMMENT_EXIST = `SELECT 1 FROM comments WHERE post_id = ? AND id = ?`
+
+
+	IS_COMMENT_LIKED = `SELECT is_like FROM comment_likes_dislikes WHERE user_id = ? AND comment_id = ?;`
+	IS_COMMENT_DISLIKED = `SELECT is_dislike FROM comment_likes_dislikes WHERE user_id = ? AND comment_id = ?;`
+
+
+
+
+	INSERT_COMMENT_LIKE_DISLIKE = `
+  INSERT INTO comment_likes_dislikes
+      (user_id, comment_id, is_like, is_dislike, created_at)
+  VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP);`
+
+
+
+	UPDATE_COMMENT_LIKE = `
+  UPDATE comment_likes_dislikes
+     SET is_like    = ?,
+         is_dislike = 0
+   WHERE user_id    = ?
+     AND comment_id = ?;`
+
+	UPDATE_COMMENT_DISLIKE = `
+  UPDATE comment_likes_dislikes
+     SET is_like    = 0,
+         is_dislike = ?
+   WHERE user_id    = ?
+     AND comment_id = ?;`
 )

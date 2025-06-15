@@ -49,9 +49,16 @@ type PageData struct {
 type Comment struct {
 	Username string
 	Initial  string
+	Content     template.HTML
+	
 	//TODO; ADD TIME OF CREATION
 	DateCreated string // Placeholder, should be set to actual creation date
-	Content     template.HTML
+	PostId                      int
+	CommentId                   int
+	IsCommentLikedByUser        bool
+	IsCommentDislikedByUser     bool
+	CommentLikes                int
+	CommentDislikes int
 }
 
 type contextKey string
@@ -83,6 +90,7 @@ const (
 	USER_NAME   contextKey = "userName"
 
 	PAGE_POSTS_QUANTITY = 10
+	PAGE_COMMENT_QUANTITY = 10
 	DAY_POST_LIMIT      = 20
 	DAY_COMMENTS_LIMIT  = 50
 )
@@ -116,7 +124,7 @@ const (
 
 	// Password limitations
 	PASSWORD_MIN_LEN = 8  // Minimum for secure password
-	PASSWORD_MAX_LEN = 72  // Bcrypt max input length
+	PASSWORD_MAX_LEN = 72 // Bcrypt max input length
 
 	// Post Title limitations
 	TITLE_MIN_LEN = 10
