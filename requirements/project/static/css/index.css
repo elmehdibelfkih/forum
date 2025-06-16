@@ -55,10 +55,6 @@ header {
   margin-block: var(--padding-md);
 }
 
-.header {
-  flex-wrap: wrap;
-}
-
 .mobileHeader {
   display: none;
   padding: var(--padding-sm) var(--padding-md);
