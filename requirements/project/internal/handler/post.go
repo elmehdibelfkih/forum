@@ -5,6 +5,7 @@ import (
 	db "forum/internal/db"
 	forumerror "forum/internal/error"
 	repo "forum/internal/repository"
+	"math"
 	"net/http"
 	"strconv"
 )
@@ -60,6 +61,15 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	comments, totalComments, err := db.GetCommentsByPostPaginated(Id, page, userID)
+
+	if float64(page) > math.Ceil(float64(totalComments)/10) && totalComments > 0 {
+		forumerror.BadRequest(w, r)
+		return
+	}
+	if totalComments == 0 && page != 1 {
+		forumerror.BadRequest(w, r)
+		return
+	}
 
 	if err != nil {
 		forumerror.InternalServerError(w, r, err)
