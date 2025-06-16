@@ -7,6 +7,7 @@ import (
 	"forum/internal/utils"
 	"html"
 	"net/http"
+	"strings"
 )
 
 func NewPostHandler(w http.ResponseWriter, r *http.Request) {
@@ -58,6 +59,14 @@ func PostPostHandler(w http.ResponseWriter, r *http.Request) {
 
 	escapedTitle := html.EscapeString(r.FormValue("title"))
 	escapedContent := html.EscapeString(r.FormValue("content"))
+
+	trimedTitle := strings.TrimSpace(escapedTitle)
+	trimedContent := strings.TrimSpace(escapedContent)
+	if trimedTitle == "" || trimedContent == "" {
+		http.Redirect(w, r, "/newPost", http.StatusSeeOther)
+		return
+	}
+
 	if !utils.ValidPost(escapedContent) || !utils.ValidPostTitle(escapedTitle) {
 		forumerror.BadRequest(w, r)
 		return
