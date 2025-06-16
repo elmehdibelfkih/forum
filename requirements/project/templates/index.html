@@ -20,36 +20,33 @@
       </a>
     </div>
 
-    <div class="header__filter">
-      <label for="category-filter" class="header__filter-label visually-hidden">Filter by Categories:</label>
-      <select id="category-filter" name="category-filter" class="header__filter-select">
-        <option value="">-- Select a category --</option>
-        {{range $key, $value := .Fields}}
-        <option value="/?filter={{$key}}">{{$key}}</option>
-        {{end}} {{if .Authenticated}}
-        <option value="/?filter=Owned">Owned</option>
-        <option value="/?filter=Likes">Likes</option>
-        {{end}}
-      </select>
-    </div>
+    
 
-    <script>
-      document
-        .getElementById("category-filter")
-        .addEventListener("change", function () {
-          if (this.value) {
-            window.location.href = this.value;
-          }
-        });
-    </script>
+
     <div class="user_actions--header">
+      <nav class="profile-nav">
+      <ul>
+        <li class="profile-dropdown">
+          <div class="header__filter-label">Filter  <img src="/static/svg/filter.svg" alt="Filter by Categories"></div>
+          <ul>
+            {{range $key, $value := .Fields}}
+            <li><a href="/?filter={{$key}}">{{$key}}</a></li>
+            {{end}}
+            {{if .Authenticated}}
+            <li><a href="/?filter=Owned">Owned</a></li>
+            <li><a href="/?filter=Likes">Likes</a></li>
+            {{end}}
+          </ul>
+        </li>
+      </ul>
+    </nav>
       {{if .Authenticated}}
       <div class="profile_section--header">
 
       </div>
       <div class="nes_post--header">
-        <a href="/newPost" class="readmore" aria-label="Create new post"  id="btn2">
-          <img src="/static/svg/pencil-line.svg" alt="New post icon"/>
+        <a href="/newPost" aria-label="Create new post" class="readmore">
+          <img src="/static/svg/pencil-line.svg" alt="New post icon" />
           Create Post
         </a>
       </div>
@@ -107,6 +104,70 @@
       {{end}}
     </nav> -->
   </header>
+  <header class="mobileHeader">
+    <div class="logo">
+      <img src="/static/svg/logo.svg" alt="Logo">
+    </div>
+    <div class="mobileHeader_profile">
+      {{if not .Authenticated}}
+      <a href="/login" class="mobileHeader__auth-link">Login</a>
+      <a href="/register" class="mobileHeader__auth-link">Sign Up</a>
+      {{else}}
+      <nav class="profile-nav">
+        <ul>
+          <li class="profile-dropdown">
+            <div class="header__profile">
+              <div class="initial">{{.Initial}}</div>
+              <div class="username">{{.Username}}</div>
+            </div>
+            <ul>
+              <li>
+                <a href="/profile" class="header__profile-link">
+                  <img src="/static/svg/bolt.svg" class="header__profile-icon" />
+                  Account Settings
+                </a>
+              </li>
+              <li>
+                <a href="/logout" class="header__profile-link">
+                  <img src="/static/svg/log-out.svg" class="header__profile-icon" />
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      {{end}}
+    </div>
+  </header>
+  {{if .Authenticated}}
+  <div class="mobileActions">
+    <div class="nes_post--header">
+        <a href="/newPost" class="header__filter-label" aria-label="Create new post">
+          <img src="/static/svg/pencil-line.svg" alt="New post icon" />
+        </a>
+      </div>
+    <div class="filtericon">
+      <nav class="profile-nav">
+      <ul>
+        <li class="profile-dropdown">
+          <div class="header__filter-label"><img src="/static/svg/filter.svg" alt="Filter by Categories"></div>
+          <ul>
+            {{range $key, $value := .Fields}}
+            <li><a href="/?filter={{$key}}">{{$key}}</a></li>
+            {{end}}
+            {{if .Authenticated}}
+            <li><a href="/?filter=Owned">Owned</a></li>
+            <li><a href="/?filter=Likes">Likes</a></li>
+            {{end}}
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    {{end}}
+    </div>
+    
+  </div>
   {{if not .Authenticated}}
   <section class="hero">
     <h1 class="hero__title">Welcome to the <span class="highlight">{{.Filter}}</span> Forum</h1>
