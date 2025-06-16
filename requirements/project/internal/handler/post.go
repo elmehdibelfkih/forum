@@ -77,7 +77,3 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "post.html", confMap)
 }
-
-// func CommentPagination(confMap map[string]any) error {
-
-// }
