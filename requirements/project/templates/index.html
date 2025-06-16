@@ -34,21 +34,21 @@
             {{end}}
             {{if .Authenticated}}
             <li><a href="/?filter=Owned">Owned</a></li>
-            <li><a href="/?filter=Likes">Likes</a></li>
+            <li><a href="/?filter=Likes">Liked</a></li>
             {{end}}
           </ul>
         </li>
       </ul>
     </nav>
+    <div class="nes_post--header">
+      <a href="/newPost" aria-label="Create new post" class="readmore">
+        <img src="/static/svg/pencil-line.svg" alt="New post icon" />
+        Create Post
+      </a>
+    </div>
       {{if .Authenticated}}
       <div class="profile_section--header">
 
-      </div>
-      <div class="nes_post--header">
-        <a href="/newPost" aria-label="Create new post" class="readmore">
-          <img src="/static/svg/pencil-line.svg" alt="New post icon" />
-          Create Post
-        </a>
       </div>
 
       <nav class="profile-nav">
