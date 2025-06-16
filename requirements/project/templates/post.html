@@ -74,6 +74,42 @@
                 {{end}}
             </div>
         </header>
+        <header class="mobileHeader">
+            <div class="logo">
+                <img src="/static/svg/logo.svg" alt="Logo">
+            </div>
+            <div class="mobileHeader_profile">
+                {{if not .Authenticated}}
+                <a href="/login" class="mobileHeader__auth-link">Login</a>
+                <a href="/register" class="mobileHeader__auth-link">Sign Up</a>
+                {{else}}
+                <nav class="profile-nav">
+                    <ul>
+                        <li class="profile-dropdown">
+                            <div class="header__profile">
+                                <div class="initial">{{.Initial}}</div>
+                                <div class="username">{{.Username}}</div>
+                            </div>
+                            <ul>
+                                <li>
+                                    <a href="/profile" class="header__profile-link">
+                                        <img src="/static/svg/bolt.svg" class="header__profile-icon" />
+                                        Account Settings
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/logout" class="header__profile-link">
+                                        <img src="/static/svg/log-out.svg" class="header__profile-icon" />
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                {{end}}
+            </div>
+        </header>
         <main>
             <div class="container">
                 <div class="post">
@@ -243,4 +279,5 @@
             </div>
         </footer>
     </body>
+
 </html>

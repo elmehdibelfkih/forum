@@ -3,6 +3,7 @@
   --border-color: #dddddd;
   --icons-color: #748093;
   --accent-color: #00aeff;
+  --select-bgcolor: #f3fafd;
   --font-heading: "Unbounded", sans-serif;
   --font-body: "Archivo", sans-serif;
 }
@@ -28,7 +29,7 @@ img {
 body {
   font-family: "Inter", sans-serif;
   line-height: 1.5;
-  background-color: #f9f9f9;
+  background-color: #f1f1f1;
   width: 100svw;
 }
 
@@ -50,14 +51,22 @@ header {
 .mobileHeader{
   display: none;
 }
-.header__auth-link {
+.header__auth-link,.mobileHeader__auth-link {
   padding: 10px 15px;
   background-color: var(--accent-color);
   color: white;
   border-radius: 5px;
   text-decoration: none;
 }
-
+.mobileHeader_profile{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.mobileHeader .logo img{
+  width: 90px;
+}
 li a{
   display: block;
   height: 100%;
@@ -212,15 +221,19 @@ header .header__logo {
 .profile-nav li ul {
   display: none;
   position: absolute;
+  z-index: 10000;
   top: 100%;
   right: 0;
+  background-color: var(--select-bgcolor );
   min-width: 200px;
-  background: #ffffff;
   padding: 0;
+
   border: solid 1px var(--border-color);
 }
 .profile-nav li ul li {
   padding: 10px 15px;
+  border-bottom: solid 1px var(--border-color);
+  font-size: 12px;
 }
 .profile-nav li:hover > ul {
   display: block;
@@ -490,6 +503,9 @@ main .container {
     font-size: 1.8rem;
     max-width: 90%;
   }
+  .mobileHeader__auth-link{
+    padding: 8px 16px;
+  }
   .hero__description {
     font-size: 1rem;
     max-width: 90%;
@@ -505,6 +521,15 @@ main .container {
 @media (max-width: 480px) {
   .header{
     display: none;
+  }
+    .mobileActions{
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80svw;
+    margin-bottom: 20px;
   }
   .hero__title {
     font-size: 1.8rem;
