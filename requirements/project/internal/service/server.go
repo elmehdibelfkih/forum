@@ -64,7 +64,7 @@ func forumMux() *http.ServeMux {
 func StartServer() {
 	server := &http.Server{
 		Addr:    repo.PORT,
-		Handler: middleware.RateLimiterMiddleware(forumMux(), 15, 45),
+		Handler: middleware.RateLimiterMiddleware(forumMux(), 15, 30),
 	}
 
 	fmt.Println(repo.SERVER_RUN_MESSAGE)

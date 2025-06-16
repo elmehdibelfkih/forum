@@ -22,8 +22,10 @@ func RateLimiterMiddleware(next http.Handler, limit float64, burst uint64) http.
 		mu.Unlock()
 
 		if !limiter.Allow() {
+			// w.Header().Set("Content-Type", "application/json")
 			// w.WriteHeader(http.StatusTooManyRequests)
-			http.ServeFile(w, r, "./templates/rate_limiting.html")
+			// http.ServeFile(w, r, "./templates/rate_limiting.html")
+			http.Error(w, http.StatusText(http.StatusTooManyRequests), http.StatusTooManyRequests)
 			return
 		}
 
