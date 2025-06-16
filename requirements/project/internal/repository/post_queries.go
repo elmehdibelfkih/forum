@@ -185,4 +185,13 @@ const (
 
   GET_COMMENT_LIKE_COUNT = `SELECT COUNT(*) FROM comment_likes_dislikes WHERE comment_id = ? AND is_like = 1`
   GET_COMMENT_DISLIKE_COUNT =  `SELECT COUNT(*) FROM comment_likes_dislikes WHERE comment_id = ? AND is_dislike = 1`
+
+  GET_CAT_COUNT = `
+  SELECT COUNT(*) AS post_count
+  FROM post_categories pc
+  JOIN categories c ON pc.category_id = c.id
+  WHERE c.name = ?;
+  `
+  UPDATE_CAT_COUNT = `UPDATE categories_count SET post_count = ? WHERE category_id = ?; `
+
 )

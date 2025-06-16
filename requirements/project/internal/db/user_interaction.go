@@ -161,7 +161,11 @@ func UpdatePassword(id int, password string) error {
 }
 
 func DeleteUser(userId int) error {
-	_, err := repo.DB.Exec(repo.DELETE_USER, userId, userId) 
+	_, err := repo.DB.Exec(repo.DELETE_USER, userId, userId)
+	if err != nil {
+		return err
+	}
+	err = UpdateCatCount()
 	if err != nil {
 		return err
 	}

@@ -292,3 +292,37 @@ func GetPostByID(postID, userID int) (repo.Post, error) {
 	post.Updated_at = utils.SqlDateFormater(post.Updated_at)
 	return post, nil
 }
+
+func UpdateCatCount() error {
+	for k, _ := range repo.IT_MAJOR_FIELDS {
+		if k != "All categories" {
+			catId, err := GetCategoryId(k)
+			if err != nil {
+				return err
+			}
+			count, err := GetCatCount(catId)
+			if err != nil {
+				return err
+			}
+			_, err = repo.DB.Exec(repo.UPDATE_CAT_COUNT, count, catId)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+func GetCatCount(catId int) (int, error) {
+	var count int
+
+	err := repo.DB.QueryRow(repo.GET_CAT_COUNT, catId).Scan(&count)
+
+	if err == sql.ErrNoRows {
+		return 0, nil
+	} else if err != nil {
+		return -1, err
+	}
+	return count, nil
+
+}
