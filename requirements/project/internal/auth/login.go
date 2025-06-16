@@ -13,6 +13,10 @@ import (
 func SwitchLogin(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
+		if r.URL.RawQuery != "" {
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
+			return
+		}
 		ServLogin(w, r)
 	case http.MethodPost:
 		SubmitLogin(w, r)

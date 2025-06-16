@@ -12,6 +12,10 @@ import (
 func SwitchRegister(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
+		if r.URL.RawQuery != ""{
+			http.Redirect(w,r,"/register",http.StatusSeeOther)
+			return
+		} 
 		ServRegister(w, r)
 	case http.MethodPost:
 		SubmitRegister(w, r)
