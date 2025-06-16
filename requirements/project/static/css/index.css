@@ -47,12 +47,17 @@ header {
   height: 8svh;
   margin-block: 20px;
 }
-.header{
-  flex-wrap: wrap;
-}
 .mobileHeader{
   display: none;
 }
+.header__auth-link {
+  padding: 10px 15px;
+  background-color: var(--accent-color);
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
 li a{
   display: block;
   height: 100%;
