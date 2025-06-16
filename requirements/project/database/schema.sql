@@ -45,10 +45,6 @@ CREATE TABLE IF NOT EXISTS likes_dislikes (
     UNIQUE(user_id, post_id)
 );
 
-
-
-
-
 -- Comment Likes/Dislikes Table
 CREATE TABLE IF NOT EXISTS comment_likes_dislikes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

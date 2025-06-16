@@ -20,6 +20,11 @@ status:
 enter:
 	docker exec -it forum bash
 
+test:
+	@sqlite3 ./requirements/project/database/forum.db < ./requirements/project/database/inject_fake_data.sql
+	$(MAKE) local
+
+
 clean: down
 	docker image prune -af
 	docker volume prune -f
@@ -28,4 +33,6 @@ clean: down
 fclean: clean
 
 re: clean up
+
+.PHONY = clean fclean re test enter status down build up local
 
