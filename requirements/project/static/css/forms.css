@@ -281,6 +281,17 @@ footer {
     animation: fadeInError 3s ease-in-out;
     visibility: hidden;
 }
+
+@keyframes fadeInError {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
 @media (max-width: 768px) {
   .mobileHeader{
     display: flex;

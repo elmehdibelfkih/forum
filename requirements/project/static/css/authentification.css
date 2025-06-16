@@ -156,7 +156,7 @@ input[type="email"]:focus {
 input[type="text"]::placeholder,
 input[type="password"]::placeholder,
 input[type="email"]::placeholder {
-  color: rgba(151, 107, 107, 0.4);
+  color: rgb(36, 36, 36);
 }
 
 /* Submit button */
