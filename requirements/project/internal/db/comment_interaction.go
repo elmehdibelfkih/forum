@@ -82,31 +82,36 @@ func GetCommentsByPostPaginated(postID, page, userID int) ([]repo.Comment, int, 
 	return comments, total, nil
 }
 
-// TODO:
 func MakeCommentMetadata(comment *repo.Comment, userId int) error {
 	var err error
 
 	comment.IsCommentLikedByUser, err = IsCommentLikedByUser(userId, comment.CommentId)
 	if err == sql.ErrNoRows {
 		err = nil
+	} else if err != nil {
+		return err
 	}
 	comment.IsCommentDislikedByUser, err = IsCommentDisikedByUser(userId, comment.CommentId)
 	if err == sql.ErrNoRows {
 		err = nil
+	} else if err != nil {
+		return err
 	}
-
-	// println(comment.PostId)
-	// println(comment.CommentId)
-
-	comment.CommentLikes = 10
-	comment.CommentDislikes = 10
-	// err = 10
-	// err = 10
-
-	return err
+	comment.CommentLikes, err = GetCommentLikeCount(comment.CommentId)
+	if err == sql.ErrNoRows {
+		err = nil
+	} else if err != nil {
+		return err
+	}
+	comment.CommentDislikes, err = GetCommentDislikeCount(comment.CommentId)
+	if err == sql.ErrNoRows {
+		err = nil
+	} else if err != nil {
+		return err
+	}
+	return nil
 }
 
-// TODO:
 func IsCommentExist(postId, commentId int) (bool, error) {
 	var exists bool
 
@@ -119,7 +124,6 @@ func IsCommentExist(postId, commentId int) (bool, error) {
 	return true, nil
 }
 
-// TODO:
 func AddRemoveCommentLike(userId, commentId int) error {
 	isLiked, err := IsCommentLikedByUser(userId, commentId)
 	if err == sql.ErrNoRows {
@@ -142,7 +146,6 @@ func AddRemoveCommentLike(userId, commentId int) error {
 	return err
 }
 
-// TODO:
 func AddRemoveCommentDislike(userId, commentId int) error {
 	isDisike, err := IsCommentDisikedByUser(userId, commentId)
 	if err == sql.ErrNoRows {
@@ -165,7 +168,6 @@ func AddRemoveCommentDislike(userId, commentId int) error {
 	return err
 }
 
-// TODO:
 func IsCommentLikedByUser(userId, commentId int) (bool, error) {
 	var isLike bool
 
@@ -180,7 +182,6 @@ func IsCommentLikedByUser(userId, commentId int) (bool, error) {
 	return false, nil
 }
 
-// TODO:
 func IsCommentDisikedByUser(userId, commentId int) (bool, error) {
 	var isDisike bool
 
@@ -193,4 +194,28 @@ func IsCommentDisikedByUser(userId, commentId int) (bool, error) {
 		return true, nil
 	}
 	return false, nil
+}
+
+func GetCommentLikeCount(commentId int) (int, error) {
+	var count int
+
+	err := repo.DB.QueryRow(repo.GET_COMMENT_LIKE_COUNT, commentId).Scan(&count)
+	if err == sql.ErrNoRows {
+		return 0, nil
+	} else if err != nil {
+		return -1, err
+	}
+	return count, nil
+}
+
+func GetCommentDislikeCount(commentId int) (int, error) {
+	var count int
+
+	err := repo.DB.QueryRow(repo.GET_COMMENT_DISLIKE_COUNT, commentId).Scan(&count)
+	if err == sql.ErrNoRows {
+		return 0, nil
+	} else if err != nil {
+		return -1, err
+	}
+	return count, nil
 }

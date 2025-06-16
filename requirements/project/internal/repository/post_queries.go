@@ -182,4 +182,7 @@ const (
          is_dislike = ?
    WHERE user_id    = ?
      AND comment_id = ?;`
+
+  GET_COMMENT_LIKE_COUNT = `SELECT COUNT(*) FROM comment_likes_dislikes WHERE comment_id = ? AND is_like = 1`
+  GET_COMMENT_DISLIKE_COUNT =  `SELECT COUNT(*) FROM comment_likes_dislikes WHERE comment_id = ? AND is_dislike = 1`
 )

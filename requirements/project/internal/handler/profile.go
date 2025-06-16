@@ -17,7 +17,7 @@ func ProfilHandler(w http.ResponseWriter, r *http.Request) {
 		forumerror.InternalServerError(w, r, err)
 		return
 	}
-	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "profile.html", user) // when u excute 2 template the get concatinated one in top of the other
+	repo.GLOBAL_TEMPLATE.ExecuteTemplate(w, "profile.html", user)
 }
 
 func UpddateProfile(w http.ResponseWriter, r *http.Request) {
