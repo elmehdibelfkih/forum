@@ -47,7 +47,7 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 
 	comment := strings.TrimSpace(r.FormValue("comment"))
 	if comment == "" {
-		link := fmt.Sprintf(fmt.Sprintf("%s#comment", r.Header.Get("Referer")))
+		link := fmt.Sprintf("%s#comment", r.Header.Get("Referer"))
 		http.Redirect(w, r, link, http.StatusSeeOther)
 		return
 	}
@@ -56,6 +56,6 @@ func CommentHandler(w http.ResponseWriter, r *http.Request) {
 		forumerror.InternalServerError(w, r, err)
 		return
 	}
-	link := fmt.Sprintf(fmt.Sprintf("%s#comment", r.Header.Get("Referer")))
+	link := fmt.Sprintf("%s#comment", r.Header.Get("Referer"))
 	http.Redirect(w, r, link, http.StatusSeeOther)
 }
