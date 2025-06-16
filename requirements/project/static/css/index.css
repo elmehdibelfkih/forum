@@ -35,7 +35,7 @@ img {
 body {
   font-family: "Inter", sans-serif;
   line-height: 1.5;
-  background-color: #f9f9f9;
+  background-color: #f1f1f1;
   width: 100svw;
 }
 
@@ -45,14 +45,14 @@ header {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 0;
+  padding: 40px;
   border-radius: 12px;
   background-color: #ffffff;
   border: solid 1px var(--border-color);
   max-width: 80svw;
   margin: auto;
-  min-height: 60px;
-  margin-block: var(--padding-md);
+  height: 8svh;
+  margin-block: 20px;
 }
 
 .mobileHeader {
@@ -72,22 +72,23 @@ header .header__logo {
   width: 50px;
 }
 
-.header__filter-label {
+.header__filter-label{
   border: solid 1px var(--border-color);
   border-radius: 4px;
-  padding: var(--padding-sm);
+  padding: 10px 10px;
   cursor: pointer;
   background-color: white;
-}
 
+}
 .header__filter-select {
   background-color: #ffffff;
   color: var(--main-color);
   border: solid 1px var(--border-color);
   border-radius: 4px;
-  padding: var(--padding-sm) var(--padding-md);
+  padding: 10px 20px;
   cursor: pointer;
 }
+
 
 .header__profile-nav {
   display: flex;

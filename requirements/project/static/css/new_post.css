@@ -1,73 +1,84 @@
 :root {
-  --main-color: #0f172a;
-  --border-color: #e4e7ea;
-  --icons-color: #748093;
+    --main-color: #0f172a;
+    --border-color: #e4e7ea;
+    --icons-color: #748093;
 }
+
 @import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Unbounded:wght@200..900&display=swap");
+
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
-a{
+
+a {
     text-decoration: none;
     color: inherit;
 }
+
 body {
-  font-family: "Inter", sans-serif;
-  line-height: 1.5;
-  background-color: #f9f9f9;
-  width: 100svw;
+    font-family: "Inter", sans-serif;
+    line-height: 1.5;
+    background-color: #f1f1f1;
+    width: 100svw;
 }
+
 /*Header Section CSS*/
 header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 40px;
-  border-radius: 12px;
-  background-color: #ffffff;
-  border: solid 1px var(--border-color);
-  max-width: 80svw;
-  margin: auto;
-  height: 8svh;
-  margin-block: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: solid 1px var(--border-color);
+    max-width: 80svw;
+    margin: auto;
+    height: 8svh;
+    margin-block: 20px;
 }
+
 header .header__logo {
-  max-height: 10svh;
-  max-width: 10svw;
-  width: 50px;
+    max-height: 10svh;
+    max-width: 10svw;
+    width: 50px;
 }
+
 .header__filter-select {
-  background-color: #ffffff;
-  color: var(--main-color);
-  border: solid 1px var(--border-color);
-  border-radius: 4px;
-  padding: 10px 20px;
-  cursor: pointer;
+    background-color: #ffffff;
+    color: var(--main-color);
+    border: solid 1px var(--border-color);
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
 }
+
 .header__profile-nav {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
+
 .header__profile-nav img {
-  width: 30px;
-  height: 30px;
+    width: 30px;
+    height: 30px;
 }
+
 .header__profile-nav a {
-  color: white;
-  text-decoration: none;
-  padding: 10px 20px;
-  background-color: var(--main-color);
-  border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: var(--main-color);
+    border-radius: 5px;
 }
 
 /* Main Content Container */
 .main-content {
     width: 100%;
-    max-width: 300px; /* Reduced from 500px to 60% of original size */
+    max-width: 300px;
+    /* Reduced from 500px to 60% of original size */
     margin-top: 100px;
     margin-bottom: 2rem;
     padding: 0 1rem;
@@ -113,7 +124,7 @@ header .header__logo {
 }
 
 /* Form Elements */
-form > div {
+form>div {
     margin-bottom: 1.25rem;
 }
 
@@ -272,25 +283,26 @@ footer {
     body {
         padding: 0 0.5rem;
     }
-    
+
     header {
         padding: 1rem 1.5rem;
     }
-    
+
     .main-content {
         margin-top: 90px;
         max-width: 100%;
         padding: 0 0.5rem;
     }
-    
+
     .form-container {
         padding: 1.5rem;
     }
-    
+
     fieldset {
         padding: 0.75rem;
     }
-    footer{
+
+    footer {
         font-size: small;
     }
 }
@@ -300,34 +312,34 @@ footer {
     body {
         padding: 0;
     }
-    
+
     header {
         padding: 1rem;
         flex-wrap: wrap;
         gap: 0.5rem;
     }
-    
+
     .main-content {
         margin-top: 80px;
         padding: 0 0.75rem;
     }
-    
+
     .form-container {
         padding: 1.25rem;
         border-radius: 12px;
     }
-    
+
     fieldset label {
         display: block;
         margin-bottom: 0.5rem;
         margin-right: 0;
     }
-    
+
     input[type="text"],
     textarea {
         padding: 0.6rem;
     }
-    
+
     button[type="submit"] {
         padding: 0.6rem 1.2rem;
         font-size: 0.9rem;
@@ -342,22 +354,22 @@ footer {
         padding: 0.75rem;
         min-height: 60px;
     }
-    
+
     .main-content {
         margin-top: 70px;
         padding: 0 0.5rem;
     }
-    
+
     .form-container {
         padding: 1rem;
         border-radius: 8px;
     }
-    
+
     fieldset {
         padding: 0.5rem;
     }
-    
-    form > div {
+
+    form>div {
         margin-bottom: 1rem;
     }
 }
@@ -369,21 +381,21 @@ footer {
         flex-direction: column;
         text-align: center;
     }
-    
+
     .main-content {
         margin-top: 80px;
         padding: 0 0.25rem;
     }
-    
+
     .form-container {
         padding: 0.75rem;
     }
-    
+
     input[type="text"],
     textarea {
         padding: 0.5rem;
     }
-    
+
     button[type="submit"] {
         padding: 0.7rem;
     }
@@ -409,12 +421,13 @@ footer {
 
 /* Improve touch targets on mobile */
 @media (max-width: 768px) {
+
     input[type="radio"],
     input[type="checkbox"] {
         min-width: 20px;
         min-height: 20px;
     }
-    
+
     fieldset label {
         padding: 0.25rem 0;
         min-height: 44px;

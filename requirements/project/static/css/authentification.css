@@ -16,12 +16,12 @@
     text-decoration: none;
     color: inherit;
   }
-  body {
-    font-family: "Inter", sans-serif;
-    line-height: 1.5;
-    background-color: #f9f9f9;
-    width: 100svw;
-  }
+body {
+  font-family: "Inter", sans-serif;
+  line-height: 1.5;
+  background-color: #f1f1f1;
+  width: 100svw;
+}
   /*Header Section CSS*/
   header {
     display: flex;

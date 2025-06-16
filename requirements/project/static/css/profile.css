@@ -31,7 +31,7 @@ img {
 body {
     font-family: "Inter", sans-serif;
     line-height: 1.5;
-    background-color: #f9f9f9;
+    background-color: #f1f1f1;
     width: 100svw;
 }
 
@@ -268,7 +268,7 @@ header .header__logo {
     }
 
     .header__logo-img {
-        scale:0.5;
+        scale: 0.5;
     }
 
     header h1 {
@@ -391,7 +391,7 @@ header .header__logo {
     }
 
     .header {
-    flex-direction: row;
+        flex-direction: row;
     }
 
     header h1 {
@@ -426,8 +426,8 @@ header .header__logo {
 }
 
 .logout {
-        color: #000000;
-    }
+    color: #000000;
+}
 
 .header__auth-link {
     scale: 3;
@@ -474,14 +474,14 @@ header .header__logo {
     width: 50px;
 }
 
-.error-container{
+.error-container {
     padding: 10px;
     border: 1px solid #ffb5b5;
     border-radius: 6px;
     background-color: #ff475660;
     color: #ffffff !important;
     font-size: 16px;
-    font-weight: 500; 
+    font-weight: 500;
     width: 100%;
     text-align: center;
     animation: fadeInError 3s ease-in-out;
@@ -493,6 +493,7 @@ header .header__logo {
         opacity: 1;
         visibility: visible;
     }
+
     100% {
         opacity: 0;
         visibility: hidden;
