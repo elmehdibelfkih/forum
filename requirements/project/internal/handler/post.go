@@ -23,7 +23,9 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		confMap["Authenticated"] = true
 		confMap["Username"] = r.Context().Value(repo.USER_NAME).(string)
-
+		if confMap["Username"] != "" {
+			confMap["Initial"] = confMap["Username"].(string)[:1]
+		}
 	}
 	Idpost := r.URL.Query().Get("Id")
 	Id, err := strconv.Atoi(Idpost)

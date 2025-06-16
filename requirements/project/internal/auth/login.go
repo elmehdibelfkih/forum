@@ -27,6 +27,9 @@ func ServLogin(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
+
+	// usrName, err := db.GetUserNameById(userId)
+
 	if r.Context().Value(repo.ERROR_CASE) != nil {
 		errMap = r.Context().Value(repo.ERROR_CASE).(map[string]any)
 	}
