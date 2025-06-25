@@ -8,17 +8,17 @@ import (
 	"time"
 )
 
-func SelectUserSession(session_id string) (int, bool, error) {
+func SelectUserSession(session_id string) (int, time.Time, bool, error) {
 	var userId int
-
-	err := repo.DB.QueryRow(repo.SELECT_USER_BY_SESSION_TOKEN, session_id).Scan(&userId)
+	var expires_at time.Time
+	err := repo.DB.QueryRow(repo.SELECT_USER_BY_SESSION_TOKEN, session_id).Scan(&userId, &expires_at)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return userId, false, nil // not logged in
+			return userId, expires_at, false, nil // not logged in
 		}
-		return userId, false, err // err in database
+		return userId, expires_at, false, err // err in database
 	}
-	return userId, true, nil // logged in
+	return userId, expires_at, true, nil // logged in
 }
 
 func UpdateUserSession(id int, token string) error {

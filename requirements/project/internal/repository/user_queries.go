@@ -8,7 +8,7 @@ const (
 
 	// select queries
 	SELECT_USER_BY_ID                        = `SELECT * FROM users WHERE id = ?`
-	SELECT_USER_BY_SESSION_TOKEN             = `SELECT user_id FROM sessions WHERE session_token = ?`
+	SELECT_USER_BY_SESSION_TOKEN             = `SELECT user_id,expires_at FROM sessions WHERE session_token = ?`
 	SELECT_USER_COUNT_BY_USERNAME_EMAIL      = `SELECT COUNT(*) FROM users WHERE username = ? OR email = ?`
 	SELECT_USERID_PASSHASH_BY_USERNAME_EMAIL = `SELECT id,password_hash FROM users WHERE username = ? OR email = ?`
 	SELECT_PASSHASH_BY_USERID                = `SELECT password_hash FROM users WHERE id = ?`

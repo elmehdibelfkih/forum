@@ -6,6 +6,7 @@ import (
 	forumerror "forum/internal/error"
 	repo "forum/internal/repository"
 	"net/http"
+	"time"
 )
 
 func InjectUser(next http.HandlerFunc) http.HandlerFunc {
@@ -17,11 +18,19 @@ func InjectUser(next http.HandlerFunc) http.HandlerFunc {
 			next(w, r.WithContext(ctx))
 			return
 		}
-		userId, exist, err := db.SelectUserSession(sessionCookie.Value)
+		userId, expires_at, exist, err := db.SelectUserSession(sessionCookie.Value)
 		if err != nil {
 			forumerror.InternalServerError(w, r, err)
 			return
 		}
+
+		// avoid cookie extends from the browser utc for the sql
+		if expires_at.Sub(time.Now().UTC()) <= 0 {
+			ctx := context.WithValue(r.Context(), repo.USER_ID_KEY, -1)
+			next(w, r.WithContext(ctx))
+			return
+		}
+
 		ctx := r.Context()
 		if !exist {
 			ctx = context.WithValue(ctx, repo.USER_ID_KEY, -1)

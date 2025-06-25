@@ -7,6 +7,7 @@ import (
 	forumerror "forum/internal/error"
 	repo "forum/internal/repository"
 	"net/http"
+	"time"
 )
 
 func AuthMidleware(next http.HandlerFunc) http.HandlerFunc {
@@ -19,10 +20,16 @@ func AuthMidleware(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		userId, exist, err := db.SelectUserSession(sessionCookie.Value)
+		userId, expires_at, exist, err := db.SelectUserSession(sessionCookie.Value)
 
 		if err != nil {
 			forumerror.InternalServerError(w, r, err)
+			return
+		}
+
+		// avoid cookie extends from the browser utc for the sql
+		if expires_at.Sub(time.Now().UTC()) <= 0 {
+			auth.ServLogin(w, r)
 			return
 		}
 
